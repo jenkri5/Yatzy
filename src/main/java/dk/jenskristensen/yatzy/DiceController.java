@@ -174,7 +174,6 @@ public class DiceController {
                         dice5.setImage(diceImage);
                     break;
                 default:
-                    System.out.println("Error");
                     break;
             }
         }
