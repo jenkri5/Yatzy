@@ -11,10 +11,10 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.Random;
 
-public class DiceController {
+public class GameController {
 
     @FXML
-    private ImageView dice0, dice1, dice2, dice3, dice4, dice5;
+    private ImageView dice0, dice1, dice2, dice3, dice4;
     @FXML
     private Text pointsLabel;
     @FXML
@@ -29,14 +29,14 @@ public class DiceController {
 
     public void roll() {
         DiceThrower.roll();
-        updateImage();
-        pointsLabel.setText(""+DiceThrower.calculatePoints());
+        updateGame();
+        pointsLabel.setText("" + DiceThrower.calculatePoints());
     }
 
     public void lockOne() {
         ColorAdjust colorAdjust = new ColorAdjust();
         DiceThrower.lock(0);
-        if(DiceThrower.m_Dice[0].m_IsLocked)
+        if (DiceThrower.dice[0].isLocked)
             colorAdjust.setContrast(-0.5);
         else
             colorAdjust.setContrast(0.0);
@@ -46,7 +46,7 @@ public class DiceController {
     public void lockTwo() {
         ColorAdjust colorAdjust = new ColorAdjust();
         DiceThrower.lock(1);
-        if(DiceThrower.m_Dice[1].m_IsLocked)
+        if (DiceThrower.dice[1].isLocked)
             colorAdjust.setContrast(-0.5);
         else
             colorAdjust.setContrast(0.0);
@@ -56,7 +56,7 @@ public class DiceController {
     public void lockThree() {
         ColorAdjust colorAdjust = new ColorAdjust();
         DiceThrower.lock(2);
-        if(DiceThrower.m_Dice[2].m_IsLocked)
+        if (DiceThrower.dice[2].isLocked)
             colorAdjust.setContrast(-0.5);
         else
             colorAdjust.setContrast(0.0);
@@ -66,7 +66,7 @@ public class DiceController {
     public void lockFour() {
         ColorAdjust colorAdjust = new ColorAdjust();
         DiceThrower.lock(3);
-        if(DiceThrower.m_Dice[3].m_IsLocked)
+        if (DiceThrower.dice[3].isLocked)
             colorAdjust.setContrast(-0.5);
         else
             colorAdjust.setContrast(0.0);
@@ -76,27 +76,17 @@ public class DiceController {
     public void lockFive() {
         ColorAdjust colorAdjust = new ColorAdjust();
         DiceThrower.lock(4);
-        if(DiceThrower.m_Dice[4].m_IsLocked)
+        if (DiceThrower.dice[4].isLocked)
             colorAdjust.setContrast(-0.5);
         else
             colorAdjust.setContrast(0.0);
         dice4.setEffect(colorAdjust);
     }
 
-    public void lockSix() {
-        ColorAdjust colorAdjust = new ColorAdjust();
-        DiceThrower.lock(5);
-        if(DiceThrower.m_Dice[5].m_IsLocked)
-            colorAdjust.setContrast(-0.5);
-        else
-            colorAdjust.setContrast(0.0);
-        dice5.setEffect(colorAdjust);
-    }
-
     // future :: rework as array of ImageViews rather than if-else
-    private void updateImage() {
-        for (int i = 0; i < DiceThrower.m_nDice; i++) {
-            switch (DiceThrower.m_Dice[i].m_FaceValue) {
+    private void updateGame() {
+        for (int i = 0; i < DiceThrower.nDice; i++) {
+            switch (DiceThrower.dice[i].faceValue) {
                 case 1:
                     if (i == 0)
                         dice0.setImage(diceImageOne);
@@ -106,10 +96,8 @@ public class DiceController {
                         dice2.setImage(diceImageOne);
                     else if (i == 3)
                         dice3.setImage(diceImageOne);
-                    else if (i == 4)
-                        dice4.setImage(diceImageOne);
                     else
-                        dice5.setImage(diceImageOne);
+                        dice4.setImage(diceImageOne);
                     break;
                 case 2:
                     if (i == 0)
@@ -120,10 +108,8 @@ public class DiceController {
                         dice2.setImage(diceImageTwo);
                     else if (i == 3)
                         dice3.setImage(diceImageTwo);
-                    else if (i == 4)
-                        dice4.setImage(diceImageTwo);
                     else
-                        dice5.setImage(diceImageTwo);
+                        dice4.setImage(diceImageTwo);
                     break;
                 case 3:
                     if (i == 0)
@@ -134,10 +120,8 @@ public class DiceController {
                         dice2.setImage(diceImageThree);
                     else if (i == 3)
                         dice3.setImage(diceImageThree);
-                    else if (i == 4)
-                        dice4.setImage(diceImageThree);
                     else
-                        dice5.setImage(diceImageThree);
+                        dice4.setImage(diceImageThree);
                     break;
                 case 4:
                     if (i == 0)
@@ -148,10 +132,8 @@ public class DiceController {
                         dice2.setImage(diceImageFour);
                     else if (i == 3)
                         dice3.setImage(diceImageFour);
-                    else if (i == 4)
-                        dice4.setImage(diceImageFour);
                     else
-                        dice5.setImage(diceImageFour);
+                        dice4.setImage(diceImageFour);
                     break;
                 case 5:
                     if (i == 0)
@@ -162,10 +144,8 @@ public class DiceController {
                         dice2.setImage(diceImageFive);
                     else if (i == 3)
                         dice3.setImage(diceImageFive);
-                    else if (i == 4)
-                        dice4.setImage(diceImageFive);
                     else
-                        dice5.setImage(diceImageFive);
+                        dice4.setImage(diceImageFive);
                     break;
                 case 6:
                     if (i == 0)
@@ -176,22 +156,24 @@ public class DiceController {
                         dice2.setImage(diceImageSix);
                     else if (i == 3)
                         dice3.setImage(diceImageSix);
-                    else if (i == 4)
-                        dice4.setImage(diceImageSix);
                     else
-                        dice5.setImage(diceImageSix);
+                        dice4.setImage(diceImageSix);
                     break;
                 default:
                     break;
             }
         }
-        if(DiceThrower.m_RollCount >= 3) {
+        if (DiceThrower.rollCount >= 3) {
             rollButton.setDisable(true);
         }
     }
 
-    public void resetRollCount() {
+    public void reset() {
         DiceThrower.resetRollCount();
+        for(DiceThrower.Die die : DiceThrower.dice) {
+            if(die.isLocked)
+                die.setLocked();
+        }
         rollButton.setDisable(false);
     }
 
@@ -201,33 +183,33 @@ public class DiceController {
 
     private static class DiceThrower {
 
-        private final static int m_nDice = 6;
-        private final static Die[] m_Dice = new Die[m_nDice];
-        private static int m_RollCount;
+        private final static int nDice = 5;
+        private final static Die[] dice = new Die[nDice];
+        private static int rollCount;
 
         private static void generateDice() {
-            for (int i = 0; i < m_nDice; i++)
-                m_Dice[i] = new DiceThrower.Die();
+            for (int i = 0; i < nDice; i++)
+                dice[i] = new DiceThrower.Die();
         }
 
         private static void resetRollCount() {
-            m_RollCount = 0;
+            rollCount = 0;
         }
 
         private static void roll() {
-            Arrays.stream(m_Dice).filter(die -> !die.m_IsLocked).forEach(Die::roll);
-            m_RollCount++;
+            Arrays.stream(dice).filter(die -> !die.isLocked).forEach(Die::roll);
+            rollCount++;
         }
 
         private static void lock(int i) {
-            m_Dice[i].setLocked();
+            dice[i].setLocked();
         }
 
         private static int calculatePoints() {
             int points = 0;
             // This class is not implemented
-            for(Die die : m_Dice) {
-                points += die.m_FaceValue;
+            for (Die die : dice) {
+                points += die.faceValue;
             }
             return points;
         }
@@ -235,15 +217,15 @@ public class DiceController {
         private static class Die {
 
             private static final Random rand = new Random();
-            private int m_FaceValue;
-            private boolean m_IsLocked = false;
+            private int faceValue;
+            private boolean isLocked = false;
 
             private void setLocked() {
-                m_IsLocked = !m_IsLocked;
+                isLocked = !isLocked;
             }
 
             private void roll() {
-                m_FaceValue = rand.nextInt(6) + 1;
+                faceValue = rand.nextInt(6) + 1;
             }
 
         }
