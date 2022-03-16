@@ -244,7 +244,7 @@
               textAlignment="CENTER"
               wrappingWidth="30.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="16"
               GridPane.valignment="CENTER"/>
-        <Text fx:id="scoreTotalSum" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="0"
+        <Text fx:id="scoreTotalSum" strokeType="OUTSIDE" strokeWidth="0.0" text="0"
               textAlignment="CENTER"
               wrappingWidth="30.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="17"
               GridPane.valignment="CENTER"/>
