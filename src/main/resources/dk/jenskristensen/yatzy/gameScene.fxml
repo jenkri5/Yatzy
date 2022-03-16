@@ -74,7 +74,7 @@
             </ImageView>
          </children>
       </HBox>
-      <GridPane gridLinesVisible="true" layoutX="14.0" layoutY="14.0" prefHeight="150.0">
+      <GridPane gridLinesVisible="true" layoutX="14.0" layoutY="14.0" prefHeight="400.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" prefWidth="50.0" />
           <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" prefWidth="30.0" />
@@ -83,6 +83,20 @@
           <RowConstraints vgrow="SOMETIMES" />
           <RowConstraints vgrow="SOMETIMES" />
           <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
             <RowConstraints vgrow="SOMETIMES" />
             <RowConstraints vgrow="SOMETIMES" />
             <RowConstraints vgrow="SOMETIMES" />
@@ -118,10 +132,26 @@
                   <Insets left="5.0" />
                </GridPane.margin></Text>
             <Text fx:id="scoreSixes" onMouseClicked="#sixesClicked" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Sum:" GridPane.rowIndex="6">
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin></Text>
+            <Text fx:id="scoreSumUpper" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Bonus:" GridPane.rowIndex="7">
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin></Text>
+            <Text opacity="0.2" strokeType="OUTSIDE" strokeWidth="0.0" text="50" textAlignment="CENTER" wrappingWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="A Pair:" GridPane.rowIndex="8">
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin></Text>
+            <Text opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
          </children>
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
       </GridPane>
+      <Button layoutX="318.0" layoutY="381.0" mnemonicParsing="false" onAction="#restart" text="Restart Game" />
    </children>
 </AnchorPane>

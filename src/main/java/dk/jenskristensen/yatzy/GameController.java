@@ -16,7 +16,7 @@ public class GameController {
     @FXML
     private ImageView dice0, dice1, dice2, dice3, dice4;
     @FXML
-    private Text pointsLabel, scoreOnes, scoreTwos, scoreThrees, scoreFours, scoreFives, scoreSixes;
+    private Text pointsLabel, scoreOnes, scoreTwos, scoreThrees, scoreFours, scoreFives, scoreSixes, scoreSumUpper;
     @FXML
     private Button rollButton, submitButton;
 
@@ -48,11 +48,31 @@ public class GameController {
                 die.setLocked();
         for (int i = 0; i < DiceThrower.nDice; i++)
             updateContrast(i);
-        for (boolean b : isClicked)
-            b = false;
+        Arrays.fill(isClicked, false);
         submitButton.setDisable(true);
-        pointsLabel.setText("" + 0);
         rollButton.setDisable(false);
+        updateText();
+    }
+
+    public void restart() {
+        Arrays.fill(isClicked, false);
+        Arrays.fill(isSubmitted, false);
+        scoreOnes.setText("0");
+        scoreOnes.setOpacity(0.5);
+        scoreTwos.setText("0");
+        scoreTwos.setOpacity(0.5);
+        scoreThrees.setText("0");
+        scoreThrees.setOpacity(0.5);
+        scoreFours.setText("0");
+        scoreFours.setOpacity(0.5);
+        scoreFives.setText("0");
+        scoreFives.setOpacity(0.5);
+        scoreSixes.setText("0");
+        scoreSixes.setOpacity(0.5);
+        pointsLabel.setText("0");
+        submitButton.setDisable(true);
+        rollButton.setDisable(false);
+        DiceThrower.rollCount = 0;
     }
 
     public void lockOne() {
@@ -137,9 +157,7 @@ public class GameController {
                 isClicked[0] = false;
             }
         } else {
-            for (int i = 0; i < isClicked.length; i++) {
-                isClicked[i] = false;
-            }
+            Arrays.fill(isClicked, false);
             if (!isSubmitted[1])
                 scoreTwos.setOpacity(0.5);
             if (!isSubmitted[2])
@@ -202,9 +220,7 @@ public class GameController {
                 isClicked[1] = false;
             }
         } else {
-            for (int i = 0; i < isClicked.length; i++) {
-                isClicked[i] = false;
-            }
+            Arrays.fill(isClicked, false);
             if (!isSubmitted[0])
                 scoreOnes.setOpacity(0.5);
             if (!isSubmitted[2])
@@ -267,9 +283,7 @@ public class GameController {
                 isClicked[2] = false;
             }
         } else {
-            for (int i = 0; i < isClicked.length; i++) {
-                isClicked[i] = false;
-            }
+            Arrays.fill(isClicked, false);
             if (!isSubmitted[0])
                 scoreOnes.setOpacity(0.5);
             if (!isSubmitted[1])
@@ -332,9 +346,7 @@ public class GameController {
                 isClicked[3] = false;
             }
         } else {
-            for (int i = 0; i < isClicked.length; i++) {
-                isClicked[i] = false;
-            }
+            Arrays.fill(isClicked, false);
             if (!isSubmitted[0])
                 scoreOnes.setOpacity(0.5);
             if (!isSubmitted[1])
@@ -397,9 +409,7 @@ public class GameController {
                 isClicked[4] = false;
             }
         } else {
-            for (int i = 0; i < isClicked.length; i++) {
-                isClicked[i] = false;
-            }
+            Arrays.fill(isClicked, false);
             if (!isSubmitted[0])
                 scoreOnes.setOpacity(0.5);
             if (!isSubmitted[1])
@@ -462,9 +472,7 @@ public class GameController {
                 isClicked[5] = false;
             }
         } else {
-            for (int i = 0; i < isClicked.length; i++) {
-                isClicked[i] = false;
-            }
+            Arrays.fill(isClicked, false);
             if (!isSubmitted[0])
                 scoreOnes.setOpacity(0.5);
             if (!isSubmitted[1])
@@ -537,7 +545,6 @@ public class GameController {
         }
     }
 
-    // future :: rework as array of ImageViews rather than if-else
     private void updateImage() {
         for (int i = 0; i < DiceThrower.nDice; i++) {
             switch (DiceThrower.dice[i].faceValue) {
@@ -667,8 +674,12 @@ public class GameController {
 
     private void updateText() {
         for (int i = 0; i < isClicked.length; i++)
-            if (isClicked[i] == true)
-                pointsLabel.setText(""+DiceThrower.calculatePoints(i));
+            if (isClicked[i])
+                pointsLabel.setText("" + DiceThrower.calculatePoints(i));
+        int sumUpper = 0;
+        for(int i : scores)
+            sumUpper += i;
+        scoreSumUpper.setText(""+sumUpper);
     }
 
     private static class DiceThrower {
