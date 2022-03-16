@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -8,9 +9,9 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.jenskristensen.yatzy.DiceController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.jenskristensen.yatzy.DiceController">
    <children>
-      <GridPane fx:id="dicePane" layoutX="346.0" layoutY="14.0">
+      <GridPane layoutX="346.0" layoutY="14.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="40.0" minWidth="40.0" prefWidth="40.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="40.0" minWidth="40.0" prefWidth="40.0" />
@@ -27,34 +28,55 @@
                <image>
                   <Image url="@dice/1.png" />
                </image>
-            </ImageView>
-            <ImageView fx:id="dice1" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#lockTwo" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
-               <image>
-                  <Image url="@dice/2.png" />
-               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </ImageView>
             <ImageView fx:id="dice2" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#lockThree" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
                <image>
                   <Image url="@dice/3.png" />
                </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </ImageView>
             <ImageView fx:id="dice3" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#lockFour" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3">
                <image>
                   <Image url="@dice/4.png" />
                </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </ImageView>
             <ImageView fx:id="dice4" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#lockFive" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4">
                <image>
                   <Image url="@dice/5.png" />
                </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </ImageView>
             <ImageView fx:id="dice5" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#lockSix" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5">
                <image>
                   <Image url="@dice/6.png" />
                </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <ImageView fx:id="dice1" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#lockTwo" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+               <image>
+                  <Image url="@dice/2.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </ImageView>
          </children>
       </GridPane>
-      <Button fx:id="rollButton" layoutX="440.0" layoutY="54.0" mnemonicParsing="false" onAction="#roll" text="Roll" />
+      <Button layoutX="440.0" layoutY="54.0" mnemonicParsing="false" onAction="#roll" text="Roll">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
    </children>
 </AnchorPane>
