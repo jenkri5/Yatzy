@@ -29,62 +29,37 @@ public class GameController {
 
     public void roll() {
         DiceThrower.roll();
-        updateGame();
+        updateImage();
         pointsLabel.setText("" + DiceThrower.calculatePoints());
     }
 
     public void lockOne() {
-        ColorAdjust colorAdjust = new ColorAdjust();
         DiceThrower.lock(0);
-        if (DiceThrower.dice[0].isLocked)
-            colorAdjust.setContrast(-0.5);
-        else
-            colorAdjust.setContrast(0.0);
-        dice0.setEffect(colorAdjust);
+        updateContrast(0);
     }
 
     public void lockTwo() {
-        ColorAdjust colorAdjust = new ColorAdjust();
         DiceThrower.lock(1);
-        if (DiceThrower.dice[1].isLocked)
-            colorAdjust.setContrast(-0.5);
-        else
-            colorAdjust.setContrast(0.0);
-        dice1.setEffect(colorAdjust);
+        updateContrast(1);
     }
 
     public void lockThree() {
-        ColorAdjust colorAdjust = new ColorAdjust();
         DiceThrower.lock(2);
-        if (DiceThrower.dice[2].isLocked)
-            colorAdjust.setContrast(-0.5);
-        else
-            colorAdjust.setContrast(0.0);
-        dice2.setEffect(colorAdjust);
+        updateContrast(2);
     }
 
     public void lockFour() {
-        ColorAdjust colorAdjust = new ColorAdjust();
         DiceThrower.lock(3);
-        if (DiceThrower.dice[3].isLocked)
-            colorAdjust.setContrast(-0.5);
-        else
-            colorAdjust.setContrast(0.0);
-        dice3.setEffect(colorAdjust);
+        updateContrast(3);
     }
 
     public void lockFive() {
-        ColorAdjust colorAdjust = new ColorAdjust();
         DiceThrower.lock(4);
-        if (DiceThrower.dice[4].isLocked)
-            colorAdjust.setContrast(-0.5);
-        else
-            colorAdjust.setContrast(0.0);
-        dice4.setEffect(colorAdjust);
+        updateContrast(4);
     }
 
     // future :: rework as array of ImageViews rather than if-else
-    private void updateGame() {
+    private void updateImage() {
         for (int i = 0; i < DiceThrower.nDice; i++) {
             switch (DiceThrower.dice[i].faceValue) {
                 case 1:
@@ -168,12 +143,57 @@ public class GameController {
         }
     }
 
+    private void updateContrast(int i) {
+        ColorAdjust colorAdjust = new ColorAdjust();
+        switch (i) {
+            case 0:
+                if (DiceThrower.dice[i].isLocked)
+                    colorAdjust.setContrast(-0.5);
+                else
+                    colorAdjust.setContrast(0.0);
+                dice0.setEffect(colorAdjust);
+                break;
+            case 1:
+                if (DiceThrower.dice[i].isLocked)
+                    colorAdjust.setContrast(-0.5);
+                else
+                    colorAdjust.setContrast(0.0);
+                dice1.setEffect(colorAdjust);
+                break;
+            case 2:
+                if (DiceThrower.dice[i].isLocked)
+                    colorAdjust.setContrast(-0.5);
+                else
+                    colorAdjust.setContrast(0.0);
+                dice2.setEffect(colorAdjust);
+                break;
+            case 3:
+                if (DiceThrower.dice[i].isLocked)
+                    colorAdjust.setContrast(-0.5);
+                else
+                    colorAdjust.setContrast(0.0);
+                dice3.setEffect(colorAdjust);
+                break;
+            case 4:
+                if (DiceThrower.dice[i].isLocked)
+                    colorAdjust.setContrast(-0.5);
+                else
+                    colorAdjust.setContrast(0.0);
+                dice4.setEffect(colorAdjust);
+                break;
+            default:
+                break;
+        }
+    }
+
+
     public void reset() {
         DiceThrower.resetRollCount();
-        for(DiceThrower.Die die : DiceThrower.dice) {
-            if(die.isLocked)
+        for (DiceThrower.Die die : DiceThrower.dice)
+            if (die.isLocked)
                 die.setLocked();
-        }
+        for (int i = 0; i < DiceThrower.nDice; i++)
+            updateContrast(i);
         rollButton.setDisable(false);
     }
 
