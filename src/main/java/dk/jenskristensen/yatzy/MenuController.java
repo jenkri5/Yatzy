@@ -7,8 +7,6 @@ public class MenuController {
 
     @FXML
     private void switchToGame() throws IOException {
-        DiceController diceController = new DiceController();
-        diceController.generateDice();
         App.setRoot("gameScene");
     }
 }

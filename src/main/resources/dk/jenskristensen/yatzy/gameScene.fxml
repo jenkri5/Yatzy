@@ -8,10 +8,12 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.jenskristensen.yatzy.DiceController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="420.0" prefWidth="420.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.jenskristensen.yatzy.DiceController">
    <children>
-      <GridPane layoutX="346.0" layoutY="14.0">
+      <GridPane layoutX="90.0" layoutY="47.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="40.0" minWidth="40.0" prefWidth="40.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="40.0" minWidth="40.0" prefWidth="40.0" />
@@ -74,9 +76,18 @@
             </ImageView>
          </children>
       </GridPane>
-      <Button layoutX="440.0" layoutY="54.0" mnemonicParsing="false" onAction="#roll" text="Roll">
+      <Button fx:id="rollButton" layoutX="166.0" layoutY="100.0" mnemonicParsing="false" onAction="#roll" text="Roll">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
+      <Button layoutX="218.0" layoutY="100.0" mnemonicParsing="false" onAction="#resetRollCount" text="Reset">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Text fx:id="pointsLabel" layoutX="203.0" layoutY="218.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

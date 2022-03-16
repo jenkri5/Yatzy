@@ -1,23 +1,36 @@
 package dk.jenskristensen.yatzy;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Text;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Random;
 
 public class DiceController {
 
     @FXML
-    ImageView dice0, dice1, dice2, dice3, dice4, dice5;
+    private ImageView dice0, dice1, dice2, dice3, dice4, dice5;
     @FXML
-    Image diceImage;
+    private Text pointsLabel;
+    @FXML
+    private Button rollButton;
+
+    private final Image diceImageOne = new Image(Objects.requireNonNull(getClass().getResourceAsStream("dice/1.png")));
+    private final Image diceImageTwo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("dice/2.png")));
+    private final Image diceImageThree = new Image(Objects.requireNonNull(getClass().getResourceAsStream("dice/3.png")));
+    private final Image diceImageFour = new Image(Objects.requireNonNull(getClass().getResourceAsStream("dice/4.png")));
+    private final Image diceImageFive = new Image(Objects.requireNonNull(getClass().getResourceAsStream("dice/5.png")));
+    private final Image diceImageSix = new Image(Objects.requireNonNull(getClass().getResourceAsStream("dice/6.png")));
 
     public void roll() {
         DiceThrower.roll();
         updateImage();
+        pointsLabel.setText(""+DiceThrower.calculatePoints());
     }
 
     public void lockOne() {
@@ -80,106 +93,109 @@ public class DiceController {
         dice5.setEffect(colorAdjust);
     }
 
+    // future :: rework as array of ImageViews rather than if-else
     private void updateImage() {
         for (int i = 0; i < DiceThrower.m_nDice; i++) {
             switch (DiceThrower.m_Dice[i].m_FaceValue) {
                 case 1:
-                    diceImage = new Image(getClass().getResourceAsStream("dice/1.png"));
                     if (i == 0)
-                        dice0.setImage(diceImage);
+                        dice0.setImage(diceImageOne);
                     else if (i == 1)
-                        dice1.setImage(diceImage);
+                        dice1.setImage(diceImageOne);
                     else if (i == 2)
-                        dice2.setImage(diceImage);
+                        dice2.setImage(diceImageOne);
                     else if (i == 3)
-                        dice3.setImage(diceImage);
+                        dice3.setImage(diceImageOne);
                     else if (i == 4)
-                        dice4.setImage(diceImage);
+                        dice4.setImage(diceImageOne);
                     else
-                        dice5.setImage(diceImage);
+                        dice5.setImage(diceImageOne);
                     break;
                 case 2:
-                    diceImage = new Image(getClass().getResourceAsStream("dice/2.png"));
                     if (i == 0)
-                        dice0.setImage(diceImage);
+                        dice0.setImage(diceImageTwo);
                     else if (i == 1)
-                        dice1.setImage(diceImage);
+                        dice1.setImage(diceImageTwo);
                     else if (i == 2)
-                        dice2.setImage(diceImage);
+                        dice2.setImage(diceImageTwo);
                     else if (i == 3)
-                        dice3.setImage(diceImage);
+                        dice3.setImage(diceImageTwo);
                     else if (i == 4)
-                        dice4.setImage(diceImage);
+                        dice4.setImage(diceImageTwo);
                     else
-                        dice5.setImage(diceImage);
+                        dice5.setImage(diceImageTwo);
                     break;
                 case 3:
-                    diceImage = new Image(getClass().getResourceAsStream("dice/3.png"));
                     if (i == 0)
-                        dice0.setImage(diceImage);
+                        dice0.setImage(diceImageThree);
                     else if (i == 1)
-                        dice1.setImage(diceImage);
+                        dice1.setImage(diceImageThree);
                     else if (i == 2)
-                        dice2.setImage(diceImage);
+                        dice2.setImage(diceImageThree);
                     else if (i == 3)
-                        dice3.setImage(diceImage);
+                        dice3.setImage(diceImageThree);
                     else if (i == 4)
-                        dice4.setImage(diceImage);
+                        dice4.setImage(diceImageThree);
                     else
-                        dice5.setImage(diceImage);
+                        dice5.setImage(diceImageThree);
                     break;
                 case 4:
-                    diceImage = new Image(getClass().getResourceAsStream("dice/4.png"));
                     if (i == 0)
-                        dice0.setImage(diceImage);
+                        dice0.setImage(diceImageFour);
                     else if (i == 1)
-                        dice1.setImage(diceImage);
+                        dice1.setImage(diceImageFour);
                     else if (i == 2)
-                        dice2.setImage(diceImage);
+                        dice2.setImage(diceImageFour);
                     else if (i == 3)
-                        dice3.setImage(diceImage);
+                        dice3.setImage(diceImageFour);
                     else if (i == 4)
-                        dice4.setImage(diceImage);
+                        dice4.setImage(diceImageFour);
                     else
-                        dice5.setImage(diceImage);
+                        dice5.setImage(diceImageFour);
                     break;
                 case 5:
-                    diceImage = new Image(getClass().getResourceAsStream("dice/5.png"));
                     if (i == 0)
-                        dice0.setImage(diceImage);
+                        dice0.setImage(diceImageFive);
                     else if (i == 1)
-                        dice1.setImage(diceImage);
+                        dice1.setImage(diceImageFive);
                     else if (i == 2)
-                        dice2.setImage(diceImage);
+                        dice2.setImage(diceImageFive);
                     else if (i == 3)
-                        dice3.setImage(diceImage);
+                        dice3.setImage(diceImageFive);
                     else if (i == 4)
-                        dice4.setImage(diceImage);
+                        dice4.setImage(diceImageFive);
                     else
-                        dice5.setImage(diceImage);
+                        dice5.setImage(diceImageFive);
                     break;
                 case 6:
-                    diceImage = new Image(getClass().getResourceAsStream("dice/6.png"));
                     if (i == 0)
-                        dice0.setImage(diceImage);
+                        dice0.setImage(diceImageSix);
                     else if (i == 1)
-                        dice1.setImage(diceImage);
+                        dice1.setImage(diceImageSix);
                     else if (i == 2)
-                        dice2.setImage(diceImage);
+                        dice2.setImage(diceImageSix);
                     else if (i == 3)
-                        dice3.setImage(diceImage);
+                        dice3.setImage(diceImageSix);
                     else if (i == 4)
-                        dice4.setImage(diceImage);
+                        dice4.setImage(diceImageSix);
                     else
-                        dice5.setImage(diceImage);
+                        dice5.setImage(diceImageSix);
                     break;
                 default:
                     break;
             }
         }
+        if(DiceThrower.m_RollCount >= 3) {
+            rollButton.setDisable(true);
+        }
     }
 
-    public void generateDice() {
+    public void resetRollCount() {
+        DiceThrower.resetRollCount();
+        rollButton.setDisable(false);
+    }
+
+    public static void generateDice() {
         DiceThrower.generateDice();
     }
 
@@ -210,6 +226,9 @@ public class DiceController {
         private static int calculatePoints() {
             int points = 0;
             // This class is not implemented
+            for(Die die : m_Dice) {
+                points += die.m_FaceValue;
+            }
             return points;
         }
 
@@ -226,7 +245,9 @@ public class DiceController {
             private void roll() {
                 m_FaceValue = rand.nextInt(6) + 1;
             }
+
         }
+
     }
 
 }
