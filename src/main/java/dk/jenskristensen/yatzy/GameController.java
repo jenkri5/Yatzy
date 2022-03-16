@@ -16,7 +16,7 @@ public class GameController {
     @FXML
     private ImageView dice0, dice1, dice2, dice3, dice4;
     @FXML
-    private Text pointsLabel, scoreOnes, scoreTwos, scoreThrees, scoreFours, scoreFives, scoreSixes, scoreSumUpper;
+    private Text pointsLabel, scoreOnes, scoreTwos, scoreThrees, scoreFours, scoreFives, scoreSixes, scoreSumUpper, scoreBonus;
     @FXML
     private Button rollButton, submitButton;
 
@@ -29,7 +29,7 @@ public class GameController {
 
     private final boolean[] isClicked = new boolean[6];
     private final boolean[] isSubmitted = new boolean[6];
-    private final int[] scores = new int[6];
+    private final int[] scoresUpper = new int[6];
 
     public static void generateDice() {
         DiceThrower.generateDice();
@@ -70,6 +70,8 @@ public class GameController {
         scoreSixes.setText("0");
         scoreSixes.setOpacity(0.5);
         pointsLabel.setText("0");
+        scoreSumUpper.setText("0");
+        scoreBonus.setOpacity(0.2);
         submitButton.setDisable(true);
         rollButton.setDisable(false);
         DiceThrower.rollCount = 0;
@@ -494,7 +496,7 @@ public class GameController {
                 case 0:
                     if (isClicked[i] && !isSubmitted[i]) {
                         scoreOnes.setText("" + DiceThrower.calculatePoints(i));
-                        scores[i] = DiceThrower.calculatePoints(i);
+                        scoresUpper[i] = DiceThrower.calculatePoints(i);
                         isSubmitted[i] = true;
                         reset();
                     }
@@ -502,7 +504,7 @@ public class GameController {
                 case 1:
                     if (isClicked[i] && !isSubmitted[i]) {
                         scoreTwos.setText("" + DiceThrower.calculatePoints(i));
-                        scores[i] = DiceThrower.calculatePoints(i);
+                        scoresUpper[i] = DiceThrower.calculatePoints(i);
                         isSubmitted[i] = true;
                         reset();
                     }
@@ -510,7 +512,7 @@ public class GameController {
                 case 2:
                     if (isClicked[i] && !isSubmitted[i]) {
                         scoreThrees.setText("" + DiceThrower.calculatePoints(i));
-                        scores[i] = DiceThrower.calculatePoints(i);
+                        scoresUpper[i] = DiceThrower.calculatePoints(i);
                         isSubmitted[i] = true;
                         reset();
                     }
@@ -518,7 +520,7 @@ public class GameController {
                 case 3:
                     if (isClicked[i] && !isSubmitted[i]) {
                         scoreFours.setText("" + DiceThrower.calculatePoints(i));
-                        scores[i] = DiceThrower.calculatePoints(i);
+                        scoresUpper[i] = DiceThrower.calculatePoints(i);
                         isSubmitted[i] = true;
                         reset();
                     }
@@ -526,7 +528,7 @@ public class GameController {
                 case 4:
                     if (isClicked[i] && !isSubmitted[i]) {
                         scoreFives.setText("" + DiceThrower.calculatePoints(i));
-                        scores[i] = DiceThrower.calculatePoints(i);
+                        scoresUpper[i] = DiceThrower.calculatePoints(i);
                         isSubmitted[i] = true;
                         reset();
                     }
@@ -534,7 +536,7 @@ public class GameController {
                 case 5:
                     if (isClicked[i] && !isSubmitted[i]) {
                         scoreSixes.setText("" + DiceThrower.calculatePoints(i));
-                        scores[i] = DiceThrower.calculatePoints(i);
+                        scoresUpper[i] = DiceThrower.calculatePoints(i);
                         isSubmitted[i] = true;
                         reset();
                     }
@@ -677,9 +679,11 @@ public class GameController {
             if (isClicked[i])
                 pointsLabel.setText("" + DiceThrower.calculatePoints(i));
         int sumUpper = 0;
-        for(int i : scores)
+        for(int i : scoresUpper)
             sumUpper += i;
         scoreSumUpper.setText(""+sumUpper);
+        if (sumUpper >= 23)
+            scoreBonus.setOpacity(1.0);
     }
 
     private static class DiceThrower {

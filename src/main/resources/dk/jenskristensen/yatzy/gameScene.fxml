@@ -141,7 +141,7 @@
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin></Text>
-            <Text opacity="0.2" strokeType="OUTSIDE" strokeWidth="0.0" text="50" textAlignment="CENTER" wrappingWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <Text fx:id="scoreBonus" opacity="0.2" strokeType="OUTSIDE" strokeWidth="0.0" text="50" textAlignment="CENTER" wrappingWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="A Pair:" GridPane.rowIndex="8">
                <GridPane.margin>
                   <Insets left="5.0" />
