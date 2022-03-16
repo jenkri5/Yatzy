@@ -16,7 +16,11 @@ public class GameController {
     @FXML
     private ImageView dice0, dice1, dice2, dice3, dice4;
     @FXML
-    private Text pointsLabel, scoreOnes, scoreTwos, scoreThrees, scoreFours, scoreFives, scoreSixes, scoreSumUpper, scoreBonus;
+    private Text pointsLabel, scoreOnes, scoreTwos, scoreThrees,
+            scoreFours, scoreFives, scoreSixes, scoreSumUpper,
+            scoreBonus, scorePair, scoreTwoPairs, scoreThreeKind,
+            scoreFourKind, scoreLowStraight, scoreHighStraight,
+            scoreFullHouse, scoreChance, scoreYatzy, scoreTotalSum;
     @FXML
     private Button rollButton, submitButton;
 
@@ -496,6 +500,42 @@ public class GameController {
         }
     }
 
+    public void pairClicked() {
+
+    }
+
+    public void twoPairsClicked() {
+
+    }
+
+    public void threeKindClicked() {
+
+    }
+
+    public void fourKindClicked() {
+
+    }
+
+    public void lowStraightClicked() {
+
+    }
+
+    public void highStraightClicked() {
+
+    }
+
+    public void fullHouseClicked() {
+
+    }
+
+    public void chanceClicked() {
+
+    }
+
+    public void yatzyClicked() {
+
+    }
+
     public void submit() {
         for (int i = 0; i < isClicked.length; i++) {
             switch (i) {
@@ -685,10 +725,10 @@ public class GameController {
             if (isClicked[i])
                 pointsLabel.setText("" + DiceThrower.calculatePoints(i));
         int sumUpper = 0;
-        for(int i : scoresUpper)
+        for (int i : scoresUpper)
             sumUpper += i;
-        scoreSumUpper.setText(""+sumUpper);
-        if (sumUpper >= 23)
+        scoreSumUpper.setText("" + sumUpper);
+        if (sumUpper >= 63)
             scoreBonus.setOpacity(1.0);
     }
 

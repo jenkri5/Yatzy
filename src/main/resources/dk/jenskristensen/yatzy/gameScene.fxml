@@ -13,145 +13,241 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="420.0" prefWidth="420.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.jenskristensen.yatzy.GameController">
-   <children>
-      <Text fx:id="pointsLabel" layoutX="251.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="45.0">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Text>
-      <HBox alignment="CENTER" layoutX="305.0" layoutY="48.0" spacing="10.0">
-         <children>
-            <Button fx:id="submitButton" disable="true" mnemonicParsing="false" onAction="#submit" text="Submit" />
-            <Button fx:id="rollButton" mnemonicParsing="false" onAction="#roll" text="Roll">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-         </children>
-      </HBox>
-      <HBox alignment="CENTER" layoutX="217.0" layoutY="5.0">
-         <children>
-            <ImageView fx:id="dice0" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#lockOne" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@dice/1.png" />
-               </image>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </ImageView>
-            <ImageView fx:id="dice1" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#lockTwo" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@dice/2.png" />
-               </image>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </ImageView>
-            <ImageView fx:id="dice2" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#lockThree" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@dice/3.png" />
-               </image>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </ImageView>
-            <ImageView fx:id="dice3" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#lockFour" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@dice/4.png" />
-               </image>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </ImageView>
-            <ImageView fx:id="dice4" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#lockFive" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@dice/5.png" />
-               </image>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </ImageView>
-         </children>
-      </HBox>
-      <GridPane gridLinesVisible="true" layoutX="14.0" layoutY="14.0" prefHeight="400.0">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="420.0"
+            prefWidth="420.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="dk.jenskristensen.yatzy.GameController">
+    <Text fx:id="pointsLabel" layoutX="251.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0"
+          textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="45.0">
+        <font>
+            <Font size="24.0"/>
+        </font>
+    </Text>
+    <HBox alignment="CENTER" layoutX="305.0" layoutY="48.0" spacing="10.0">
+        <Button fx:id="submitButton" disable="true" mnemonicParsing="false" onAction="#submit" text="Submit"/>
+        <Button fx:id="rollButton" mnemonicParsing="false" onAction="#roll" text="Roll">
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+        </Button>
+    </HBox>
+    <HBox alignment="CENTER" layoutX="217.0" layoutY="5.0">
+        <ImageView fx:id="dice0" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#lockOne" pickOnBounds="true"
+                   preserveRatio="true">
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+            <Image url="@dice/1.png"/>
+        </ImageView>
+        <ImageView fx:id="dice1" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#lockTwo" pickOnBounds="true"
+                   preserveRatio="true">
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+            <Image url="@dice/2.png"/>
+        </ImageView>
+        <ImageView fx:id="dice2" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#lockThree"
+                   pickOnBounds="true" preserveRatio="true">
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+            <Image url="@dice/3.png"/>
+        </ImageView>
+        <ImageView fx:id="dice3" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#lockFour" pickOnBounds="true"
+                   preserveRatio="true">
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+            <Image url="@dice/4.png"/>
+        </ImageView>
+        <ImageView fx:id="dice4" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#lockFive" pickOnBounds="true"
+                   preserveRatio="true">
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+            <Image url="@dice/5.png"/>
+        </ImageView>
+    </HBox>
+    <GridPane gridLinesVisible="true" layoutX="14.0" layoutY="14.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" prefWidth="50.0" />
-          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" prefWidth="30.0" />
+            <ColumnConstraints hgrow="SOMETIMES" prefWidth="100.0"/>
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" prefWidth="30.0"/>
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints vgrow="SOMETIMES" />
-          <RowConstraints vgrow="SOMETIMES" />
-          <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES"/>
+            <RowConstraints vgrow="SOMETIMES"/>
+            <RowConstraints vgrow="SOMETIMES"/>
+            <RowConstraints vgrow="SOMETIMES"/>
+            <RowConstraints vgrow="SOMETIMES"/>
+            <RowConstraints vgrow="SOMETIMES"/>
+            <RowConstraints vgrow="SOMETIMES"/>
+            <RowConstraints vgrow="SOMETIMES"/>
+            <RowConstraints vgrow="SOMETIMES"/>
+            <RowConstraints vgrow="SOMETIMES"/>
+            <RowConstraints vgrow="SOMETIMES"/>
+            <RowConstraints vgrow="SOMETIMES"/>
+            <RowConstraints vgrow="SOMETIMES"/>
+            <RowConstraints vgrow="SOMETIMES"/>
+            <RowConstraints vgrow="SOMETIMES"/>
+            <RowConstraints vgrow="SOMETIMES"/>
+            <RowConstraints vgrow="SOMETIMES"/>
+            <RowConstraints vgrow="SOMETIMES"/>
         </rowConstraints>
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ones:" GridPane.halignment="LEFT">
-               <GridPane.margin>
-                  <Insets left="5.0" />
-               </GridPane.margin></Text>
-            <Text fx:id="scoreOnes" onMouseClicked="#onesClicked" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="30.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Twos:" GridPane.rowIndex="1">
-               <GridPane.margin>
-                  <Insets left="5.0" />
-               </GridPane.margin></Text>
-            <Text fx:id="scoreTwos" onMouseClicked="#twosClicked" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Threes:" GridPane.rowIndex="2">
-               <GridPane.margin>
-                  <Insets left="5.0" />
-               </GridPane.margin></Text>
-            <Text fx:id="scoreThrees" onMouseClicked="#threesClicked" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Fours:" GridPane.rowIndex="3">
-               <GridPane.margin>
-                  <Insets left="5.0" />
-               </GridPane.margin></Text>
-            <Text fx:id="scoreFours" onMouseClicked="#foursClicked" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Fives:" GridPane.rowIndex="4">
-               <GridPane.margin>
-                  <Insets left="5.0" />
-               </GridPane.margin></Text>
-            <Text fx:id="scoreFives" onMouseClicked="#fivesClicked" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Sixes:" GridPane.rowIndex="5">
-               <GridPane.margin>
-                  <Insets left="5.0" />
-               </GridPane.margin></Text>
-            <Text fx:id="scoreSixes" onMouseClicked="#sixesClicked" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Sum:" GridPane.rowIndex="6">
-               <GridPane.margin>
-                  <Insets left="5.0" />
-               </GridPane.margin></Text>
-            <Text fx:id="scoreSumUpper" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Bonus:" GridPane.rowIndex="7">
-               <GridPane.margin>
-                  <Insets left="5.0" />
-               </GridPane.margin></Text>
-            <Text fx:id="scoreBonus" opacity="0.2" strokeType="OUTSIDE" strokeWidth="0.0" text="50" textAlignment="CENTER" wrappingWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="A Pair:" GridPane.rowIndex="8">
-               <GridPane.margin>
-                  <Insets left="5.0" />
-               </GridPane.margin></Text>
-            <Text opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-         </children>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-      </GridPane>
-      <Button layoutX="318.0" layoutY="381.0" mnemonicParsing="false" onAction="#restart" text="Restart Game" />
-   </children>
+        <opaqueInsets>
+            <Insets/>
+        </opaqueInsets>
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ones:" GridPane.halignment="LEFT">
+            <GridPane.margin>
+                <Insets left="5.0"/>
+            </GridPane.margin>
+        </Text>
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Twos:" GridPane.rowIndex="1">
+            <GridPane.margin>
+                <Insets left="5.0"/>
+            </GridPane.margin>
+        </Text>
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Threes:" GridPane.rowIndex="2">
+            <GridPane.margin>
+                <Insets left="5.0"/>
+            </GridPane.margin>
+        </Text>
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Fours:" GridPane.rowIndex="3">
+            <GridPane.margin>
+                <Insets left="5.0"/>
+            </GridPane.margin>
+        </Text>
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Fives:" GridPane.rowIndex="4">
+            <GridPane.margin>
+                <Insets left="5.0"/>
+            </GridPane.margin>
+        </Text>
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Sixes:" GridPane.rowIndex="5">
+            <GridPane.margin>
+                <Insets left="5.0"/>
+            </GridPane.margin>
+        </Text>
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Sum:" GridPane.rowIndex="6">
+            <GridPane.margin>
+                <Insets left="5.0"/>
+            </GridPane.margin>
+        </Text>
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Bonus:" GridPane.rowIndex="7">
+            <GridPane.margin>
+                <Insets left="5.0"/>
+            </GridPane.margin>
+        </Text>
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="A Pair:" GridPane.rowIndex="8">
+            <GridPane.margin>
+                <Insets left="5.0"/>
+            </GridPane.margin>
+        </Text>
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Two Pairs:" GridPane.rowIndex="9">
+            <GridPane.margin>
+                <Insets left="5.0"/>
+            </GridPane.margin>
+        </Text>
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Three of a kind:" GridPane.rowIndex="10">
+            <GridPane.margin>
+                <Insets left="5.0"/>
+            </GridPane.margin>
+        </Text>
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Four of a kind:" GridPane.rowIndex="11">
+            <GridPane.margin>
+                <Insets left="5.0"/>
+            </GridPane.margin>
+        </Text>
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Low Straight:" GridPane.rowIndex="12">
+            <GridPane.margin>
+                <Insets left="5.0"/>
+            </GridPane.margin>
+        </Text>
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="High Straight:" GridPane.rowIndex="13">
+            <GridPane.margin>
+                <Insets left="5.0"/>
+            </GridPane.margin>
+        </Text>
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Full House:" GridPane.rowIndex="14">
+            <GridPane.margin>
+                <Insets left="5.0"/>
+            </GridPane.margin>
+        </Text>
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Chance:" GridPane.rowIndex="15">
+            <GridPane.margin>
+                <Insets left="5.0"/>
+            </GridPane.margin>
+        </Text>
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Yatzy:" GridPane.rowIndex="16">
+            <GridPane.margin>
+                <Insets left="5.0"/>
+            </GridPane.margin>
+        </Text>
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Total Sum:" GridPane.rowIndex="17">
+            <GridPane.margin>
+                <Insets left="5.0"/>
+            </GridPane.margin>
+        </Text>
+        <Text fx:id="scoreOnes" onMouseClicked="#onesClicked" opacity="0.5" strokeType="OUTSIDE"
+              strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="30.0" GridPane.columnIndex="1"
+              GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
+        <Text fx:id="scoreTwos" onMouseClicked="#twosClicked" opacity="0.5" strokeType="OUTSIDE"
+              strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="30.0" GridPane.columnIndex="1"
+              GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER"/>
+        <Text fx:id="scoreThrees" onMouseClicked="#threesClicked" opacity="0.5" strokeType="OUTSIDE"
+              strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="30.0" GridPane.columnIndex="1"
+              GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER"/>
+        <Text fx:id="scoreFours" onMouseClicked="#foursClicked" opacity="0.5" strokeType="OUTSIDE"
+              strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="30.0" GridPane.columnIndex="1"
+              GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER"/>
+        <Text fx:id="scoreFives" onMouseClicked="#fivesClicked" opacity="0.5" strokeType="OUTSIDE"
+              strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="30.0" GridPane.columnIndex="1"
+              GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER"/>
+        <Text fx:id="scoreSixes" onMouseClicked="#sixesClicked" opacity="0.5" strokeType="OUTSIDE"
+              strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="30.0" GridPane.columnIndex="1"
+              GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER"/>
+        <Text fx:id="scoreSumUpper" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER"
+              wrappingWidth="30.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6"
+              GridPane.valignment="CENTER"/>
+        <Text fx:id="scoreBonus" opacity="0.2" strokeType="OUTSIDE" strokeWidth="0.0" text="50"
+              textAlignment="CENTER" wrappingWidth="30.0" GridPane.columnIndex="1" GridPane.halignment="CENTER"
+              GridPane.rowIndex="7" GridPane.valignment="CENTER"/>
+        <Text fx:id="scorePair" onMouseClicked="#pairClicked" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER"
+              wrappingWidth="30.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="8"
+              GridPane.valignment="CENTER"/>
+        <Text fx:id="scoreTwoPairs" onMouseClicked="#twoPairsClicked" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="0"
+              textAlignment="CENTER"
+              wrappingWidth="30.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="9"
+              GridPane.valignment="CENTER"/>
+        <Text fx:id="scoreThreeKind" onMouseClicked="#threeKindClicked" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="0"
+              textAlignment="CENTER"
+              wrappingWidth="30.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="10"
+              GridPane.valignment="CENTER"/>
+        <Text fx:id="scoreFourKind" onMouseClicked="#fourKindClicked" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="0"
+              textAlignment="CENTER"
+              wrappingWidth="30.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="11"
+              GridPane.valignment="CENTER"/>
+        <Text fx:id="scoreLowStraight" onMouseClicked="#lowStraightClicked" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="0"
+              textAlignment="CENTER"
+              wrappingWidth="30.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="12"
+              GridPane.valignment="CENTER"/>
+        <Text fx:id="scoreHighStraight" onMouseClicked="#highStraightClicked" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="0"
+              textAlignment="CENTER"
+              wrappingWidth="30.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="13"
+              GridPane.valignment="CENTER"/>
+        <Text fx:id="scoreFullHouse" onMouseClicked="#fullHouseClicked" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="0"
+              textAlignment="CENTER"
+              wrappingWidth="30.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="14"
+              GridPane.valignment="CENTER"/>
+        <Text fx:id="scoreChance" onMouseClicked="#chanceClicked" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="0"
+              textAlignment="CENTER"
+              wrappingWidth="30.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="15"
+              GridPane.valignment="CENTER"/>
+        <Text fx:id="scoreYatzy" onMouseClicked="#yatzyClicked" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="0"
+              textAlignment="CENTER"
+              wrappingWidth="30.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="16"
+              GridPane.valignment="CENTER"/>
+        <Text fx:id="scoreTotalSum" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="0"
+              textAlignment="CENTER"
+              wrappingWidth="30.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="17"
+              GridPane.valignment="CENTER"/>
+    </GridPane>
+    <Button layoutX="318.0" layoutY="381.0" mnemonicParsing="false" onAction="#restart" text="Restart Game"/>
 </AnchorPane>
