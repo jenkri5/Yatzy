@@ -32,6 +32,14 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
+            <ImageView fx:id="dice1" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#lockTwo" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+               <image>
+                  <Image url="@dice/2.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
             <ImageView fx:id="dice2" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#lockThree" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
                <image>
                   <Image url="@dice/3.png" />
@@ -59,14 +67,6 @@
             <ImageView fx:id="dice5" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#lockSix" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5">
                <image>
                   <Image url="@dice/6.png" />
-               </image>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </ImageView>
-            <ImageView fx:id="dice1" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#lockTwo" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
-               <image>
-                  <Image url="@dice/2.png" />
                </image>
                <cursor>
                   <Cursor fx:constant="HAND" />
