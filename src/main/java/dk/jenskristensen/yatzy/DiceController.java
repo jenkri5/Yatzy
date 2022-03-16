@@ -203,7 +203,6 @@ public class DiceController {
         private static void roll() {
             Arrays.stream(m_Dice).filter(die -> !die.m_IsLocked).forEach(Die::roll);
             m_RollCount++;
-            System.out.println(m_RollCount);
         }
 
         private static void lock(int i) {
