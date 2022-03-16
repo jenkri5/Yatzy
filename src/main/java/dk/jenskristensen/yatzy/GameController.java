@@ -27,10 +27,24 @@ public class GameController {
     private final Image diceImageFive = new Image(Objects.requireNonNull(getClass().getResourceAsStream("dice/5.png")));
     private final Image diceImageSix = new Image(Objects.requireNonNull(getClass().getResourceAsStream("dice/6.png")));
 
+    public static void generateDice() {
+        DiceThrower.generateDice();
+    }
+
     public void roll() {
         DiceThrower.roll();
         updateImage();
         pointsLabel.setText("" + DiceThrower.calculatePoints());
+    }
+
+    public void reset() {
+        DiceThrower.resetRollCount();
+        for (DiceThrower.Die die : DiceThrower.dice)
+            if (die.isLocked)
+                die.setLocked();
+        for (int i = 0; i < DiceThrower.nDice; i++)
+            updateContrast(i);
+        rollButton.setDisable(false);
     }
 
     public void lockOne() {
@@ -194,21 +208,6 @@ public class GameController {
             default:
                 break;
         }
-    }
-
-
-    public void reset() {
-        DiceThrower.resetRollCount();
-        for (DiceThrower.Die die : DiceThrower.dice)
-            if (die.isLocked)
-                die.setLocked();
-        for (int i = 0; i < DiceThrower.nDice; i++)
-            updateContrast(i);
-        rollButton.setDisable(false);
-    }
-
-    public static void generateDice() {
-        DiceThrower.generateDice();
     }
 
     private static class DiceThrower {
