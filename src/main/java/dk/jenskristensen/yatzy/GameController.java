@@ -34,28 +34,38 @@ public class GameController {
     }
 
     public void lockOne() {
-        DiceThrower.lock(0);
-        updateContrast(0);
+        if (DiceThrower.rollCount > 0) {
+            DiceThrower.lock(0);
+            updateContrast(0);
+        }
     }
 
     public void lockTwo() {
-        DiceThrower.lock(1);
-        updateContrast(1);
+        if (DiceThrower.rollCount > 0) {
+            DiceThrower.lock(1);
+            updateContrast(1);
+        }
     }
 
     public void lockThree() {
-        DiceThrower.lock(2);
-        updateContrast(2);
+        if (DiceThrower.rollCount > 0) {
+            DiceThrower.lock(2);
+            updateContrast(2);
+        }
     }
 
     public void lockFour() {
-        DiceThrower.lock(3);
-        updateContrast(3);
+        if (DiceThrower.rollCount > 0) {
+            DiceThrower.lock(3);
+            updateContrast(3);
+        }
     }
 
     public void lockFive() {
-        DiceThrower.lock(4);
-        updateContrast(4);
+        if (DiceThrower.rollCount > 0) {
+            DiceThrower.lock(4);
+            updateContrast(4);
+        }
     }
 
     // future :: rework as array of ImageViews rather than if-else
