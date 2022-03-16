@@ -1,17 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="420.0" prefWidth="420.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.jenskristensen.yatzy.GameController">
    <children>
-      <HBox alignment="CENTER" layoutX="110.0" layoutY="60.0">
+      <Text fx:id="pointsLabel" layoutX="251.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="45.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <HBox alignment="CENTER" layoutX="305.0" layoutY="48.0" spacing="10.0">
+         <children>
+            <Button fx:id="submitButton" disable="true" mnemonicParsing="false" onAction="#submit" text="Submit" />
+            <Button fx:id="rollButton" mnemonicParsing="false" onAction="#roll" text="Roll">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="217.0" layoutY="5.0">
          <children>
             <ImageView fx:id="dice0" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#lockOne" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -55,24 +74,54 @@
             </ImageView>
          </children>
       </HBox>
-      <HBox alignment="CENTER" layoutX="164.0" layoutY="110.0" spacing="10.0">
+      <GridPane gridLinesVisible="true" layoutX="14.0" layoutY="14.0" prefHeight="150.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" prefWidth="50.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" prefWidth="30.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints vgrow="SOMETIMES" />
+          <RowConstraints vgrow="SOMETIMES" />
+          <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+        </rowConstraints>
          <children>
-            <Button fx:id="rollButton" mnemonicParsing="false" onAction="#roll" text="Roll">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <Button mnemonicParsing="false" onAction="#reset" text="Reset">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ones:" GridPane.halignment="LEFT">
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin></Text>
+            <Text fx:id="scoreOnes" onMouseClicked="#onesClicked" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="30.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Twos:" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin></Text>
+            <Text fx:id="scoreTwos" onMouseClicked="#twosClicked" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Threes:" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin></Text>
+            <Text fx:id="scoreThrees" onMouseClicked="#threesClicked" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Fours:" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin></Text>
+            <Text fx:id="scoreFours" onMouseClicked="#foursClicked" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Fives:" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin></Text>
+            <Text fx:id="scoreFives" onMouseClicked="#fivesClicked" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Sixes:" GridPane.rowIndex="5">
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin></Text>
+            <Text fx:id="scoreSixes" onMouseClicked="#sixesClicked" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="30.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>
-      </HBox>
-      <Text fx:id="pointsLabel" layoutX="204.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textOrigin="CENTER">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Text>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </GridPane>
    </children>
 </AnchorPane>

@@ -16,9 +16,9 @@ public class GameController {
     @FXML
     private ImageView dice0, dice1, dice2, dice3, dice4;
     @FXML
-    private Text pointsLabel;
+    private Text pointsLabel, scoreOnes, scoreTwos, scoreThrees, scoreFours, scoreFives, scoreSixes;
     @FXML
-    private Button rollButton;
+    private Button rollButton, submitButton;
 
     private final Image diceImageOne = new Image(Objects.requireNonNull(getClass().getResourceAsStream("dice/1.png")));
     private final Image diceImageTwo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("dice/2.png")));
@@ -27,6 +27,10 @@ public class GameController {
     private final Image diceImageFive = new Image(Objects.requireNonNull(getClass().getResourceAsStream("dice/5.png")));
     private final Image diceImageSix = new Image(Objects.requireNonNull(getClass().getResourceAsStream("dice/6.png")));
 
+    private final boolean[] isClicked = new boolean[6];
+    private final boolean[] isSubmitted = new boolean[6];
+    private final int[] scores = new int[6];
+
     public static void generateDice() {
         DiceThrower.generateDice();
     }
@@ -34,7 +38,7 @@ public class GameController {
     public void roll() {
         DiceThrower.roll();
         updateImage();
-        pointsLabel.setText("" + DiceThrower.calculatePoints());
+        updateText();
     }
 
     public void reset() {
@@ -44,6 +48,10 @@ public class GameController {
                 die.setLocked();
         for (int i = 0; i < DiceThrower.nDice; i++)
             updateContrast(i);
+        for (boolean b : isClicked)
+            b = false;
+        submitButton.setDisable(true);
+        pointsLabel.setText("" + 0);
         rollButton.setDisable(false);
     }
 
@@ -79,6 +87,453 @@ public class GameController {
         if (DiceThrower.rollCount > 0) {
             DiceThrower.lock(4);
             updateContrast(4);
+        }
+    }
+
+    public void onesClicked() {
+        if (!isSubmitted[0] && DiceThrower.rollCount != 0) {
+            for (int i = 0; i < isClicked.length; i++) {
+                if (isClicked[i]) {
+                    switch (i) {
+                        case 1:
+                            if (!isSubmitted[i])
+                                scoreTwos.setOpacity(0.5);
+                            isClicked[i] = false;
+                            break;
+                        case 2:
+                            if (!isSubmitted[i])
+                                scoreThrees.setOpacity(0.5);
+                            isClicked[i] = false;
+                            break;
+                        case 3:
+                            if (!isSubmitted[i])
+                                scoreFours.setOpacity(0.5);
+                            isClicked[i] = false;
+                            break;
+                        case 4:
+                            if (!isSubmitted[i])
+                                scoreFives.setOpacity(0.5);
+                            isClicked[i] = false;
+                            break;
+                        case 5:
+                            if (!isSubmitted[i])
+                                scoreSixes.setOpacity(0.5);
+                            isClicked[i] = false;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            if (!isClicked[0]) {
+                scoreOnes.setOpacity(1.0);
+                pointsLabel.setText("" + DiceThrower.calculatePoints(0));
+                submitButton.setDisable(false);
+                isClicked[0] = true;
+            } else {
+                scoreOnes.setOpacity(0.5);
+                pointsLabel.setText("0");
+                submitButton.setDisable(true);
+                isClicked[0] = false;
+            }
+        } else {
+            for (int i = 0; i < isClicked.length; i++) {
+                isClicked[i] = false;
+            }
+            if (!isSubmitted[1])
+                scoreTwos.setOpacity(0.5);
+            if (!isSubmitted[2])
+                scoreThrees.setOpacity(0.5);
+            if (!isSubmitted[3])
+                scoreFours.setOpacity(0.5);
+            if (!isSubmitted[4])
+                scoreFives.setOpacity(0.5);
+            if (!isSubmitted[5])
+                scoreSixes.setOpacity(0.5);
+            submitButton.setDisable(true);
+            pointsLabel.setText("0");
+        }
+    }
+
+    public void twosClicked() {
+        if (!isSubmitted[1] && DiceThrower.rollCount != 0) {
+            for (int i = 0; i < isClicked.length; i++) {
+                if (isClicked[i]) {
+                    switch (i) {
+                        case 0:
+                            if (!isSubmitted[i])
+                                scoreOnes.setOpacity(0.5);
+                            isClicked[i] = false;
+                            break;
+                        case 2:
+                            if (!isSubmitted[i])
+                                scoreThrees.setOpacity(0.5);
+                            isClicked[i] = false;
+                            break;
+                        case 3:
+                            if (!isSubmitted[i])
+                                scoreFours.setOpacity(0.5);
+                            isClicked[i] = false;
+                            break;
+                        case 4:
+                            if (!isSubmitted[i])
+                                scoreFives.setOpacity(0.5);
+                            isClicked[i] = false;
+                            break;
+                        case 5:
+                            if (!isSubmitted[i])
+                                scoreSixes.setOpacity(0.5);
+                            isClicked[i] = false;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            if (!isClicked[1]) {
+                scoreTwos.setOpacity(1.0);
+                pointsLabel.setText("" + DiceThrower.calculatePoints(1));
+                submitButton.setDisable(false);
+                isClicked[1] = true;
+            } else {
+                scoreTwos.setOpacity(0.5);
+                pointsLabel.setText("0");
+                submitButton.setDisable(true);
+                isClicked[1] = false;
+            }
+        } else {
+            for (int i = 0; i < isClicked.length; i++) {
+                isClicked[i] = false;
+            }
+            if (!isSubmitted[0])
+                scoreOnes.setOpacity(0.5);
+            if (!isSubmitted[2])
+                scoreThrees.setOpacity(0.5);
+            if (!isSubmitted[3])
+                scoreFours.setOpacity(0.5);
+            if (!isSubmitted[4])
+                scoreFives.setOpacity(0.5);
+            if (!isSubmitted[5])
+                scoreSixes.setOpacity(0.5);
+            submitButton.setDisable(true);
+            pointsLabel.setText("0");
+        }
+    }
+
+    public void threesClicked() {
+        if (!isSubmitted[2] && DiceThrower.rollCount != 0) {
+            for (int i = 0; i < isClicked.length; i++) {
+                if (isClicked[i]) {
+                    switch (i) {
+                        case 0:
+                            if (!isSubmitted[i])
+                                scoreOnes.setOpacity(0.5);
+                            isClicked[i] = false;
+                            break;
+                        case 1:
+                            if (!isSubmitted[i])
+                                scoreTwos.setOpacity(0.5);
+                            isClicked[i] = false;
+                            break;
+                        case 3:
+                            if (!isSubmitted[i])
+                                scoreFours.setOpacity(0.5);
+                            isClicked[i] = false;
+                            break;
+                        case 4:
+                            if (!isSubmitted[i])
+                                scoreFives.setOpacity(0.5);
+                            isClicked[i] = false;
+                            break;
+                        case 5:
+                            if (!isSubmitted[i])
+                                scoreSixes.setOpacity(0.5);
+                            isClicked[i] = false;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            if (!isClicked[2]) {
+                scoreThrees.setOpacity(1.0);
+                pointsLabel.setText("" + DiceThrower.calculatePoints(2));
+                submitButton.setDisable(false);
+                isClicked[2] = true;
+            } else {
+                scoreThrees.setOpacity(0.5);
+                pointsLabel.setText("0");
+                submitButton.setDisable(true);
+                isClicked[2] = false;
+            }
+        } else {
+            for (int i = 0; i < isClicked.length; i++) {
+                isClicked[i] = false;
+            }
+            if (!isSubmitted[0])
+                scoreOnes.setOpacity(0.5);
+            if (!isSubmitted[1])
+                scoreTwos.setOpacity(0.5);
+            if (!isSubmitted[3])
+                scoreFours.setOpacity(0.5);
+            if (!isSubmitted[4])
+                scoreFives.setOpacity(0.5);
+            if (!isSubmitted[5])
+                scoreSixes.setOpacity(0.5);
+            submitButton.setDisable(true);
+            pointsLabel.setText("0");
+        }
+    }
+
+    public void foursClicked() {
+        if (!isSubmitted[3] && DiceThrower.rollCount != 0) {
+            for (int i = 0; i < isClicked.length; i++) {
+                if (isClicked[i]) {
+                    switch (i) {
+                        case 0:
+                            if (!isSubmitted[i])
+                                scoreOnes.setOpacity(0.5);
+                            isClicked[i] = false;
+                            break;
+                        case 1:
+                            if (!isSubmitted[i])
+                                scoreTwos.setOpacity(0.5);
+                            isClicked[i] = false;
+                            break;
+                        case 2:
+                            if (!isSubmitted[i])
+                                scoreThrees.setOpacity(0.5);
+                            isClicked[i] = false;
+                            break;
+                        case 4:
+                            if (!isSubmitted[i])
+                                scoreFives.setOpacity(0.5);
+                            isClicked[i] = false;
+                            break;
+                        case 5:
+                            if (!isSubmitted[i])
+                                scoreSixes.setOpacity(0.5);
+                            isClicked[i] = false;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            if (!isClicked[3]) {
+                scoreFours.setOpacity(1.0);
+                pointsLabel.setText("" + DiceThrower.calculatePoints(3));
+                submitButton.setDisable(false);
+                isClicked[3] = true;
+            } else {
+                scoreFours.setOpacity(0.5);
+                pointsLabel.setText("0");
+                submitButton.setDisable(true);
+                isClicked[3] = false;
+            }
+        } else {
+            for (int i = 0; i < isClicked.length; i++) {
+                isClicked[i] = false;
+            }
+            if (!isSubmitted[0])
+                scoreOnes.setOpacity(0.5);
+            if (!isSubmitted[1])
+                scoreTwos.setOpacity(0.5);
+            if (!isSubmitted[2])
+                scoreThrees.setOpacity(0.5);
+            if (!isSubmitted[4])
+                scoreFives.setOpacity(0.5);
+            if (!isSubmitted[5])
+                scoreSixes.setOpacity(0.5);
+            submitButton.setDisable(true);
+            pointsLabel.setText("0");
+        }
+    }
+
+    public void fivesClicked() {
+        if (!isSubmitted[4] && DiceThrower.rollCount != 0) {
+            for (int i = 0; i < isClicked.length; i++) {
+                if (isClicked[i]) {
+                    switch (i) {
+                        case 0:
+                            if (!isSubmitted[i])
+                                scoreOnes.setOpacity(0.5);
+                            isClicked[i] = false;
+                            break;
+                        case 1:
+                            if (!isSubmitted[i])
+                                scoreTwos.setOpacity(0.5);
+                            isClicked[i] = false;
+                            break;
+                        case 2:
+                            if (!isSubmitted[i])
+                                scoreThrees.setOpacity(0.5);
+                            isClicked[i] = false;
+                            break;
+                        case 3:
+                            if (!isSubmitted[i])
+                                scoreFours.setOpacity(0.5);
+                            isClicked[i] = false;
+                            break;
+                        case 5:
+                            if (!isSubmitted[i])
+                                scoreSixes.setOpacity(0.5);
+                            isClicked[i] = false;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            if (!isClicked[4]) {
+                scoreFives.setOpacity(1.0);
+                pointsLabel.setText("" + DiceThrower.calculatePoints(4));
+                submitButton.setDisable(false);
+                isClicked[4] = true;
+            } else {
+                scoreFives.setOpacity(0.5);
+                pointsLabel.setText("0");
+                submitButton.setDisable(true);
+                isClicked[4] = false;
+            }
+        } else {
+            for (int i = 0; i < isClicked.length; i++) {
+                isClicked[i] = false;
+            }
+            if (!isSubmitted[0])
+                scoreOnes.setOpacity(0.5);
+            if (!isSubmitted[1])
+                scoreTwos.setOpacity(0.5);
+            if (!isSubmitted[2])
+                scoreThrees.setOpacity(0.5);
+            if (!isSubmitted[3])
+                scoreFours.setOpacity(0.5);
+            if (!isSubmitted[5])
+                scoreSixes.setOpacity(0.5);
+            submitButton.setDisable(true);
+            pointsLabel.setText("0");
+        }
+    }
+
+    public void sixesClicked() {
+        if (!isSubmitted[5] && DiceThrower.rollCount != 0) {
+            for (int i = 0; i < isClicked.length; i++) {
+                if (isClicked[i]) {
+                    switch (i) {
+                        case 0:
+                            if (!isSubmitted[i])
+                                scoreOnes.setOpacity(0.5);
+                            isClicked[i] = false;
+                            break;
+                        case 1:
+                            if (!isSubmitted[i])
+                                scoreTwos.setOpacity(0.5);
+                            isClicked[i] = false;
+                            break;
+                        case 2:
+                            if (!isSubmitted[i])
+                                scoreThrees.setOpacity(0.5);
+                            isClicked[i] = false;
+                            break;
+                        case 3:
+                            if (!isSubmitted[i])
+                                scoreFours.setOpacity(0.5);
+                            isClicked[i] = false;
+                            break;
+                        case 4:
+                            if (!isSubmitted[i])
+                                scoreFives.setOpacity(0.5);
+                            isClicked[i] = false;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            if (!isClicked[5]) {
+                scoreSixes.setOpacity(1.0);
+                pointsLabel.setText("" + DiceThrower.calculatePoints(5));
+                submitButton.setDisable(false);
+                isClicked[5] = true;
+            } else {
+                scoreSixes.setOpacity(0.5);
+                pointsLabel.setText("0");
+                submitButton.setDisable(true);
+                isClicked[5] = false;
+            }
+        } else {
+            for (int i = 0; i < isClicked.length; i++) {
+                isClicked[i] = false;
+            }
+            if (!isSubmitted[0])
+                scoreOnes.setOpacity(0.5);
+            if (!isSubmitted[1])
+                scoreTwos.setOpacity(0.5);
+            if (!isSubmitted[2])
+                scoreThrees.setOpacity(0.5);
+            if (!isSubmitted[3])
+                scoreFours.setOpacity(0.5);
+            if (!isSubmitted[4])
+                scoreFives.setOpacity(0.5);
+            submitButton.setDisable(true);
+            pointsLabel.setText("0");
+        }
+    }
+
+    public void submit() {
+        for (int i = 0; i < isClicked.length; i++) {
+            switch (i) {
+                case 0:
+                    if (isClicked[i] && !isSubmitted[i]) {
+                        scoreOnes.setText("" + DiceThrower.calculatePoints(i));
+                        scores[i] = DiceThrower.calculatePoints(i);
+                        isSubmitted[i] = true;
+                        reset();
+                    }
+                    break;
+                case 1:
+                    if (isClicked[i] && !isSubmitted[i]) {
+                        scoreTwos.setText("" + DiceThrower.calculatePoints(i));
+                        scores[i] = DiceThrower.calculatePoints(i);
+                        isSubmitted[i] = true;
+                        reset();
+                    }
+                    break;
+                case 2:
+                    if (isClicked[i] && !isSubmitted[i]) {
+                        scoreThrees.setText("" + DiceThrower.calculatePoints(i));
+                        scores[i] = DiceThrower.calculatePoints(i);
+                        isSubmitted[i] = true;
+                        reset();
+                    }
+                    break;
+                case 3:
+                    if (isClicked[i] && !isSubmitted[i]) {
+                        scoreFours.setText("" + DiceThrower.calculatePoints(i));
+                        scores[i] = DiceThrower.calculatePoints(i);
+                        isSubmitted[i] = true;
+                        reset();
+                    }
+                    break;
+                case 4:
+                    if (isClicked[i] && !isSubmitted[i]) {
+                        scoreFives.setText("" + DiceThrower.calculatePoints(i));
+                        scores[i] = DiceThrower.calculatePoints(i);
+                        isSubmitted[i] = true;
+                        reset();
+                    }
+                    break;
+                case 5:
+                    if (isClicked[i] && !isSubmitted[i]) {
+                        scoreSixes.setText("" + DiceThrower.calculatePoints(i));
+                        scores[i] = DiceThrower.calculatePoints(i);
+                        isSubmitted[i] = true;
+                        reset();
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -210,6 +665,12 @@ public class GameController {
         }
     }
 
+    private void updateText() {
+        for (int i = 0; i < isClicked.length; i++)
+            if (isClicked[i] == true)
+                pointsLabel.setText(""+DiceThrower.calculatePoints(i));
+    }
+
     private static class DiceThrower {
 
         private final static int nDice = 5;
@@ -234,11 +695,11 @@ public class GameController {
             dice[i].setLocked();
         }
 
-        private static int calculatePoints() {
+        private static int calculatePoints(int i) {
             int points = 0;
-            // This class is not implemented
             for (Die die : dice) {
-                points += die.faceValue;
+                if (i + 1 == die.faceValue)
+                    points += die.faceValue;
             }
             return points;
         }
