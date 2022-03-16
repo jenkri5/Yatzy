@@ -75,6 +75,12 @@ public class GameController {
         submitButton.setDisable(true);
         rollButton.setDisable(false);
         DiceThrower.rollCount = 0;
+        for (int i = 0; i < DiceThrower.nDice; i++) {
+            DiceThrower.dice[i].faceValue = i + 1;
+            DiceThrower.dice[i].isLocked = false;
+            updateContrast(i);
+        }
+        updateImage();
     }
 
     public void lockOne() {
