@@ -148,7 +148,7 @@
                             </descriptorRefs>
                             <archive>
                                 <manifest>
-                                    <mainClass>dk.jenskristensen.yatzy.App</mainClass>
+                                    <mainClass>dk.jenskristensen.yatzy.Main</mainClass>
                                 </manifest>
                             </archive>
                         </configuration>
@@ -163,7 +163,7 @@
                     <execution>
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>dk.jenskristensen.yatzy.App</mainClass>
+                            <mainClass>dk.jenskristensen.yatzy.Main</mainClass>
                         </configuration>
                     </execution>
                 </executions>
@@ -205,13 +205,14 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>2.4</version>
                 <configuration>
+
                     <archive>
                         <manifest>
                             <!--
                             <addClassPath>true</addClassPath>
                             <classpathPrefix>lib/</classpathPrefix>
                             -->
-                            <mainClass>dk.jenskristensen.yatzy.App</mainClass>
+                            <mainClass>dk.jenskristensen.yatzy.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
