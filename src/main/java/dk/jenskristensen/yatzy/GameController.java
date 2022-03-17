@@ -36,230 +36,19 @@ public class GameController {
     private final int[] scoresUpper = new int[6];
     private final int[] scoresLower = new int[9];
 
-    private final static int nDice = 5;
-    private final static Die[] dice = new Die[nDice];
-    private static int rollCount;
+    private static final int nDice = 5;
+    private static final Die[] dice = new Die[nDice];
+    private int rollCount;
 
     public static void generateDice() {
         for (int i = 0; i < nDice; i++)
             dice[i] = new Die();
     }
 
-    public void reset() {
-        resetRollCount();
-        for (int i = 0; i < nDice; i++)
-            if (dice[i].isLocked) {
-                dice[i].setLocked();
-                updateContrast(i);
-            }
-        Arrays.fill(isClicked, false);
-        submitButton.setDisable(true);
-        rollButton.setDisable(false);
-        updateText();
-    }
-
-    public void restart() {
-        Arrays.fill(isClicked, false);
-        Arrays.fill(isSubmitted, false);
-        Arrays.fill(scoresUpper, 0);
-        Arrays.fill(scoresLower, 0);
-        scoreOnes.setText("0");
-        scoreOnes.setOpacity(0.5);
-        scoreTwos.setText("0");
-        scoreTwos.setOpacity(0.5);
-        scoreThrees.setText("0");
-        scoreThrees.setOpacity(0.5);
-        scoreFours.setText("0");
-        scoreFours.setOpacity(0.5);
-        scoreFives.setText("0");
-        scoreFives.setOpacity(0.5);
-        scoreSixes.setText("0");
-        scoreSixes.setOpacity(0.5);
-        scoreSumUpper.setText("0");
-        scoreBonus.setOpacity(0.2);
-        scorePair.setText("0");
-        scorePair.setOpacity(0.5);
-        scoreTwoPairs.setText("0");
-        scoreTwoPairs.setOpacity(0.5);
-        scoreThreeKind.setText("0");
-        scoreThreeKind.setOpacity(0.5);
-        scoreFourKind.setText("0");
-        scoreFourKind.setOpacity(0.5);
-        scoreLowStraight.setText("0");
-        scoreLowStraight.setOpacity(0.5);
-        scoreHighStraight.setText("0");
-        scoreHighStraight.setOpacity(0.5);
-        scoreFullHouse.setText("0");
-        scoreFullHouse.setOpacity(0.5);
-        scoreChance.setText("0");
-        scoreChance.setOpacity(0.5);
-        scoreYatzy.setText("0");
-        scoreYatzy.setOpacity(0.5);
-        scoreTotalSum.setText("0");
-        pointsLabel.setText("0");
-        submitButton.setDisable(true);
-        rollButton.setDisable(false);
-        rollCount = 0;
-        for (int i = 0; i < nDice; i++) {
-            dice[i].faceValue = i + 1;
-            dice[i].isLocked = false;
-            updateContrast(i);
-        }
+    public void roll() {
+        Arrays.stream(dice).filter(die -> !die.isLocked).forEach(Die::roll);
+        rollCount++;
         updateImage();
-    }
-
-    public void lockOne() {
-        if (rollCount > 0) {
-            lock(0);
-            updateContrast(0);
-        }
-    }
-
-    public void lockTwo() {
-        if (rollCount > 0) {
-            lock(1);
-            updateContrast(1);
-        }
-    }
-
-    public void lockThree() {
-        if (rollCount > 0) {
-            lock(2);
-            updateContrast(2);
-        }
-    }
-
-    public void lockFour() {
-        if (rollCount > 0) {
-            lock(3);
-            updateContrast(3);
-        }
-    }
-
-    public void lockFive() {
-        if (rollCount > 0) {
-            lock(4);
-            updateContrast(4);
-        }
-    }
-
-    public void onesClicked() {
-        if (validateClick(0))
-            scoreOnes.setOpacity(1.0);
-        else if (!isSubmitted[0])
-            scoreOnes.setOpacity(0.5);
-        updateText();
-    }
-
-    public void twosClicked() {
-        if (validateClick(1))
-            scoreTwos.setOpacity(1.0);
-        else if (!isSubmitted[1])
-            scoreTwos.setOpacity(0.5);
-        updateText();
-    }
-
-    public void threesClicked() {
-        if (validateClick(2))
-            scoreThrees.setOpacity(1.0);
-        else if (!isSubmitted[2])
-            scoreThrees.setOpacity(0.5);
-        updateText();
-    }
-
-    public void foursClicked() {
-        if (validateClick(3) && !isSubmitted[3])
-            scoreFours.setOpacity(1.0);
-        else if (!isSubmitted[3])
-            scoreFours.setOpacity(0.5);
-        updateText();
-    }
-
-    public void fivesClicked() {
-        if (validateClick(4))
-            scoreFives.setOpacity(1.0);
-        else if (!isSubmitted[4])
-            scoreFives.setOpacity(0.5);
-        updateText();
-    }
-
-    public void sixesClicked() {
-        if (validateClick(5))
-            scoreSixes.setOpacity(1.0);
-        else if (!isSubmitted[5])
-            scoreSixes.setOpacity(0.5);
-        updateText();
-    }
-
-    public void pairClicked() {
-        if (validateClick(6))
-            scorePair.setOpacity(1.0);
-        else if (!isSubmitted[6])
-            scorePair.setOpacity(0.5);
-        updateText();
-    }
-
-    public void twoPairsClicked() {
-        if (validateClick(7))
-            scoreTwoPairs.setOpacity(1.0);
-        else if (!isSubmitted[7])
-            scoreTwoPairs.setOpacity(0.5);
-        updateText();
-    }
-
-    public void threeKindClicked() {
-        if (validateClick(8))
-            scoreThreeKind.setOpacity(1.0);
-        else if (!isSubmitted[8])
-            scoreThreeKind.setOpacity(0.5);
-        updateText();
-    }
-
-    public void fourKindClicked() {
-        if (validateClick(9))
-            scoreFourKind.setOpacity(1.0);
-        else if (!isSubmitted[9])
-            scoreFourKind.setOpacity(0.5);
-        updateText();
-    }
-
-    public void lowStraightClicked() {
-        if (validateClick(10))
-            scoreLowStraight.setOpacity(1.0);
-        else if (!isSubmitted[10])
-            scoreLowStraight.setOpacity(0.5);
-        updateText();
-    }
-
-    public void highStraightClicked() {
-        if (validateClick(11))
-            scoreHighStraight.setOpacity(1.0);
-        else if (!isSubmitted[11])
-            scoreHighStraight.setOpacity(0.5);
-        updateText();
-    }
-
-    public void fullHouseClicked() {
-        if (validateClick(12))
-            scoreFullHouse.setOpacity(1.0);
-        else if (!isSubmitted[12])
-            scoreFullHouse.setOpacity(0.5);
-        updateText();
-    }
-
-    public void chanceClicked() {
-        if (validateClick(13))
-            scoreChance.setOpacity(1.0);
-        else if (!isSubmitted[13])
-            scoreChance.setOpacity(0.5);
-        updateText();
-    }
-
-    public void yatzyClicked() {
-        if (validateClick(14))
-            scoreYatzy.setOpacity(1.0);
-        else if (!isSubmitted[14])
-            scoreYatzy.setOpacity(0.5);
         updateText();
     }
 
@@ -422,6 +211,224 @@ public class GameController {
                     break;
             }
         }
+    }
+
+    public void reset() {
+        rollCount = 0;
+        for (int i = 0; i < nDice; i++)
+            if (dice[i].isLocked) {
+                dice[i].setLocked();
+                updateContrast(i);
+            }
+        Arrays.fill(isClicked, false);
+        submitButton.setDisable(true);
+        rollButton.setDisable(false);
+        updateText();
+    }
+
+    public void restart() {
+        Arrays.fill(isClicked, false);
+        Arrays.fill(isSubmitted, false);
+        Arrays.fill(scoresUpper, 0);
+        Arrays.fill(scoresLower, 0);
+        scoreOnes.setText("0");
+        scoreOnes.setOpacity(0.5);
+        scoreTwos.setText("0");
+        scoreTwos.setOpacity(0.5);
+        scoreThrees.setText("0");
+        scoreThrees.setOpacity(0.5);
+        scoreFours.setText("0");
+        scoreFours.setOpacity(0.5);
+        scoreFives.setText("0");
+        scoreFives.setOpacity(0.5);
+        scoreSixes.setText("0");
+        scoreSixes.setOpacity(0.5);
+        scoreSumUpper.setText("0");
+        scoreBonus.setOpacity(0.2);
+        scorePair.setText("0");
+        scorePair.setOpacity(0.5);
+        scoreTwoPairs.setText("0");
+        scoreTwoPairs.setOpacity(0.5);
+        scoreThreeKind.setText("0");
+        scoreThreeKind.setOpacity(0.5);
+        scoreFourKind.setText("0");
+        scoreFourKind.setOpacity(0.5);
+        scoreLowStraight.setText("0");
+        scoreLowStraight.setOpacity(0.5);
+        scoreHighStraight.setText("0");
+        scoreHighStraight.setOpacity(0.5);
+        scoreFullHouse.setText("0");
+        scoreFullHouse.setOpacity(0.5);
+        scoreChance.setText("0");
+        scoreChance.setOpacity(0.5);
+        scoreYatzy.setText("0");
+        scoreYatzy.setOpacity(0.5);
+        scoreTotalSum.setText("0");
+        pointsLabel.setText("0");
+        submitButton.setDisable(true);
+        rollButton.setDisable(false);
+        rollCount = 0;
+        for (int i = 0; i < nDice; i++) {
+            dice[i].faceValue = i + 1;
+            dice[i].isLocked = false;
+            updateContrast(i);
+        }
+        updateImage();
+    }
+
+    public void lockOne() {
+        if (rollCount > 0) {
+            dice[0].setLocked();
+            updateContrast(0);
+        }
+    }
+
+    public void lockTwo() {
+        if (rollCount > 0) {
+            dice[1].setLocked();
+            updateContrast(1);
+        }
+    }
+
+    public void lockThree() {
+        if (rollCount > 0) {
+            dice[2].setLocked();
+            updateContrast(2);
+        }
+    }
+
+    public void lockFour() {
+        if (rollCount > 0) {
+            dice[3].setLocked();
+            updateContrast(3);
+        }
+    }
+
+    public void lockFive() {
+        if (rollCount > 0) {
+            dice[4].setLocked();
+            updateContrast(4);
+        }
+    }
+
+    public void onesClicked() {
+        if (validateClick(0))
+            scoreOnes.setOpacity(1.0);
+        else if (!isSubmitted[0])
+            scoreOnes.setOpacity(0.5);
+        updateText();
+    }
+
+    public void twosClicked() {
+        if (validateClick(1))
+            scoreTwos.setOpacity(1.0);
+        else if (!isSubmitted[1])
+            scoreTwos.setOpacity(0.5);
+        updateText();
+    }
+
+    public void threesClicked() {
+        if (validateClick(2))
+            scoreThrees.setOpacity(1.0);
+        else if (!isSubmitted[2])
+            scoreThrees.setOpacity(0.5);
+        updateText();
+    }
+
+    public void foursClicked() {
+        if (validateClick(3) && !isSubmitted[3])
+            scoreFours.setOpacity(1.0);
+        else if (!isSubmitted[3])
+            scoreFours.setOpacity(0.5);
+        updateText();
+    }
+
+    public void fivesClicked() {
+        if (validateClick(4))
+            scoreFives.setOpacity(1.0);
+        else if (!isSubmitted[4])
+            scoreFives.setOpacity(0.5);
+        updateText();
+    }
+
+    public void sixesClicked() {
+        if (validateClick(5))
+            scoreSixes.setOpacity(1.0);
+        else if (!isSubmitted[5])
+            scoreSixes.setOpacity(0.5);
+        updateText();
+    }
+
+    public void pairClicked() {
+        if (validateClick(6))
+            scorePair.setOpacity(1.0);
+        else if (!isSubmitted[6])
+            scorePair.setOpacity(0.5);
+        updateText();
+    }
+
+    public void twoPairsClicked() {
+        if (validateClick(7))
+            scoreTwoPairs.setOpacity(1.0);
+        else if (!isSubmitted[7])
+            scoreTwoPairs.setOpacity(0.5);
+        updateText();
+    }
+
+    public void threeKindClicked() {
+        if (validateClick(8))
+            scoreThreeKind.setOpacity(1.0);
+        else if (!isSubmitted[8])
+            scoreThreeKind.setOpacity(0.5);
+        updateText();
+    }
+
+    public void fourKindClicked() {
+        if (validateClick(9))
+            scoreFourKind.setOpacity(1.0);
+        else if (!isSubmitted[9])
+            scoreFourKind.setOpacity(0.5);
+        updateText();
+    }
+
+    public void lowStraightClicked() {
+        if (validateClick(10))
+            scoreLowStraight.setOpacity(1.0);
+        else if (!isSubmitted[10])
+            scoreLowStraight.setOpacity(0.5);
+        updateText();
+    }
+
+    public void highStraightClicked() {
+        if (validateClick(11))
+            scoreHighStraight.setOpacity(1.0);
+        else if (!isSubmitted[11])
+            scoreHighStraight.setOpacity(0.5);
+        updateText();
+    }
+
+    public void fullHouseClicked() {
+        if (validateClick(12))
+            scoreFullHouse.setOpacity(1.0);
+        else if (!isSubmitted[12])
+            scoreFullHouse.setOpacity(0.5);
+        updateText();
+    }
+
+    public void chanceClicked() {
+        if (validateClick(13))
+            scoreChance.setOpacity(1.0);
+        else if (!isSubmitted[13])
+            scoreChance.setOpacity(0.5);
+        updateText();
+    }
+
+    public void yatzyClicked() {
+        if (validateClick(14))
+            scoreYatzy.setOpacity(1.0);
+        else if (!isSubmitted[14])
+            scoreYatzy.setOpacity(0.5);
+        updateText();
     }
 
     public void cheatPairs() {
@@ -693,6 +700,81 @@ public class GameController {
         return isValid;
     }
 
+    private int calculatePoints(int i) {
+        int points = 0;
+        if (i >= 0 && i <= 5) {
+            for (Die die : dice)
+                if (i + 1 == die.faceValue)
+                    points += die.faceValue;
+        } else if (i >= 6 && i <= 9) {
+            switch (i) {
+                case 6:
+                    int pair = 0;
+                    int[] pairsBucket = new int[6];
+                    for (Die die : dice)
+                        pairsBucket[die.faceValue - 1]++;
+                    for (int j = 0; j < pairsBucket.length; j++)
+                        if (pairsBucket[j] >= 2)
+                            pair = (j + 1) * 2;
+                    points = pair;
+                    break;
+                case 7:
+                    int twoPairs = 0;
+                    int[] twoPairsBucket = new int[6];
+                    int[] twoPairsTemp = new int[nDice];
+                    for (int j = 0; j < nDice; j++)
+                        twoPairsTemp[j] = dice[j].faceValue;
+                    for (int j = 0; j < nDice - 1; j++) {
+                        for (int k = j + 1; k < nDice; k++) {
+                            if (twoPairsTemp[j] == twoPairsTemp[k] && twoPairsTemp[j] != 0) {
+                                twoPairsBucket[twoPairsTemp[j] - 1]++;
+                                twoPairsTemp[j] = 0;
+                                twoPairsTemp[k] = 0;
+                            }
+                        }
+                    }
+                    for (int j = 0; j < twoPairsBucket.length; j++) {
+                        if (twoPairsBucket[j] >= 2) {
+                            twoPairs += ((j + 1) * 2) * 2;
+                            twoPairsBucket[j]--;
+                        } else if (twoPairsBucket[j] >= 1) {
+                            twoPairs += (j + 1) * 2;
+                        }
+                    }
+                    points = twoPairs;
+                    break;
+                case 8:
+                    int threeKind = 0;
+                    int[] threeKindBucket = new int[6];
+                    for (Die die : dice)
+                        threeKindBucket[die.faceValue - 1]++;
+                    for (int j = 0; j < threeKindBucket.length; j++)
+                        if (threeKindBucket[j] >= 3)
+                            threeKind = (j + 1) * 3;
+                    points = threeKind;
+                    break;
+                case 9:
+                    int fourKind = 0;
+                    int[] fourKindBucket = new int[6];
+                    for (Die die : dice)
+                        fourKindBucket[die.faceValue - 1]++;
+                    for (int j = 0; j < fourKindBucket.length; j++)
+                        if (fourKindBucket[j] >= 4)
+                            fourKind = (j + 1) * 4;
+                    points = fourKind;
+                    break;
+                default:
+                    break;
+            }
+        } else if (i == 14) {
+            points = 50;
+        } else {
+            for (Die die : dice)
+                points += die.faceValue;
+        }
+        return points;
+    }
+
     private void updateImage() {
         for (int i = 0; i < nDice; i++) {
             switch (dice[i].faceValue) {
@@ -837,96 +919,6 @@ public class GameController {
         for (int i : scoresLower)
             totalSum += i;
         scoreTotalSum.setText("" + totalSum);
-    }
-
-    private static void resetRollCount() {
-        rollCount = 0;
-    }
-
-    public void roll() {
-        Arrays.stream(dice).filter(die -> !die.isLocked).forEach(Die::roll);
-        rollCount++;
-        updateImage();
-        updateText();
-    }
-
-    private static void lock(int i) {
-        dice[i].setLocked();
-    }
-
-    private static int calculatePoints(int i) {
-        int points = 0;
-        if (i >= 0 && i <= 5) {
-            for (Die die : dice)
-                if (i + 1 == die.faceValue)
-                    points += die.faceValue;
-        } else if (i >= 6 && i <= 9) {
-            switch (i) {
-                case 6:
-                    int pair = 0;
-                    int[] pairsBucket = new int[6];
-                    for (Die die : dice)
-                        pairsBucket[die.faceValue - 1]++;
-                    for (int j = 0; j < pairsBucket.length; j++)
-                        if (pairsBucket[j] >= 2)
-                            pair = (j + 1) * 2;
-                    points = pair;
-                    break;
-                case 7:
-                    int twoPairs = 0;
-                    int[] twoPairsBucket = new int[6];
-                    int[] twoPairsTemp = new int[nDice];
-                    for (int j = 0; j < nDice; j++)
-                        twoPairsTemp[j] = dice[j].faceValue;
-                    for (int j = 0; j < nDice - 1; j++) {
-                        for (int k = j + 1; k < nDice; k++) {
-                            if (twoPairsTemp[j] == twoPairsTemp[k] && twoPairsTemp[j] != 0) {
-                                twoPairsBucket[twoPairsTemp[j] - 1]++;
-                                twoPairsTemp[j] = 0;
-                                twoPairsTemp[k] = 0;
-                            }
-                        }
-                    }
-                    for (int j = 0; j < twoPairsBucket.length; j++) {
-                        if (twoPairsBucket[j] >= 2) {
-                            twoPairs += ((j + 1) * 2) * 2;
-                            twoPairsBucket[j]--;
-                        } else if (twoPairsBucket[j] >= 1) {
-                            twoPairs += (j + 1) * 2;
-                        }
-                    }
-                    points = twoPairs;
-                    break;
-                case 8:
-                    int threeKind = 0;
-                    int[] threeKindBucket = new int[6];
-                    for (Die die : dice)
-                        threeKindBucket[die.faceValue - 1]++;
-                    for (int j = 0; j < threeKindBucket.length; j++)
-                        if (threeKindBucket[j] >= 3)
-                            threeKind = (j + 1) * 3;
-                    points = threeKind;
-                    break;
-                case 9:
-                    int fourKind = 0;
-                    int[] fourKindBucket = new int[6];
-                    for (Die die : dice)
-                        fourKindBucket[die.faceValue - 1]++;
-                    for (int j = 0; j < fourKindBucket.length; j++)
-                        if (fourKindBucket[j] >= 4)
-                            fourKind = (j + 1) * 4;
-                    points = fourKind;
-                    break;
-                default:
-                    break;
-            }
-        } else if (i == 14) {
-            points = 50;
-        } else {
-            for (Die die : dice)
-                points += die.faceValue;
-        }
-        return points;
     }
 
     private static class Die {
