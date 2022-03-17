@@ -62,6 +62,8 @@ public class GameController {
     public void restart() {
         Arrays.fill(isClicked, false);
         Arrays.fill(isSubmitted, false);
+        Arrays.fill(scoresUpper, 0);
+        Arrays.fill(scoresLower, 0);
         scoreOnes.setText("0");
         scoreOnes.setOpacity(0.5);
         scoreTwos.setText("0");
@@ -74,9 +76,28 @@ public class GameController {
         scoreFives.setOpacity(0.5);
         scoreSixes.setText("0");
         scoreSixes.setOpacity(0.5);
-        pointsLabel.setText("0");
         scoreSumUpper.setText("0");
         scoreBonus.setOpacity(0.2);
+        scorePair.setText("0");
+        scorePair.setOpacity(0.5);
+        scoreTwoPairs.setText("0");
+        scoreTwoPairs.setOpacity(0.5);
+        scoreThreeKind.setText("0");
+        scoreThreeKind.setOpacity(0.5);
+        scoreFourKind.setText("0");
+        scoreFourKind.setOpacity(0.5);
+        scoreLowStraight.setText("0");
+        scoreLowStraight.setOpacity(0.5);
+        scoreHighStraight.setText("0");
+        scoreHighStraight.setOpacity(0.5);
+        scoreFullHouse.setText("0");
+        scoreFullHouse.setOpacity(0.5);
+        scoreChance.setText("0");
+        scoreChance.setOpacity(0.5);
+        scoreYatzy.setText("0");
+        scoreYatzy.setOpacity(0.5);
+        scoreTotalSum.setText("0");
+        pointsLabel.setText("0");
         submitButton.setDisable(true);
         rollButton.setDisable(false);
         DiceThrower.rollCount = 0;
@@ -124,376 +145,341 @@ public class GameController {
     }
 
     public void onesClicked() {
-
-        if (validateClick(0) && !isSubmitted[0]) {
+        if (validateClick(0))
             scoreOnes.setOpacity(1.0);
-            pointsLabel.setText("" + DiceThrower.calculatePoints(0));
-        } else if (!isSubmitted[0]){
+        else if (!isSubmitted[0])
             scoreOnes.setOpacity(0.5);
-            pointsLabel.setText("0");
-        }
-
+        updateText();
     }
 
     public void twosClicked() {
-        if (validateClick(1) && !isSubmitted[1]) {
+        if (validateClick(1))
             scoreTwos.setOpacity(1.0);
-            pointsLabel.setText("" + DiceThrower.calculatePoints(1));
-        } else if (!isSubmitted[1]) {
+        else if (!isSubmitted[1])
             scoreTwos.setOpacity(0.5);
-            pointsLabel.setText("0");
-        }
+        updateText();
     }
 
     public void threesClicked() {
-        if (validateClick(2) && !isSubmitted[2]) {
+        if (validateClick(2))
             scoreThrees.setOpacity(1.0);
-            pointsLabel.setText("" + DiceThrower.calculatePoints(2));
-        } else if (!isSubmitted[2]) {
+        else if (!isSubmitted[2])
             scoreThrees.setOpacity(0.5);
-            pointsLabel.setText("0");
-        }
+        updateText();
     }
 
     public void foursClicked() {
-        if (!isClicked[3] && !isSubmitted[3]) {
+        if (validateClick(3) && !isSubmitted[3])
             scoreFours.setOpacity(1.0);
-            pointsLabel.setText("" + DiceThrower.calculatePoints(3));
-        } else  if (!isSubmitted[3]) {
+        else if (!isSubmitted[3])
             scoreFours.setOpacity(0.5);
-            pointsLabel.setText("0");
-        }
+        updateText();
     }
 
     public void fivesClicked() {
-        if (!isClicked[4] && !isSubmitted[4]) {
+        if (validateClick(4))
             scoreFives.setOpacity(1.0);
-            pointsLabel.setText("" + DiceThrower.calculatePoints(4));
-        } else  if (!isSubmitted[4]) {
+        else if (!isSubmitted[4])
             scoreFives.setOpacity(0.5);
-            pointsLabel.setText("0");
-        }
+        updateText();
     }
 
     public void sixesClicked() {
-        if (!isClicked[5] && !isSubmitted[5]) {
+        if (validateClick(5))
             scoreSixes.setOpacity(1.0);
-            pointsLabel.setText("" + DiceThrower.calculatePoints(5));
-        } else {
+        else if (!isSubmitted[5])
             scoreSixes.setOpacity(0.5);
-            pointsLabel.setText("0");
-        }
-        if (!isSubmitted[5] && DiceThrower.rollCount != 0) {
-            for (int i = 0; i < isClicked.length; i++) {
-                if (isClicked[i]) {
-                    switch (i) {
-                        case 0:
-                            if (!isSubmitted[i])
-                                scoreOnes.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        case 1:
-                            if (!isSubmitted[i])
-                                scoreTwos.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        case 2:
-                            if (!isSubmitted[i])
-                                scoreThrees.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        case 3:
-                            if (!isSubmitted[i])
-                                scoreFours.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        case 4:
-                            if (!isSubmitted[i])
-                                scoreFives.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        case 5:
-                            if (!isSubmitted[i])
-                                scoreSixes.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        case 6:
-                            if (!isSubmitted[i])
-                                scorePair.setOpacity(0.5);
-                            isClicked[i] = false;
-                        case 7:
-                            if (!isSubmitted[i])
-                                scoreTwoPairs.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        case 8:
-                            if (!isSubmitted[i])
-                                scoreThreeKind.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        case 9:
-                            if (!isSubmitted[i])
-                                scoreFourKind.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        case 10:
-                            if (!isSubmitted[i])
-                                scoreLowStraight.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        case 11:
-                            if (!isSubmitted[i])
-                                scoreHighStraight.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        case 12:
-                            if (!isSubmitted[i])
-                                scoreFullHouse.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        case 13:
-                            if (!isSubmitted[i])
-                                scoreChance.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        case 14:
-                            if (!isSubmitted[i])
-                                scoreYatzy.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }
-            if (!isClicked[5]) {
-                scoreSixes.setOpacity(1.0);
-                pointsLabel.setText("" + DiceThrower.calculatePoints(5));
-                submitButton.setDisable(false);
-                isClicked[5] = true;
-            } else {
-                scoreSixes.setOpacity(0.5);
-                pointsLabel.setText("0");
-                submitButton.setDisable(true);
-                isClicked[5] = false;
-            }
-        } else {
-            Arrays.fill(isClicked, false);
-            if (!isSubmitted[0])
-                scoreOnes.setOpacity(0.5);
-            if (!isSubmitted[1])
-                scoreTwos.setOpacity(0.5);
-            if (!isSubmitted[2])
-                scoreThrees.setOpacity(0.5);
-            if (!isSubmitted[3])
-                scoreFours.setOpacity(0.5);
-            if (!isSubmitted[4])
-                scoreFives.setOpacity(0.5);
-            if (!isSubmitted[6])
-                scorePair.setOpacity(0.5);
-            if (!isSubmitted[7])
-                scoreTwoPairs.setOpacity(0.5);
-            if (!isSubmitted[8])
-                scoreThreeKind.setOpacity(0.5);
-            if (!isSubmitted[9])
-                scoreFourKind.setOpacity(0.5);
-            if (!isSubmitted[10])
-                scoreLowStraight.setOpacity(0.5);
-            if (!isSubmitted[11])
-                scoreHighStraight.setOpacity(0.5);
-            if (!isSubmitted[12])
-                scoreFullHouse.setOpacity(0.5);
-            if (!isSubmitted[13])
-                scoreChance.setOpacity(0.5);
-            if (!isSubmitted[14])
-                scoreYatzy.setOpacity(0.5);
-            submitButton.setDisable(true);
-            pointsLabel.setText("0");
-        }
+        updateText();
     }
 
     public void pairClicked() {
-        // add && DiceThrower.hasPair() to if statement
-        if (!isSubmitted[6] && DiceThrower.rollCount != 0) {
-            for (int i = 0; i < isClicked.length; i++) {
-                if (isClicked[i]) {
-                    switch (i) {
-                        case 0:
-                            if (!isSubmitted[i])
-                                scoreOnes.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        case 1:
-                            if (!isSubmitted[i])
-                                scoreTwos.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        case 2:
-                            if (!isSubmitted[i])
-                                scoreThrees.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        case 3:
-                            if (!isSubmitted[i])
-                                scoreFours.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        case 4:
-                            if (!isSubmitted[i])
-                                scoreFives.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        case 5:
-                            if (!isSubmitted[i])
-                                scoreSixes.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        case 7:
-                            if (!isSubmitted[i])
-                                scoreTwoPairs.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        case 8:
-                            if (!isSubmitted[i])
-                                scoreThreeKind.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        case 9:
-                            if (!isSubmitted[i])
-                                scoreFourKind.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        case 10:
-                            if (!isSubmitted[i])
-                                scoreLowStraight.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        case 11:
-                            if (!isSubmitted[i])
-                                scoreHighStraight.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        case 12:
-                            if (!isSubmitted[i])
-                                scoreFullHouse.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        case 13:
-                            if (!isSubmitted[i])
-                                scoreChance.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        case 14:
-                            if (!isSubmitted[i])
-                                scoreYatzy.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }
-            if (!isClicked[6]) {
-                scorePair.setOpacity(1.0);
-                pointsLabel.setText("" + "DiceThrower.calculatePair()");
-                submitButton.setDisable(false);
-                isClicked[6] = true;
-            } else {
-                scorePair.setOpacity(0.5);
-                pointsLabel.setText("0");
-                submitButton.setDisable(true);
-                isClicked[6] = false;
-            }
-        } else {
-            Arrays.fill(isClicked, false);
-            if (!isSubmitted[0])
-                scoreOnes.setOpacity(0.5);
-            if (!isSubmitted[1])
-                scoreTwos.setOpacity(0.5);
-            if (!isSubmitted[2])
-                scoreThrees.setOpacity(0.5);
-            if (!isSubmitted[3])
-                scoreFours.setOpacity(0.5);
-            if (!isSubmitted[4])
-                scoreFives.setOpacity(0.5);
-            if (!isSubmitted[5])
-                scoreSixes.setOpacity(0.5);
-            if (!isSubmitted[7])
-                scoreTwoPairs.setOpacity(0.5);
-            if (!isSubmitted[8])
-                scoreThreeKind.setOpacity(0.5);
-            if (!isSubmitted[9])
-                scoreFourKind.setOpacity(0.5);
-            if (!isSubmitted[10])
-                scoreLowStraight.setOpacity(0.5);
-            if (!isSubmitted[11])
-                scoreHighStraight.setOpacity(0.5);
-            if (!isSubmitted[12])
-                scoreFullHouse.setOpacity(0.5);
-            if (!isSubmitted[13])
-                scoreChance.setOpacity(0.5);
-            if (!isSubmitted[14])
-                scoreYatzy.setOpacity(0.5);
-            if (!isSubmitted[6])
-                scorePair.setOpacity(0.5);
-            if (!isSubmitted[7])
-                scoreTwoPairs.setOpacity(0.5);
-            if (!isSubmitted[8])
-                scoreThreeKind.setOpacity(0.5);
-            if (!isSubmitted[9])
-                scoreFourKind.setOpacity(0.5);
-            if (!isSubmitted[10])
-                scoreLowStraight.setOpacity(0.5);
-            if (!isSubmitted[11])
-                scoreHighStraight.setOpacity(0.5);
-            if (!isSubmitted[12])
-                scoreFullHouse.setOpacity(0.5);
-            if (!isSubmitted[13])
-                scoreChance.setOpacity(0.5);
-            if (!isSubmitted[14])
-                scoreYatzy.setOpacity(0.5);
-            submitButton.setDisable(true);
-            pointsLabel.setText("0");
-        }
+        if (validateClick(6))
+            scorePair.setOpacity(1.0);
+        else if (!isSubmitted[6])
+            scorePair.setOpacity(0.5);
+        updateText();
     }
 
     public void twoPairsClicked() {
-
+        if (validateClick(7))
+            scoreTwoPairs.setOpacity(1.0);
+        else if (!isSubmitted[7])
+            scoreTwoPairs.setOpacity(0.5);
+        updateText();
     }
 
     public void threeKindClicked() {
-
+        if (validateClick(8))
+            scoreThreeKind.setOpacity(1.0);
+        else if (!isSubmitted[8])
+            scoreThreeKind.setOpacity(0.5);
+        updateText();
     }
 
     public void fourKindClicked() {
-
+        if (validateClick(9))
+            scoreFourKind.setOpacity(1.0);
+        else if (!isSubmitted[9])
+            scoreFourKind.setOpacity(0.5);
+        updateText();
     }
 
     public void lowStraightClicked() {
-
+        if (validateClick(10))
+            scoreLowStraight.setOpacity(1.0);
+        else if (!isSubmitted[10])
+            scoreLowStraight.setOpacity(0.5);
+        updateText();
     }
 
     public void highStraightClicked() {
-
+        if (validateClick(11))
+            scoreHighStraight.setOpacity(1.0);
+        else if (!isSubmitted[11])
+            scoreHighStraight.setOpacity(0.5);
+        updateText();
     }
 
     public void fullHouseClicked() {
-
+        if (validateClick(12))
+            scoreFullHouse.setOpacity(1.0);
+        else if (!isSubmitted[12])
+            scoreFullHouse.setOpacity(0.5);
+        updateText();
     }
 
     public void chanceClicked() {
-
+        if (validateClick(13))
+            scoreChance.setOpacity(1.0);
+        else if (!isSubmitted[13])
+            scoreChance.setOpacity(0.5);
+        updateText();
     }
 
     public void yatzyClicked() {
-
+        if (validateClick(14))
+            scoreYatzy.setOpacity(1.0);
+        else if (!isSubmitted[14])
+            scoreYatzy.setOpacity(0.5);
+        updateText();
     }
 
-    public boolean validateClick(int n) {
+    public void submit() {
+        for (int i = 0; i < isClicked.length; i++) {
+            switch (i) {
+                case 0:
+                    if (isClicked[i] && !isSubmitted[i]) {
+                        scoreOnes.setText("" + DiceThrower.calculatePoints(i));
+                        scoresUpper[i] = DiceThrower.calculatePoints(i);
+                        isSubmitted[i] = true;
+                        reset();
+                    }
+                    break;
+                case 1:
+                    if (isClicked[i] && !isSubmitted[i]) {
+                        scoreTwos.setText("" + DiceThrower.calculatePoints(i));
+                        scoresUpper[i] = DiceThrower.calculatePoints(i);
+                        isSubmitted[i] = true;
+                        reset();
+                    }
+                    break;
+                case 2:
+                    if (isClicked[i] && !isSubmitted[i]) {
+                        scoreThrees.setText("" + DiceThrower.calculatePoints(i));
+                        scoresUpper[i] = DiceThrower.calculatePoints(i);
+                        isSubmitted[i] = true;
+                        reset();
+                    }
+                    break;
+                case 3:
+                    if (isClicked[i] && !isSubmitted[i]) {
+                        scoreFours.setText("" + DiceThrower.calculatePoints(i));
+                        scoresUpper[i] = DiceThrower.calculatePoints(i);
+                        isSubmitted[i] = true;
+                        reset();
+                    }
+                    break;
+                case 4:
+                    if (isClicked[i] && !isSubmitted[i]) {
+                        scoreFives.setText("" + DiceThrower.calculatePoints(i));
+                        scoresUpper[i] = DiceThrower.calculatePoints(i);
+                        isSubmitted[i] = true;
+                        reset();
+                    }
+                    break;
+                case 5:
+                    if (isClicked[i] && !isSubmitted[i]) {
+                        scoreSixes.setText("" + DiceThrower.calculatePoints(i));
+                        scoresUpper[i] = DiceThrower.calculatePoints(i);
+                        isSubmitted[i] = true;
+                        reset();
+                    }
+                    break;
+                case 6:
+                    if (isClicked[i] && !isSubmitted[i]) {
+                        if (validateSubmit(i)) {
+                            scorePair.setText("" + DiceThrower.calculatePoints(i));
+                            scoresLower[i - 6] = DiceThrower.calculatePoints(i);
+                        } else {
+                            scoresLower[i - 6] = 0;
+                        }
+                        isSubmitted[i] = true;
+                        reset();
+                    }
+                    break;
+                case 7:
+                    if (isClicked[i] && !isSubmitted[i]) {
+                        if (validateSubmit(i)) {
+                            scoreTwoPairs.setText("" + DiceThrower.calculatePoints(i));
+                            scoresLower[i - 6] = DiceThrower.calculatePoints(i);
+                        } else {
+                            scoresLower[i - 6] = 0;
+                        }
+                        isSubmitted[i] = true;
+                        reset();
+                    }
+                    break;
+                case 8:
+                    if (isClicked[i] && !isSubmitted[i]) {
+                        if (validateSubmit(i)) {
+                            scoreThreeKind.setText("" + DiceThrower.calculatePoints(i));
+                            scoresLower[i - 6] = DiceThrower.calculatePoints(i);
+                        } else {
+                            scoresLower[i - 6] = 0;
+                        }
+                        isSubmitted[i] = true;
+                        reset();
+                    }
+                    break;
+                case 9:
+                    if (isClicked[i] && !isSubmitted[i]) {
+                        if (validateSubmit(i)) {
+                            scoreFourKind.setText("" + DiceThrower.calculatePoints(i));
+                            scoresLower[i - 6] = DiceThrower.calculatePoints(i);
+                        } else {
+                            scoresLower[i - 6] = 0;
+                        }
+                        isSubmitted[i] = true;
+                        reset();
+                    }
+                    break;
+                case 10:
+                    if (isClicked[i] && !isSubmitted[i]) {
+                        if (validateSubmit(i)) {
+                            scoreLowStraight.setText("" + DiceThrower.calculatePoints(i));
+                            scoresLower[i - 6] = DiceThrower.calculatePoints(i);
+                        } else {
+                            scoresLower[i - 6] = 0;
+                        }
+                        isSubmitted[i] = true;
+                        reset();
+                    }
+                    break;
+                case 11:
+                    if (isClicked[i] && !isSubmitted[i]) {
+                        if (validateSubmit(i)) {
+                            scoreHighStraight.setText("" + DiceThrower.calculatePoints(i));
+                            scoresLower[i - 6] = DiceThrower.calculatePoints(i);
+                        } else {
+                            scoresLower[i - 6] = 0;
+                        }
+                        isSubmitted[i] = true;
+                        reset();
+                    }
+                    break;
+                case 12:
+                    if (isClicked[i] && !isSubmitted[i]) {
+                        if (validateSubmit(i)) {
+                            scoreFullHouse.setText("" + DiceThrower.calculatePoints(i));
+                            scoresLower[i - 6] = DiceThrower.calculatePoints(i);
+                        } else {
+                            scoresLower[i - 6] = 0;
+                        }
+                        isSubmitted[i] = true;
+                        reset();
+                    }
+                    break;
+                case 13:
+                    if (isClicked[i] && !isSubmitted[i]) {
+                        scoreChance.setText("" + DiceThrower.calculatePoints(i));
+                        scoresLower[i - 6] = DiceThrower.calculatePoints(i);
+                        isSubmitted[i] = true;
+                        reset();
+                    }
+                    break;
+                case 14:
+                    if (isClicked[i] && !isSubmitted[i]) {
+                        if (validateSubmit(i)) {
+                            scoreYatzy.setText("" + DiceThrower.calculatePoints(i));
+                            scoresLower[i - 6] = DiceThrower.calculatePoints(i);
+                        } else {
+                            scoresLower[i - 6] = 0;
+                        }
+                        isSubmitted[i] = true;
+                        reset();
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    public void cheatPairs() {
+        DiceThrower.dice[0].faceValue = 1;
+        DiceThrower.dice[1].faceValue = 3;
+        DiceThrower.dice[2].faceValue = 3;
+        DiceThrower.dice[3].faceValue = 6;
+        DiceThrower.dice[4].faceValue = 6;
+        updateImage();
+        updateText();
+    }
+
+    public void cheatLowStraight() {
+        DiceThrower.dice[0].faceValue = 1;
+        DiceThrower.dice[1].faceValue = 2;
+        DiceThrower.dice[2].faceValue = 3;
+        DiceThrower.dice[3].faceValue = 4;
+        DiceThrower.dice[4].faceValue = 5;
+        updateImage();
+        updateText();
+    }
+
+    public void cheatHighStraight() {
+        DiceThrower.dice[0].faceValue = 2;
+        DiceThrower.dice[1].faceValue = 3;
+        DiceThrower.dice[2].faceValue = 4;
+        DiceThrower.dice[3].faceValue = 5;
+        DiceThrower.dice[4].faceValue = 6;
+        updateImage();
+        updateText();
+    }
+
+    public void cheatFullHouse() {
+        DiceThrower.dice[0].faceValue = 5;
+        DiceThrower.dice[1].faceValue = 5;
+        DiceThrower.dice[2].faceValue = 6;
+        DiceThrower.dice[3].faceValue = 6;
+        DiceThrower.dice[4].faceValue = 6;
+        updateImage();
+        updateText();
+    }
+
+    public void cheatYatzy() {
+        DiceThrower.dice[0].faceValue = 6;
+        DiceThrower.dice[1].faceValue = 6;
+        DiceThrower.dice[2].faceValue = 6;
+        DiceThrower.dice[3].faceValue = 6;
+        DiceThrower.dice[4].faceValue = 6;
+        updateImage();
+        updateText();
+    }
+
+    private boolean validateClick(int n) {
         boolean isValid = false;
         if (!isSubmitted[n] && DiceThrower.rollCount != 0) {
             for (int i = 0; i < isClicked.length; i++) {
-                if (isClicked[i]) {
+                if (isClicked[i] && i != n) {
                     switch (i) {
                         case 0:
                             if (!isSubmitted[i])
@@ -620,61 +606,49 @@ public class GameController {
         return isValid;
     }
 
-    public void submit() {
-        for (int i = 0; i < isClicked.length; i++) {
-            switch (i) {
-                case 0:
-                    if (isClicked[i] && !isSubmitted[i]) {
-                        scoreOnes.setText("" + DiceThrower.calculatePoints(i));
-                        scoresUpper[i] = DiceThrower.calculatePoints(i);
-                        isSubmitted[i] = true;
-                        reset();
+    private boolean validateSubmit(int n) {
+        boolean isValid = true;
+        switch (n) {
+            case 6:
+                //validate one pair
+                isValid = false;
+                break;
+            case 7:
+                //validate two pairs
+                isValid = false;
+                break;
+            case 8:
+                //validate three kind
+                isValid = false;
+                break;
+            case 9:
+                //validate four kind
+                isValid = false;
+                break;
+            case 10:
+                //validate low straight
+                isValid = false;
+                break;
+            case 11:
+                //validate high straight
+                isValid = false;
+                break;
+            case 12:
+                //validate full house
+                isValid = false;
+                break;
+            case 14:
+                for (int i = 1; i < DiceThrower.nDice; i++) {
+                    if (DiceThrower.dice[0].faceValue != DiceThrower.dice[i].faceValue) {
+                        isValid = false;
+                        break;
                     }
-                    break;
-                case 1:
-                    if (isClicked[i] && !isSubmitted[i]) {
-                        scoreTwos.setText("" + DiceThrower.calculatePoints(i));
-                        scoresUpper[i] = DiceThrower.calculatePoints(i);
-                        isSubmitted[i] = true;
-                        reset();
-                    }
-                    break;
-                case 2:
-                    if (isClicked[i] && !isSubmitted[i]) {
-                        scoreThrees.setText("" + DiceThrower.calculatePoints(i));
-                        scoresUpper[i] = DiceThrower.calculatePoints(i);
-                        isSubmitted[i] = true;
-                        reset();
-                    }
-                    break;
-                case 3:
-                    if (isClicked[i] && !isSubmitted[i]) {
-                        scoreFours.setText("" + DiceThrower.calculatePoints(i));
-                        scoresUpper[i] = DiceThrower.calculatePoints(i);
-                        isSubmitted[i] = true;
-                        reset();
-                    }
-                    break;
-                case 4:
-                    if (isClicked[i] && !isSubmitted[i]) {
-                        scoreFives.setText("" + DiceThrower.calculatePoints(i));
-                        scoresUpper[i] = DiceThrower.calculatePoints(i);
-                        isSubmitted[i] = true;
-                        reset();
-                    }
-                    break;
-                case 5:
-                    if (isClicked[i] && !isSubmitted[i]) {
-                        scoreSixes.setText("" + DiceThrower.calculatePoints(i));
-                        scoresUpper[i] = DiceThrower.calculatePoints(i);
-                        isSubmitted[i] = true;
-                        reset();
-                    }
-                    break;
-                default:
-                    break;
-            }
+                }
+                break;
+            default:
+                break;
         }
+        return isValid;
     }
 
     private void updateImage() {
@@ -807,7 +781,7 @@ public class GameController {
     private void updateText() {
         pointsLabel.setText("0");
         for (int i = 0; i < isClicked.length; i++)
-            if (isClicked[i])
+            if (isClicked[i] && validateSubmit(i))
                 pointsLabel.setText("" + DiceThrower.calculatePoints(i));
         int sumUpper = 0;
         for (int i : scoresUpper)
@@ -849,8 +823,30 @@ public class GameController {
 
         private static int calculatePoints(int i) {
             int points = 0;
-            for (Die die : dice) {
-                if (i + 1 == die.faceValue)
+            if (i >= 0 && i <= 5) {
+                for (Die die : dice) {
+                    if (i + 1 == die.faceValue)
+                        points += die.faceValue;
+                }
+            } else if (i >= 6 && i <= 9) {
+                switch (i) {
+                    case 6:
+                        //Pair
+                        break;
+                    case 7:
+                        //Two Pair
+                        break;
+                    case 8:
+                        //Three Kind
+                        break;
+                    case 9:
+                        //Four Kind
+                        break;
+                    default:
+                        break;
+                }
+            } else {
+                for (Die die : dice)
                     points += die.faceValue;
             }
             return points;
