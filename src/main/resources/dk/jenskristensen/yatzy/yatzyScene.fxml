@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="420.0" prefWidth="420.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.jenskristensen.yatzy.GameController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="420.0" prefWidth="420.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.jenskristensen.yatzy.YatzyController">
     <HBox alignment="CENTER" layoutX="248.0" layoutY="45.0" spacing="10.0">
        <Text fx:id="pointsLabel" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="45.0">
            <font>
@@ -28,37 +28,37 @@
             </cursor>
         </Button>
     </HBox>
-    <HBox alignment="CENTER" layoutX="217.0" layoutY="5.0">
-        <ImageView fx:id="dice0" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#lockOne" pickOnBounds="true" preserveRatio="true">
-            <cursor>
-                <Cursor fx:constant="HAND" />
-            </cursor>
-            <Image url="@dice/1.png" />
-        </ImageView>
-        <ImageView fx:id="dice1" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#lockTwo" pickOnBounds="true" preserveRatio="true">
-            <cursor>
-                <Cursor fx:constant="HAND" />
-            </cursor>
-            <Image url="@dice/2.png" />
-        </ImageView>
-        <ImageView fx:id="dice2" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#lockThree" pickOnBounds="true" preserveRatio="true">
-            <cursor>
-                <Cursor fx:constant="HAND" />
-            </cursor>
-            <Image url="@dice/3.png" />
-        </ImageView>
-        <ImageView fx:id="dice3" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#lockFour" pickOnBounds="true" preserveRatio="true">
-            <cursor>
-                <Cursor fx:constant="HAND" />
-            </cursor>
-            <Image url="@dice/4.png" />
-        </ImageView>
-        <ImageView fx:id="dice4" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#lockFive" pickOnBounds="true" preserveRatio="true">
-            <cursor>
-                <Cursor fx:constant="HAND" />
-            </cursor>
-            <Image url="@dice/5.png" />
-        </ImageView>
+    <HBox fx:id="diceBox" alignment="CENTER" layoutX="217.0" layoutY="5.0">
+<!--        <ImageView fx:id="dice0" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#lockOne" pickOnBounds="true" preserveRatio="true">-->
+<!--            <cursor>-->
+<!--                <Cursor fx:constant="HAND" />-->
+<!--            </cursor>-->
+<!--            <Image url="@dice/1.png" />-->
+<!--        </ImageView>-->
+<!--        <ImageView fx:id="dice1" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#lockTwo" pickOnBounds="true" preserveRatio="true">-->
+<!--            <cursor>-->
+<!--                <Cursor fx:constant="HAND" />-->
+<!--            </cursor>-->
+<!--            <Image url="@dice/2.png" />-->
+<!--        </ImageView>-->
+<!--        <ImageView fx:id="dice2" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#lockThree" pickOnBounds="true" preserveRatio="true">-->
+<!--            <cursor>-->
+<!--                <Cursor fx:constant="HAND" />-->
+<!--            </cursor>-->
+<!--            <Image url="@dice/3.png" />-->
+<!--        </ImageView>-->
+<!--        <ImageView fx:id="dice3" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#lockFour" pickOnBounds="true" preserveRatio="true">-->
+<!--            <cursor>-->
+<!--                <Cursor fx:constant="HAND" />-->
+<!--            </cursor>-->
+<!--            <Image url="@dice/4.png" />-->
+<!--        </ImageView>-->
+<!--        <ImageView fx:id="dice4" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#lockFive" pickOnBounds="true" preserveRatio="true">-->
+<!--            <cursor>-->
+<!--                <Cursor fx:constant="HAND" />-->
+<!--            </cursor>-->
+<!--            <Image url="@dice/5.png" />-->
+<!--        </ImageView>-->
     </HBox>
     <GridPane gridLinesVisible="true" layoutX="14.0" layoutY="14.0">
         <columnConstraints>

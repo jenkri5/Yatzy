@@ -5,16 +5,21 @@ import javafx.scene.control.Button;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Random;
 
-public class GameController {
+public class YatzyController {
 
-    @FXML
+    private final YatzyGame yatzyGame = new YatzyGame();
+
+    //@FXML
     private ImageView dice0, dice1, dice2, dice3, dice4;
+    @FXML
+    private HBox diceBox;
     @FXML
     private Text pointsLabel, scoreOnes, scoreTwos, scoreThrees,
             scoreFours, scoreFives, scoreSixes, scoreSumUpper,
@@ -24,12 +29,12 @@ public class GameController {
     @FXML
     private Button rollButton, submitButton;
 
-    private final Image diceImageOne = new Image(Objects.requireNonNull(getClass().getResourceAsStream("dice/1.png")));
-    private final Image diceImageTwo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("dice/2.png")));
-    private final Image diceImageThree = new Image(Objects.requireNonNull(getClass().getResourceAsStream("dice/3.png")));
-    private final Image diceImageFour = new Image(Objects.requireNonNull(getClass().getResourceAsStream("dice/4.png")));
-    private final Image diceImageFive = new Image(Objects.requireNonNull(getClass().getResourceAsStream("dice/5.png")));
-    private final Image diceImageSix = new Image(Objects.requireNonNull(getClass().getResourceAsStream("dice/6.png")));
+    private static final Image diceImageOne = new Image(Objects.requireNonNull(YatzyController.class.getResourceAsStream("dice/1.png")));
+    private static final Image diceImageTwo = new Image(Objects.requireNonNull(YatzyController.class.getResourceAsStream("dice/2.png")));
+    private static final Image diceImageThree = new Image(Objects.requireNonNull(YatzyController.class.getResourceAsStream("dice/3.png")));
+    private static final Image diceImageFour = new Image(Objects.requireNonNull(YatzyController.class.getResourceAsStream("dice/4.png")));
+    private static final Image diceImageFive = new Image(Objects.requireNonNull(YatzyController.class.getResourceAsStream("dice/5.png")));
+    private static final Image diceImageSix = new Image(Objects.requireNonNull(YatzyController.class.getResourceAsStream("dice/6.png")));
 
     private final boolean[] isClicked = new boolean[15];
     private final boolean[] isSubmitted = new boolean[15];
@@ -37,12 +42,21 @@ public class GameController {
     private final int[] scoresLower = new int[9];
 
     private static final int nDice = 5;
-    private static final Die[] dice = new Die[nDice];
+    private static final Die die1 = new Die(), die2 = new Die(), die3 = new Die(), die4 = new Die(), die5 = new Die();
+    private static final Die[] dice = {die1, die2, die3, die4, die5};
     private int rollCount;
 
-    public static void generateDice() {
-        for (int i = 0; i < nDice; i++)
-            dice[i] = new Die();
+    public void initialize() {
+        dice0 = new ImageView(diceImageOne);
+        diceBox.getChildren().add(dice0);
+        dice1 = new ImageView(diceImageTwo);
+        diceBox.getChildren().add(dice1);
+        dice2 = new ImageView(diceImageThree);
+        diceBox.getChildren().add(dice2);
+        dice3 = new ImageView(diceImageFour);
+        diceBox.getChildren().add(dice3);
+        dice4 = new ImageView(diceImageFive);
+        diceBox.getChildren().add(dice4);
     }
 
     public void roll() {
