@@ -610,32 +610,75 @@ public class GameController {
         boolean isValid = true;
         switch (n) {
             case 6:
-                //validate one pair
-                isValid = false;
+                boolean hasPair = false;
+                for (int i = 0; i < DiceThrower.nDice - 1; i++)
+                    for (int j = i + 1; j < DiceThrower.nDice; j++)
+                        if (DiceThrower.dice[i].faceValue == DiceThrower.dice[j].faceValue) {
+                            hasPair = true;
+                            break;
+                        }
+                isValid = hasPair;
                 break;
             case 7:
-                //validate two pairs
-                isValid = false;
+                boolean hasTwoPairs = false;
+                int numberOfPairs = 0;
+                int[] twoPairsBucket = new int[6];
+                for (DiceThrower.Die die : DiceThrower.dice)
+                    twoPairsBucket[die.faceValue - 1]++;
+                for (int j : twoPairsBucket)
+                    if (j >= 2)
+                        numberOfPairs += j / 2;
+                if (numberOfPairs >= 2)
+                    hasTwoPairs = true;
+                isValid = hasTwoPairs;
                 break;
             case 8:
-                //validate three kind
-                isValid = false;
+                boolean hasThreeKind = false;
+                int[] threeKindBucket = new int[6];
+                for (DiceThrower.Die die : DiceThrower.dice)
+                    threeKindBucket[die.faceValue - 1]++;
+                for (int i : threeKindBucket)
+                    if (i >= 3) {
+                        hasThreeKind = true;
+                        break;
+                    }
+                isValid = hasThreeKind;
                 break;
             case 9:
-                //validate four kind
-                isValid = false;
+                boolean hasFourKind = false;
+                int[] fourKindBucket = new int[6];
+                for (DiceThrower.Die die : DiceThrower.dice)
+                    fourKindBucket[die.faceValue - 1]++;
+                for (int i : fourKindBucket)
+                    if (i >= 4) {
+                        hasFourKind = true;
+                        break;
+                    }
+                isValid = hasFourKind;
                 break;
             case 10:
-                //validate low straight
-                isValid = false;
+                int[] lowStraight = {1, 2, 3, 4, 5};
+                int[] tempLowStraight = new int[DiceThrower.nDice];
+                for (int i = 0; i < tempLowStraight.length; i++)
+                    tempLowStraight[i] = DiceThrower.dice[i].faceValue;
+                Arrays.sort(tempLowStraight);
+                isValid = Arrays.equals(lowStraight, tempLowStraight);
                 break;
             case 11:
-                //validate high straight
-                isValid = false;
+                int[] highStraight = {2, 3, 4, 5, 6};
+                int[] tempHighStraight = new int[DiceThrower.nDice];
+                for (int i = 0; i < tempHighStraight.length; i++)
+                    tempHighStraight[i] = DiceThrower.dice[i].faceValue;
+                Arrays.sort(tempHighStraight);
+                isValid = Arrays.equals(highStraight, tempHighStraight);
                 break;
             case 12:
-                //validate full house
-                isValid = false;
+                int[] houseBucket = new int[6];
+                for (DiceThrower.Die die : DiceThrower.dice)
+                    houseBucket[die.faceValue-1]++;
+                Arrays.sort(houseBucket);
+                if (houseBucket[4] != 2 || houseBucket[5] != 3)
+                    isValid = false;
                 break;
             case 14:
                 for (int i = 1; i < DiceThrower.nDice; i++) {
@@ -824,27 +867,71 @@ public class GameController {
         private static int calculatePoints(int i) {
             int points = 0;
             if (i >= 0 && i <= 5) {
-                for (Die die : dice) {
+                for (Die die : dice)
                     if (i + 1 == die.faceValue)
                         points += die.faceValue;
-                }
             } else if (i >= 6 && i <= 9) {
                 switch (i) {
                     case 6:
-                        //Pair
+                        int pair = 0;
+                        int[] pairsBucket = new int[6];
+                        for (DiceThrower.Die die : DiceThrower.dice)
+                            pairsBucket[die.faceValue - 1]++;
+                        for (int j = 0; j < pairsBucket.length; j++)
+                            if (pairsBucket[j] >= 2)
+                                pair = (j + 1) * 2;
+                        points = pair;
                         break;
                     case 7:
-                        //Two Pair
+                        int twoPairs = 0;
+                        int[] twoPairsBucket = new int[6];
+                        int[] twoPairsTemp = new int[nDice];
+                        for (int j = 0; j < nDice; j++)
+                            twoPairsTemp[j] = dice[j].faceValue;
+                        for (int j = 0; j < nDice - 1; j++) {
+                            for (int k = j + 1; k < nDice; k++) {
+                                if (twoPairsTemp[j] == twoPairsTemp[k] && twoPairsTemp[j] != 0) {
+                                    twoPairsBucket[twoPairsTemp[j] - 1]++;
+                                    twoPairsTemp[j] = 0;
+                                    twoPairsTemp[k] = 0;
+                                }
+                            }
+                        }
+                        for (int j = 0; j < twoPairsBucket.length; j++) {
+                            if (twoPairsBucket[j] >= 2) {
+                                twoPairs += ((j + 1) * 2) * 2;
+                                twoPairsBucket[j]--;
+                            } else if (twoPairsBucket[j] >= 1) {
+                                twoPairs += (j + 1) * 2;
+                            }
+                        }
+                        points = twoPairs;
                         break;
                     case 8:
-                        //Three Kind
+                        int threeKind = 0;
+                        int[] threeKindBucket = new int[6];
+                        for (DiceThrower.Die die : DiceThrower.dice)
+                            threeKindBucket[die.faceValue - 1]++;
+                        for (int j = 0; j < threeKindBucket.length; j++)
+                            if (threeKindBucket[j] >= 3)
+                                threeKind = (j + 1) * 3;
+                        points = threeKind;
                         break;
                     case 9:
-                        //Four Kind
+                        int fourKind = 0;
+                        int[] fourKindBucket = new int[6];
+                        for (DiceThrower.Die die : DiceThrower.dice)
+                            fourKindBucket[die.faceValue - 1]++;
+                        for (int j = 0; j < fourKindBucket.length; j++)
+                            if (fourKindBucket[j] >= 4)
+                                fourKind = (j + 1) * 4;
+                        points = fourKind;
                         break;
                     default:
                         break;
                 }
+            } else if (i == 14) {
+                points = 50;
             } else {
                 for (Die die : dice)
                     points += die.faceValue;
