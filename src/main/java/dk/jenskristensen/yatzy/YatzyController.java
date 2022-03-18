@@ -16,8 +16,12 @@ public class YatzyController {
 
     private final YatzyGame yatzyGame = new YatzyGame();
 
-    //@FXML
-    private ImageView dice0, dice1, dice2, dice3, dice4;
+    private ImageView dice0 = new ImageView(diceImageOne),
+            dice1 = new ImageView(diceImageTwo),
+            dice2 = new ImageView(diceImageThree),
+            dice3 = new ImageView(diceImageFour),
+            dice4 = new ImageView(diceImageFive);
+    private ImageView[] diceImageViews = {dice0, dice1, dice2, dice3, dice4};
     @FXML
     private HBox diceBox;
     @FXML
@@ -47,16 +51,20 @@ public class YatzyController {
     private int rollCount;
 
     public void initialize() {
-        dice0 = new ImageView(diceImageOne);
-        diceBox.getChildren().add(dice0);
-        dice1 = new ImageView(diceImageTwo);
-        diceBox.getChildren().add(dice1);
-        dice2 = new ImageView(diceImageThree);
-        diceBox.getChildren().add(dice2);
-        dice3 = new ImageView(diceImageFour);
-        diceBox.getChildren().add(dice3);
-        dice4 = new ImageView(diceImageFive);
-        diceBox.getChildren().add(dice4);
+        for (int i = 0; i < nDice; i++) {
+            diceImageViews[i].setFitHeight(40.0);
+            diceImageViews[i].setFitWidth(40.0);
+            int finalI = i;
+            diceImageViews[i].setOnMouseClicked(event -> lockDice(finalI));
+            diceBox.getChildren().add(diceImageViews[i]);
+        }
+    }
+
+    public void lockDice(int i) {
+        if (rollCount > 0) {
+            dice[i].setLocked();
+            updateContrast(i);
+        }
     }
 
     public void roll() {
@@ -288,41 +296,6 @@ public class YatzyController {
             updateContrast(i);
         }
         updateImage();
-    }
-
-    public void lockOne() {
-        if (rollCount > 0) {
-            dice[0].setLocked();
-            updateContrast(0);
-        }
-    }
-
-    public void lockTwo() {
-        if (rollCount > 0) {
-            dice[1].setLocked();
-            updateContrast(1);
-        }
-    }
-
-    public void lockThree() {
-        if (rollCount > 0) {
-            dice[2].setLocked();
-            updateContrast(2);
-        }
-    }
-
-    public void lockFour() {
-        if (rollCount > 0) {
-            dice[3].setLocked();
-            updateContrast(3);
-        }
-    }
-
-    public void lockFive() {
-        if (rollCount > 0) {
-            dice[4].setLocked();
-            updateContrast(4);
-        }
     }
 
     public void onesClicked() {
@@ -875,45 +848,11 @@ public class YatzyController {
 
     private void updateContrast(int i) {
         ColorAdjust colorAdjust = new ColorAdjust();
-        switch (i) {
-            case 0:
-                if (dice[i].isLocked)
-                    colorAdjust.setContrast(-0.5);
-                else
-                    colorAdjust.setContrast(0.0);
-                dice0.setEffect(colorAdjust);
-                break;
-            case 1:
-                if (dice[i].isLocked)
-                    colorAdjust.setContrast(-0.5);
-                else
-                    colorAdjust.setContrast(0.0);
-                dice1.setEffect(colorAdjust);
-                break;
-            case 2:
-                if (dice[i].isLocked)
-                    colorAdjust.setContrast(-0.5);
-                else
-                    colorAdjust.setContrast(0.0);
-                dice2.setEffect(colorAdjust);
-                break;
-            case 3:
-                if (dice[i].isLocked)
-                    colorAdjust.setContrast(-0.5);
-                else
-                    colorAdjust.setContrast(0.0);
-                dice3.setEffect(colorAdjust);
-                break;
-            case 4:
-                if (dice[i].isLocked)
-                    colorAdjust.setContrast(-0.5);
-                else
-                    colorAdjust.setContrast(0.0);
-                dice4.setEffect(colorAdjust);
-                break;
-            default:
-                break;
-        }
+        if (dice[i].isLocked)
+            colorAdjust.setContrast(-0.5);
+        else
+            colorAdjust.setContrast(0.0);
+        diceImageViews[i].setEffect(colorAdjust);
     }
 
     private void updateText() {
