@@ -15,8 +15,6 @@ import java.util.Random;
 
 public class YatzyController {
 
-    private final YatzyGame yatzyGame = new YatzyGame();
-
     private final ImageView dice0 = new ImageView(diceImageOne),
             dice1 = new ImageView(diceImageTwo),
             dice2 = new ImageView(diceImageThree),
