@@ -13,15 +13,10 @@ public class App extends Application {
     private static Scene scene;
 
     @Override
-    public void init() {
-        // YatzyController.generateDice();
-    }
-
-    @Override
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("yatzyScene"));
         stage.setScene(scene);
-        stage.setTitle("Yatzi");
+        stage.setTitle("Yatzy");
         stage.setResizable(false);
         stage.show();
     }

@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
@@ -16,20 +17,27 @@ public class YatzyController {
 
     private final YatzyGame yatzyGame = new YatzyGame();
 
-    private ImageView dice0 = new ImageView(diceImageOne),
+    private final ImageView dice0 = new ImageView(diceImageOne),
             dice1 = new ImageView(diceImageTwo),
             dice2 = new ImageView(diceImageThree),
             dice3 = new ImageView(diceImageFour),
             dice4 = new ImageView(diceImageFive);
-    private ImageView[] diceImageViews = {dice0, dice1, dice2, dice3, dice4};
+    private final ImageView[] diceImageViews = {dice0, dice1, dice2, dice3, dice4};
+
+    private final Text scoreOnes = new Text("0"), scoreTwos = new Text("0"), scoreThrees = new Text("0"),
+            scoreFours = new Text("0"), scoreFives = new Text("0"), scoreSixes = new Text("0"), scoreSumUpper = new Text("0"),
+            scoreBonus = new Text("50"), scorePair = new Text("0"), scoreTwoPairs = new Text("0"), scoreThreeKind = new Text("0"),
+            scoreFourKind = new Text("0"), scoreLowStraight = new Text("0"), scoreHighStraight = new Text("0"),
+            scoreFullHouse = new Text("0"), scoreChance = new Text("0"), scoreYatzy = new Text("0"), scoreTotalSum = new Text("0");
+    private final Text[] scoreUpperTexts = {scoreOnes, scoreTwos, scoreThrees, scoreFours, scoreFives, scoreSixes};
+    private final Text[] scoreLowerTexts = {scorePair, scoreTwoPairs, scoreThreeKind, scoreFourKind, scoreLowStraight, scoreHighStraight, scoreFullHouse, scoreChance, scoreYatzy};
+
     @FXML
     private HBox diceBox;
     @FXML
-    private Text pointsLabel, scoreOnes, scoreTwos, scoreThrees,
-            scoreFours, scoreFives, scoreSixes, scoreSumUpper,
-            scoreBonus, scorePair, scoreTwoPairs, scoreThreeKind,
-            scoreFourKind, scoreLowStraight, scoreHighStraight,
-            scoreFullHouse, scoreChance, scoreYatzy, scoreTotalSum;
+    private GridPane scorePane;
+    @FXML
+    private Text pointsLabel;
     @FXML
     private Button rollButton, submitButton;
 
@@ -58,19 +66,55 @@ public class YatzyController {
             diceImageViews[i].setOnMouseClicked(event -> lockDice(finalI));
             diceBox.getChildren().add(diceImageViews[i]);
         }
+        for (int i = 0; i < scoreUpperTexts.length; i++) {
+            scoreUpperTexts[i].setOpacity(0.5);
+            int finalI = i;
+            scoreUpperTexts[i].setOnMouseClicked(event -> scoreClicked(finalI));
+            scorePane.add(scoreUpperTexts[i],1,i);
+        }
+
+        for (int i = 0; i < scoreLowerTexts.length; i++) {
+            scoreLowerTexts[i].setOpacity(0.5);
+            int finalI = i + 6;
+            scoreLowerTexts[i].setOnMouseClicked(event -> scoreClicked(finalI));
+            scorePane.add(scoreLowerTexts[i], 1, i + 8);
+        }
+
+        scoreBonus.setOpacity(0.2);
+        scorePane.add(scoreSumUpper, 1, 6);
+        scorePane.add(scoreBonus, 1, 7);
+        scorePane.add(scoreTotalSum, 1, 17);
     }
 
-    public void lockDice(int i) {
+    public void roll() {
+        Arrays.stream(dice).filter(die -> !die.isLocked).forEach(Die::roll);
+        rollCount++;
+        if (rollCount >= 3)
+            rollButton.setDisable(true);
+        updateImage();
+        updateText();
+    }
+
+    private void lockDice(int i) {
         if (rollCount > 0) {
             dice[i].setLocked();
             updateContrast(i);
         }
     }
 
-    public void roll() {
-        Arrays.stream(dice).filter(die -> !die.isLocked).forEach(Die::roll);
-        rollCount++;
-        updateImage();
+    private void scoreClicked(int i) {
+        if (validateClick(i)) {
+            if (i <= 5)
+                scoreUpperTexts[i].setOpacity(1.0);
+            else
+                scoreLowerTexts[i-6].setOpacity(1.0);
+        }
+        else if (!isSubmitted[i]) {
+            if (i <= 5)
+                scoreUpperTexts[i].setOpacity(0.5);
+            else
+                scoreLowerTexts[i-6].setOpacity(0.5);
+        }
         updateText();
     }
 
@@ -298,126 +342,6 @@ public class YatzyController {
         updateImage();
     }
 
-    public void onesClicked() {
-        if (validateClick(0))
-            scoreOnes.setOpacity(1.0);
-        else if (!isSubmitted[0])
-            scoreOnes.setOpacity(0.5);
-        updateText();
-    }
-
-    public void twosClicked() {
-        if (validateClick(1))
-            scoreTwos.setOpacity(1.0);
-        else if (!isSubmitted[1])
-            scoreTwos.setOpacity(0.5);
-        updateText();
-    }
-
-    public void threesClicked() {
-        if (validateClick(2))
-            scoreThrees.setOpacity(1.0);
-        else if (!isSubmitted[2])
-            scoreThrees.setOpacity(0.5);
-        updateText();
-    }
-
-    public void foursClicked() {
-        if (validateClick(3) && !isSubmitted[3])
-            scoreFours.setOpacity(1.0);
-        else if (!isSubmitted[3])
-            scoreFours.setOpacity(0.5);
-        updateText();
-    }
-
-    public void fivesClicked() {
-        if (validateClick(4))
-            scoreFives.setOpacity(1.0);
-        else if (!isSubmitted[4])
-            scoreFives.setOpacity(0.5);
-        updateText();
-    }
-
-    public void sixesClicked() {
-        if (validateClick(5))
-            scoreSixes.setOpacity(1.0);
-        else if (!isSubmitted[5])
-            scoreSixes.setOpacity(0.5);
-        updateText();
-    }
-
-    public void pairClicked() {
-        if (validateClick(6))
-            scorePair.setOpacity(1.0);
-        else if (!isSubmitted[6])
-            scorePair.setOpacity(0.5);
-        updateText();
-    }
-
-    public void twoPairsClicked() {
-        if (validateClick(7))
-            scoreTwoPairs.setOpacity(1.0);
-        else if (!isSubmitted[7])
-            scoreTwoPairs.setOpacity(0.5);
-        updateText();
-    }
-
-    public void threeKindClicked() {
-        if (validateClick(8))
-            scoreThreeKind.setOpacity(1.0);
-        else if (!isSubmitted[8])
-            scoreThreeKind.setOpacity(0.5);
-        updateText();
-    }
-
-    public void fourKindClicked() {
-        if (validateClick(9))
-            scoreFourKind.setOpacity(1.0);
-        else if (!isSubmitted[9])
-            scoreFourKind.setOpacity(0.5);
-        updateText();
-    }
-
-    public void lowStraightClicked() {
-        if (validateClick(10))
-            scoreLowStraight.setOpacity(1.0);
-        else if (!isSubmitted[10])
-            scoreLowStraight.setOpacity(0.5);
-        updateText();
-    }
-
-    public void highStraightClicked() {
-        if (validateClick(11))
-            scoreHighStraight.setOpacity(1.0);
-        else if (!isSubmitted[11])
-            scoreHighStraight.setOpacity(0.5);
-        updateText();
-    }
-
-    public void fullHouseClicked() {
-        if (validateClick(12))
-            scoreFullHouse.setOpacity(1.0);
-        else if (!isSubmitted[12])
-            scoreFullHouse.setOpacity(0.5);
-        updateText();
-    }
-
-    public void chanceClicked() {
-        if (validateClick(13))
-            scoreChance.setOpacity(1.0);
-        else if (!isSubmitted[13])
-            scoreChance.setOpacity(0.5);
-        updateText();
-    }
-
-    public void yatzyClicked() {
-        if (validateClick(14))
-            scoreYatzy.setOpacity(1.0);
-        else if (!isSubmitted[14])
-            scoreYatzy.setOpacity(0.5);
-        updateText();
-    }
-
     public void cheatPairs() {
         dice[0].faceValue = 1;
         dice[1].faceValue = 3;
@@ -471,86 +395,18 @@ public class YatzyController {
     private boolean validateClick(int n) {
         boolean isValid = false;
         if (!isSubmitted[n] && rollCount != 0) {
-            for (int i = 0; i < isClicked.length; i++) {
+            for (int i = 0; i < scoreUpperTexts.length; i++) {
                 if (isClicked[i] && i != n) {
-                    switch (i) {
-                        case 0:
-                            if (!isSubmitted[i])
-                                scoreOnes.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        case 1:
-                            if (!isSubmitted[i])
-                                scoreTwos.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        case 2:
-                            if (!isSubmitted[i])
-                                scoreThrees.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        case 3:
-                            if (!isSubmitted[i])
-                                scoreFours.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        case 4:
-                            if (!isSubmitted[i])
-                                scoreFives.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        case 5:
-                            if (!isSubmitted[i])
-                                scoreSixes.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        case 6:
-                            if (!isSubmitted[i])
-                                scorePair.setOpacity(0.5);
-                            isClicked[i] = false;
-                        case 7:
-                            if (!isSubmitted[i])
-                                scoreTwoPairs.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        case 8:
-                            if (!isSubmitted[i])
-                                scoreThreeKind.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        case 9:
-                            if (!isSubmitted[i])
-                                scoreFourKind.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        case 10:
-                            if (!isSubmitted[i])
-                                scoreLowStraight.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        case 11:
-                            if (!isSubmitted[i])
-                                scoreHighStraight.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        case 12:
-                            if (!isSubmitted[i])
-                                scoreFullHouse.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        case 13:
-                            if (!isSubmitted[i])
-                                scoreChance.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        case 14:
-                            if (!isSubmitted[i])
-                                scoreYatzy.setOpacity(0.5);
-                            isClicked[i] = false;
-                            break;
-                        default:
-                            break;
-                    }
+                    if (!isSubmitted[i])
+                        scoreUpperTexts[i].setOpacity(0.5);
+                    isClicked[i] = false;
+                }
+            }
+            for (int i = 0; i < scoreLowerTexts.length; i++) {
+                if (isClicked[i+6] && i+6 != n) {
+                    if (!isSubmitted[i+6])
+                        scoreLowerTexts[i].setOpacity(0.5);
+                    isClicked[i] = false;
                 }
             }
             if (!isClicked[n]) {
@@ -558,41 +414,19 @@ public class YatzyController {
                 submitButton.setDisable(false);
                 isClicked[n] = true;
             } else {
-                submitButton.setDisable(true);
+                submitButton.setDisable(false);
                 isClicked[n] = false;
             }
         } else {
             Arrays.fill(isClicked, false);
-            if (!isSubmitted[0])
-                scoreOnes.setOpacity(0.5);
-            if (!isSubmitted[1])
-                scoreTwos.setOpacity(0.5);
-            if (!isSubmitted[2])
-                scoreThrees.setOpacity(0.5);
-            if (!isSubmitted[3])
-                scoreFours.setOpacity(0.5);
-            if (!isSubmitted[4])
-                scoreFives.setOpacity(0.5);
-            if (!isSubmitted[5])
-                scoreSixes.setOpacity(0.5);
-            if (!isSubmitted[6])
-                scorePair.setOpacity(0.5);
-            if (!isSubmitted[7])
-                scoreTwoPairs.setOpacity(0.5);
-            if (!isSubmitted[8])
-                scoreThreeKind.setOpacity(0.5);
-            if (!isSubmitted[9])
-                scoreFourKind.setOpacity(0.5);
-            if (!isSubmitted[10])
-                scoreLowStraight.setOpacity(0.5);
-            if (!isSubmitted[11])
-                scoreHighStraight.setOpacity(0.5);
-            if (!isSubmitted[12])
-                scoreFullHouse.setOpacity(0.5);
-            if (!isSubmitted[13])
-                scoreChance.setOpacity(0.5);
-            if (!isSubmitted[14])
-                scoreYatzy.setOpacity(0.5);
+            for (int i = 0; i < scoreUpperTexts.length; i++) {
+                if (!isSubmitted[i])
+                    scoreUpperTexts[i].setOpacity(0.5);
+            }
+            for (int i = 0; i < scoreLowerTexts.length; i++) {
+                if (!isSubmitted[i+6])
+                    scoreLowerTexts[i].setOpacity(0.5);
+            }
             submitButton.setDisable(true);
             pointsLabel.setText("0");
         }
@@ -766,83 +600,26 @@ public class YatzyController {
         for (int i = 0; i < nDice; i++) {
             switch (dice[i].faceValue) {
                 case 1:
-                    if (i == 0)
-                        dice0.setImage(diceImageOne);
-                    else if (i == 1)
-                        dice1.setImage(diceImageOne);
-                    else if (i == 2)
-                        dice2.setImage(diceImageOne);
-                    else if (i == 3)
-                        dice3.setImage(diceImageOne);
-                    else
-                        dice4.setImage(diceImageOne);
+                    diceImageViews[i].setImage(diceImageOne);
                     break;
                 case 2:
-                    if (i == 0)
-                        dice0.setImage(diceImageTwo);
-                    else if (i == 1)
-                        dice1.setImage(diceImageTwo);
-                    else if (i == 2)
-                        dice2.setImage(diceImageTwo);
-                    else if (i == 3)
-                        dice3.setImage(diceImageTwo);
-                    else
-                        dice4.setImage(diceImageTwo);
+                    diceImageViews[i].setImage(diceImageTwo);
                     break;
                 case 3:
-                    if (i == 0)
-                        dice0.setImage(diceImageThree);
-                    else if (i == 1)
-                        dice1.setImage(diceImageThree);
-                    else if (i == 2)
-                        dice2.setImage(diceImageThree);
-                    else if (i == 3)
-                        dice3.setImage(diceImageThree);
-                    else
-                        dice4.setImage(diceImageThree);
+                    diceImageViews[i].setImage(diceImageThree);
                     break;
                 case 4:
-                    if (i == 0)
-                        dice0.setImage(diceImageFour);
-                    else if (i == 1)
-                        dice1.setImage(diceImageFour);
-                    else if (i == 2)
-                        dice2.setImage(diceImageFour);
-                    else if (i == 3)
-                        dice3.setImage(diceImageFour);
-                    else
-                        dice4.setImage(diceImageFour);
+                    diceImageViews[i].setImage(diceImageFour);
                     break;
                 case 5:
-                    if (i == 0)
-                        dice0.setImage(diceImageFive);
-                    else if (i == 1)
-                        dice1.setImage(diceImageFive);
-                    else if (i == 2)
-                        dice2.setImage(diceImageFive);
-                    else if (i == 3)
-                        dice3.setImage(diceImageFive);
-                    else
-                        dice4.setImage(diceImageFive);
+                    diceImageViews[i].setImage(diceImageFive);
                     break;
                 case 6:
-                    if (i == 0)
-                        dice0.setImage(diceImageSix);
-                    else if (i == 1)
-                        dice1.setImage(diceImageSix);
-                    else if (i == 2)
-                        dice2.setImage(diceImageSix);
-                    else if (i == 3)
-                        dice3.setImage(diceImageSix);
-                    else
-                        dice4.setImage(diceImageSix);
+                    diceImageViews[i].setImage(diceImageSix);
                     break;
                 default:
                     break;
             }
-        }
-        if (rollCount >= 3) {
-            rollButton.setDisable(true);
         }
     }
 

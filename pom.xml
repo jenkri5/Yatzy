@@ -51,29 +51,29 @@
     </pluginRepositories>
 
     <build>
-        <sourceDirectory>C:/Users/jensk/IdeaProjects/Yatzy/src/main/java</sourceDirectory>
+        <sourceDirectory>src/main/java</sourceDirectory>
         <!--
         <scriptSourceDirectory>C:/Users/jensk/IdeaProjects/Yatzy/src/main/scripts</scriptSourceDirectory>
         <testSourceDirectory>C:/Users/jensk/IdeaProjects/Yatzy/src/test/java</testSourceDirectory>
         -->
-        <outputDirectory>C:/Users/jensk/IdeaProjects/Yatzy/target/classes</outputDirectory>
+        <outputDirectory>target/classes</outputDirectory>
         <!--
         <testOutputDirectory>C:/Users/jensk/IdeaProjects/Yatzy/target/test-classes</testOutputDirectory>
         -->
 
         <resources>
             <resource>
-                <directory>C:/Users/jensk/IdeaProjects/Yatzy/src/main/resources</directory>
+                <directory>src/main/resources</directory>
             </resource>
         </resources>
 
         <testResources>
             <testResource>
-                <directory>C:/Users/jensk/IdeaProjects/Yatzy/src/test/resources</directory>
+                <directory>src/test/resources</directory>
             </testResource>
         </testResources>
 
-        <directory>C:/Users/jensk/IdeaProjects/Yatzy/target</directory>
+        <directory>target</directory>
         <finalName>yatzy-0.9.0</finalName>
 
         <pluginManagement>
@@ -84,7 +84,7 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-assembly-plugin</artifactId>
-                    <version>2.2-beta-5</version>
+                    <version>3.3.0</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-dependency-plugin</artifactId>
@@ -138,10 +138,10 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <executions>
                     <execution>
-                        <goals>
-                            <goal>attached</goal>
-                        </goals>
                         <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
                         <configuration>
                             <descriptorRefs>
                                 <descriptorRef>jar-with-dependencies</descriptorRef>
@@ -276,7 +276,7 @@
                             <goal>site</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>C:/Users/jensk/IdeaProjects/Yatzy/target/site</outputDirectory>
+                            <outputDirectory>target/site</outputDirectory>
                             <!--
                             <reportPlugins>
                                 <reportPlugin>
@@ -294,7 +294,7 @@
                             <goal>deploy</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>C:/Users/jensk/IdeaProjects/Yatzy/target/site</outputDirectory>
+                            <outputDirectory>target/site</outputDirectory>
                             <!--
                             <reportPlugins>
                                 <reportPlugin>
@@ -307,7 +307,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <outputDirectory>C:/Users/jensk/IdeaProjects/Yatzy/target/site</outputDirectory>
+                    <outputDirectory>target/site</outputDirectory>
                     <!--
                     <reportPlugins>
                         <reportPlugin>
@@ -322,7 +322,7 @@
     </build>
 
     <reporting>
-        <outputDirectory>C:/Users/jensk/IdeaProjects/Yatzy/target/site</outputDirectory>
+        <outputDirectory>target/site</outputDirectory>
     </reporting>
 
 </project>
