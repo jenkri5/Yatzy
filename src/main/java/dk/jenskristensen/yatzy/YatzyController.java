@@ -62,22 +62,20 @@ public class YatzyController {
             diceImageViews[i].setFitWidth(40.0);
             int finalI = i;
             diceImageViews[i].setOnMouseClicked(event -> lockDice(finalI));
-            diceBox.getChildren().add(diceImageViews[i]);
         }
+        diceBox.getChildren().addAll(diceImageViews);
         for (int i = 0; i < scoreUpperText.length; i++) {
             scoreUpperText[i].setOpacity(0.5);
             int finalI = i;
             scoreUpperText[i].setOnMouseClicked(event -> scoreClicked(finalI));
             scorePane.add(scoreUpperText[i], 1, i);
         }
-
         for (int i = 0; i < scoreLowerText.length; i++) {
             scoreLowerText[i].setOpacity(0.5);
             int finalI = i + 6;
             scoreLowerText[i].setOnMouseClicked(event -> scoreClicked(finalI));
             scorePane.add(scoreLowerText[i], 1, i + 8);
         }
-
         scoreBonus.setOpacity(0.2);
         scorePane.add(scoreSumUpper, 1, 6);
         scorePane.add(scoreBonus, 1, 7);
@@ -117,7 +115,6 @@ public class YatzyController {
 
     public void submit() {
         for (int i = 0; i < scoreUpperText.length + scoreLowerText.length; i++) {
-            //if (isClicked[i] && !isSubmitted[i]) {
             if (isClicked[i]) {
                 int points = calculatePoints(i);
                 if (i <= 5) {
@@ -172,56 +169,6 @@ public class YatzyController {
             updateContrast(i);
         }
         updateImage();
-    }
-
-    public void cheatPairs() {
-        dice[0].faceValue = 1;
-        dice[1].faceValue = 3;
-        dice[2].faceValue = 3;
-        dice[3].faceValue = 6;
-        dice[4].faceValue = 6;
-        updateImage();
-        updateText();
-    }
-
-    public void cheatLowStraight() {
-        dice[0].faceValue = 1;
-        dice[1].faceValue = 2;
-        dice[2].faceValue = 3;
-        dice[3].faceValue = 4;
-        dice[4].faceValue = 5;
-        updateImage();
-        updateText();
-    }
-
-    public void cheatHighStraight() {
-        dice[0].faceValue = 2;
-        dice[1].faceValue = 3;
-        dice[2].faceValue = 4;
-        dice[3].faceValue = 5;
-        dice[4].faceValue = 6;
-        updateImage();
-        updateText();
-    }
-
-    public void cheatFullHouse() {
-        dice[0].faceValue = 5;
-        dice[1].faceValue = 5;
-        dice[2].faceValue = 6;
-        dice[3].faceValue = 6;
-        dice[4].faceValue = 6;
-        updateImage();
-        updateText();
-    }
-
-    public void cheatYatzy() {
-        dice[0].faceValue = 6;
-        dice[1].faceValue = 6;
-        dice[2].faceValue = 6;
-        dice[3].faceValue = 6;
-        dice[4].faceValue = 6;
-        updateImage();
-        updateText();
     }
 
     private boolean validateClick(int n) {
@@ -459,6 +406,56 @@ public class YatzyController {
         for (int i : scoreLower)
             totalSum += i;
         scoreTotalSum.setText("" + totalSum);
+    }
+
+    public void cheatPairs() {
+        dice[0].faceValue = 1;
+        dice[1].faceValue = 3;
+        dice[2].faceValue = 3;
+        dice[3].faceValue = 6;
+        dice[4].faceValue = 6;
+        updateImage();
+        updateText();
+    }
+
+    public void cheatLowStraight() {
+        dice[0].faceValue = 1;
+        dice[1].faceValue = 2;
+        dice[2].faceValue = 3;
+        dice[3].faceValue = 4;
+        dice[4].faceValue = 5;
+        updateImage();
+        updateText();
+    }
+
+    public void cheatHighStraight() {
+        dice[0].faceValue = 2;
+        dice[1].faceValue = 3;
+        dice[2].faceValue = 4;
+        dice[3].faceValue = 5;
+        dice[4].faceValue = 6;
+        updateImage();
+        updateText();
+    }
+
+    public void cheatFullHouse() {
+        dice[0].faceValue = 5;
+        dice[1].faceValue = 5;
+        dice[2].faceValue = 6;
+        dice[3].faceValue = 6;
+        dice[4].faceValue = 6;
+        updateImage();
+        updateText();
+    }
+
+    public void cheatYatzy() {
+        dice[0].faceValue = 6;
+        dice[1].faceValue = 6;
+        dice[2].faceValue = 6;
+        dice[3].faceValue = 6;
+        dice[4].faceValue = 6;
+        updateImage();
+        updateText();
     }
 
     private static class Die {
