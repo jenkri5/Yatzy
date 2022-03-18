@@ -15,6 +15,13 @@ import java.util.Random;
 
 public class YatzyController {
 
+    private final Image diceImageOne = new Image(Objects.requireNonNull(YatzyController.class.getResourceAsStream("dice/1.png")));
+    private final Image diceImageTwo = new Image(Objects.requireNonNull(YatzyController.class.getResourceAsStream("dice/2.png")));
+    private final Image diceImageThree = new Image(Objects.requireNonNull(YatzyController.class.getResourceAsStream("dice/3.png")));
+    private final Image diceImageFour = new Image(Objects.requireNonNull(YatzyController.class.getResourceAsStream("dice/4.png")));
+    private final Image diceImageFive = new Image(Objects.requireNonNull(YatzyController.class.getResourceAsStream("dice/5.png")));
+    private final Image diceImageSix = new Image(Objects.requireNonNull(YatzyController.class.getResourceAsStream("dice/6.png")));
+
     private final ImageView dice0 = new ImageView(diceImageOne),
             dice1 = new ImageView(diceImageTwo),
             dice2 = new ImageView(diceImageThree),
@@ -39,21 +46,14 @@ public class YatzyController {
     @FXML
     private Button rollButton, submitButton;
 
-    private static final Image diceImageOne = new Image(Objects.requireNonNull(YatzyController.class.getResourceAsStream("dice/1.png")));
-    private static final Image diceImageTwo = new Image(Objects.requireNonNull(YatzyController.class.getResourceAsStream("dice/2.png")));
-    private static final Image diceImageThree = new Image(Objects.requireNonNull(YatzyController.class.getResourceAsStream("dice/3.png")));
-    private static final Image diceImageFour = new Image(Objects.requireNonNull(YatzyController.class.getResourceAsStream("dice/4.png")));
-    private static final Image diceImageFive = new Image(Objects.requireNonNull(YatzyController.class.getResourceAsStream("dice/5.png")));
-    private static final Image diceImageSix = new Image(Objects.requireNonNull(YatzyController.class.getResourceAsStream("dice/6.png")));
-
     private final boolean[] isClicked = new boolean[15];
     private final boolean[] isSubmitted = new boolean[15];
     private final int[] scoresUpper = new int[6];
     private final int[] scoresLower = new int[9];
 
-    private static final int nDice = 5;
-    private static final Die die1 = new Die(), die2 = new Die(), die3 = new Die(), die4 = new Die(), die5 = new Die();
-    private static final Die[] dice = {die1, die2, die3, die4, die5};
+    private final int nDice = 5;
+    private final Die die1 = new Die(), die2 = new Die(), die3 = new Die(), die4 = new Die(), die5 = new Die();
+    private final Die[] dice = {die1, die2, die3, die4, die5};
     private int rollCount;
 
     public void initialize() {
@@ -431,6 +431,7 @@ public class YatzyController {
         return isValid;
     }
 
+    // OBS! MISSING NEW LOGIC
     private boolean validateSubmit(int n) {
         boolean isValid = true;
         switch (n) {
