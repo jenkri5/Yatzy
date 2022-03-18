@@ -21,6 +21,7 @@ public class YatzyController {
     private final Image diceImageFour = new Image(Objects.requireNonNull(YatzyController.class.getResourceAsStream("dice/4.png")));
     private final Image diceImageFive = new Image(Objects.requireNonNull(YatzyController.class.getResourceAsStream("dice/5.png")));
     private final Image diceImageSix = new Image(Objects.requireNonNull(YatzyController.class.getResourceAsStream("dice/6.png")));
+    private final Image[] diceImages = {diceImageOne, diceImageTwo, diceImageThree, diceImageFour, diceImageFive, diceImageSix};
 
     private final ImageView dice0 = new ImageView(diceImageOne),
             dice1 = new ImageView(diceImageTwo),
@@ -575,30 +576,8 @@ public class YatzyController {
     }
 
     private void updateImage() {
-        for (int i = 0; i < nDice; i++) {
-            switch (dice[i].faceValue) {
-                case 1:
-                    diceImageViews[i].setImage(diceImageOne);
-                    break;
-                case 2:
-                    diceImageViews[i].setImage(diceImageTwo);
-                    break;
-                case 3:
-                    diceImageViews[i].setImage(diceImageThree);
-                    break;
-                case 4:
-                    diceImageViews[i].setImage(diceImageFour);
-                    break;
-                case 5:
-                    diceImageViews[i].setImage(diceImageFive);
-                    break;
-                case 6:
-                    diceImageViews[i].setImage(diceImageSix);
-                    break;
-                default:
-                    break;
-            }
-        }
+        for (int i = 0; i < nDice; i++)
+            diceImageViews[i].setImage(diceImages[dice[i].faceValue-1]);
     }
 
     private void updateContrast(int i) {
