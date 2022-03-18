@@ -296,38 +296,16 @@ public class YatzyController {
         Arrays.fill(isSubmitted, false);
         Arrays.fill(scoresUpper, 0);
         Arrays.fill(scoresLower, 0);
-        scoreOnes.setText("0");
-        scoreOnes.setOpacity(0.5);
-        scoreTwos.setText("0");
-        scoreTwos.setOpacity(0.5);
-        scoreThrees.setText("0");
-        scoreThrees.setOpacity(0.5);
-        scoreFours.setText("0");
-        scoreFours.setOpacity(0.5);
-        scoreFives.setText("0");
-        scoreFives.setOpacity(0.5);
-        scoreSixes.setText("0");
-        scoreSixes.setOpacity(0.5);
+        for (Text score : scoreUpperTexts) {
+            score.setText("0");
+            score.setOpacity(0.5);
+        }
+        for (Text score : scoreLowerTexts) {
+            score.setText("0");
+            score.setOpacity(0.5);
+        }
         scoreSumUpper.setText("0");
         scoreBonus.setOpacity(0.2);
-        scorePair.setText("0");
-        scorePair.setOpacity(0.5);
-        scoreTwoPairs.setText("0");
-        scoreTwoPairs.setOpacity(0.5);
-        scoreThreeKind.setText("0");
-        scoreThreeKind.setOpacity(0.5);
-        scoreFourKind.setText("0");
-        scoreFourKind.setOpacity(0.5);
-        scoreLowStraight.setText("0");
-        scoreLowStraight.setOpacity(0.5);
-        scoreHighStraight.setText("0");
-        scoreHighStraight.setOpacity(0.5);
-        scoreFullHouse.setText("0");
-        scoreFullHouse.setOpacity(0.5);
-        scoreChance.setText("0");
-        scoreChance.setOpacity(0.5);
-        scoreYatzy.setText("0");
-        scoreYatzy.setOpacity(0.5);
         scoreTotalSum.setText("0");
         pointsLabel.setText("0");
         submitButton.setDisable(true);
