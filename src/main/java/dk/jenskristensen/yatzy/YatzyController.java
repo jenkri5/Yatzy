@@ -1,7 +1,9 @@
 package dk.jenskristensen.yatzy;
 
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -45,7 +47,11 @@ public class YatzyController {
     @FXML
     private Text pointsLabel;
     @FXML
-    private Button rollButton, submitButton;
+    private Button rollButton, submitButton,
+            cheatOnes, cheatTwos, cheatThrees, cheatFours, cheatFives,
+            cheatPairs, cheatLowStraight, cheatHighStraight, cheatFullHouse, cheatYatzy;
+    @FXML
+    private PasswordField passwordCheat;
 
     private final boolean[] isClicked = new boolean[scoreUpperText.length + scoreLowerText.length];
     private final boolean[] isSubmitted = new boolean[scoreUpperText.length + scoreLowerText.length];
@@ -120,8 +126,10 @@ public class YatzyController {
                 if (i <= 5) {
                     scoreUpperText[i].setText("" + points);
                     scoreUpper[i] = points;
+                    scoreUpperText[i].setCursor(Cursor.DEFAULT);
                 } else if (validateSubmit(i)) {
                     scoreLowerText[i - 6].setText("" + points);
+                    scoreLowerText[i].setCursor(Cursor.DEFAULT);
                     scoreLower[i - 6] = points;
                 }
                 isSubmitted[i] = true;
@@ -151,10 +159,12 @@ public class YatzyController {
         for (Text score : scoreUpperText) {
             score.setText("0");
             score.setOpacity(0.5);
+            score.setCursor(Cursor.HAND);
         }
         for (Text score : scoreLowerText) {
             score.setText("0");
             score.setOpacity(0.5);
+            score.setCursor(Cursor.HAND);
         }
         scoreSumUpper.setText("0");
         scoreBonus.setOpacity(0.2);
@@ -169,6 +179,16 @@ public class YatzyController {
             updateContrast(i);
         }
         updateImage();
+        cheatOnes.setDisable(true);
+        cheatTwos.setDisable(true);
+        cheatThrees.setDisable(true);
+        cheatFours.setDisable(true);
+        cheatFives.setDisable(true);
+        cheatPairs.setDisable(true);
+        cheatLowStraight.setDisable(true);
+        cheatHighStraight.setDisable(true);
+        cheatFullHouse.setDisable(true);
+        cheatYatzy.setDisable(true);
     }
 
     private boolean validateClick(int n) {
@@ -391,6 +411,20 @@ public class YatzyController {
 
     private void updateText() {
         pointsLabel.setText("0");
+        if (rollCount == 0) {
+            for (Text score : scoreUpperText)
+                score.setCursor(Cursor.DEFAULT);
+            for (Text score : scoreLowerText)
+                score.setCursor(Cursor.DEFAULT);
+        } else {
+            for (int i = 0; i < isSubmitted.length; i++) {
+                if (!isSubmitted[i] && i <= 5) {
+                    scoreUpperText[i].setCursor(Cursor.HAND);
+                } else if (!isSubmitted[i]) {
+                    scoreLowerText[i - 6].setCursor(Cursor.HAND);
+                }
+            }
+        }
         for (int i = 0; i < isClicked.length; i++)
             if (isClicked[i] && validateSubmit(i))
                 pointsLabel.setText("" + calculatePoints(i));
@@ -406,6 +440,72 @@ public class YatzyController {
         for (int i : scoreLower)
             totalSum += i;
         scoreTotalSum.setText("" + totalSum);
+    }
+
+    public void unlockCheats() {
+        String password = passwordCheat.getText();
+        if (password.equals("yatzy")) {
+            cheatOnes.setDisable(false);
+            cheatTwos.setDisable(false);
+            cheatThrees.setDisable(false);
+            cheatFours.setDisable(false);
+            cheatFives.setDisable(false);
+            cheatPairs.setDisable(false);
+            cheatLowStraight.setDisable(false);
+            cheatHighStraight.setDisable(false);
+            cheatFullHouse.setDisable(false);
+            cheatYatzy.setDisable(false);
+        }
+    }
+
+    public void cheatOnes() {
+        dice[0].faceValue = 1;
+        dice[1].faceValue = 1;
+        dice[2].faceValue = 1;
+        dice[3].faceValue = 1;
+        dice[4].faceValue = 1;
+        updateImage();
+        updateText();
+    }
+
+    public void cheatTwos() {
+        dice[0].faceValue = 2;
+        dice[1].faceValue = 2;
+        dice[2].faceValue = 2;
+        dice[3].faceValue = 2;
+        dice[4].faceValue = 2;
+        updateImage();
+        updateText();
+    }
+
+    public void cheatThrees() {
+        dice[0].faceValue = 3;
+        dice[1].faceValue = 3;
+        dice[2].faceValue = 3;
+        dice[3].faceValue = 3;
+        dice[4].faceValue = 3;
+        updateImage();
+        updateText();
+    }
+
+    public void cheatFours() {
+        dice[0].faceValue = 4;
+        dice[1].faceValue = 4;
+        dice[2].faceValue = 4;
+        dice[3].faceValue = 4;
+        dice[4].faceValue = 4;
+        updateImage();
+        updateText();
+    }
+
+    public void cheatFives() {
+        dice[0].faceValue = 5;
+        dice[1].faceValue = 5;
+        dice[2].faceValue = 5;
+        dice[3].faceValue = 5;
+        dice[4].faceValue = 5;
+        updateImage();
+        updateText();
     }
 
     public void cheatPairs() {
