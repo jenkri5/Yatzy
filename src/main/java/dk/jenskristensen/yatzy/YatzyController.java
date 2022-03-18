@@ -35,8 +35,8 @@ public class YatzyController {
             scoreBonus = new Text("50"), scorePair = new Text("0"), scoreTwoPairs = new Text("0"), scoreThreeKind = new Text("0"),
             scoreFourKind = new Text("0"), scoreLowStraight = new Text("0"), scoreHighStraight = new Text("0"),
             scoreFullHouse = new Text("0"), scoreChance = new Text("0"), scoreYatzy = new Text("0"), scoreTotalSum = new Text("0");
-    private final Text[] scoreUpperTexts = {scoreOnes, scoreTwos, scoreThrees, scoreFours, scoreFives, scoreSixes};
-    private final Text[] scoreLowerTexts = {scorePair, scoreTwoPairs, scoreThreeKind, scoreFourKind, scoreLowStraight, scoreHighStraight, scoreFullHouse, scoreChance, scoreYatzy};
+    private final Text[] scoreUpperText = {scoreOnes, scoreTwos, scoreThrees, scoreFours, scoreFives, scoreSixes};
+    private final Text[] scoreLowerText = {scorePair, scoreTwoPairs, scoreThreeKind, scoreFourKind, scoreLowStraight, scoreHighStraight, scoreFullHouse, scoreChance, scoreYatzy};
 
     @FXML
     private HBox diceBox;
@@ -47,36 +47,35 @@ public class YatzyController {
     @FXML
     private Button rollButton, submitButton;
 
-    private final boolean[] isClicked = new boolean[15];
-    private final boolean[] isSubmitted = new boolean[15];
-    private final int[] scoresUpper = new int[6];
-    private final int[] scoresLower = new int[9];
+    private final boolean[] isClicked = new boolean[scoreUpperText.length + scoreLowerText.length];
+    private final boolean[] isSubmitted = new boolean[scoreUpperText.length + scoreLowerText.length];
+    private final int[] scoreUpper = new int[scoreUpperText.length];
+    private final int[] scoreLower = new int[scoreLowerText.length];
 
-    private final int nDice = 5;
     private final Die die1 = new Die(), die2 = new Die(), die3 = new Die(), die4 = new Die(), die5 = new Die();
     private final Die[] dice = {die1, die2, die3, die4, die5};
-    private int rollCount;
+    private int rollCount = 0;
 
     public void initialize() {
-        for (int i = 0; i < nDice; i++) {
+        for (int i = 0; i < dice.length; i++) {
             diceImageViews[i].setFitHeight(40.0);
             diceImageViews[i].setFitWidth(40.0);
             int finalI = i;
             diceImageViews[i].setOnMouseClicked(event -> lockDice(finalI));
             diceBox.getChildren().add(diceImageViews[i]);
         }
-        for (int i = 0; i < scoreUpperTexts.length; i++) {
-            scoreUpperTexts[i].setOpacity(0.5);
+        for (int i = 0; i < scoreUpperText.length; i++) {
+            scoreUpperText[i].setOpacity(0.5);
             int finalI = i;
-            scoreUpperTexts[i].setOnMouseClicked(event -> scoreClicked(finalI));
-            scorePane.add(scoreUpperTexts[i],1,i);
+            scoreUpperText[i].setOnMouseClicked(event -> scoreClicked(finalI));
+            scorePane.add(scoreUpperText[i], 1, i);
         }
 
-        for (int i = 0; i < scoreLowerTexts.length; i++) {
-            scoreLowerTexts[i].setOpacity(0.5);
+        for (int i = 0; i < scoreLowerText.length; i++) {
+            scoreLowerText[i].setOpacity(0.5);
             int finalI = i + 6;
-            scoreLowerTexts[i].setOnMouseClicked(event -> scoreClicked(finalI));
-            scorePane.add(scoreLowerTexts[i], 1, i + 8);
+            scoreLowerText[i].setOnMouseClicked(event -> scoreClicked(finalI));
+            scorePane.add(scoreLowerText[i], 1, i + 8);
         }
 
         scoreBonus.setOpacity(0.2);
@@ -104,184 +103,39 @@ public class YatzyController {
     private void scoreClicked(int i) {
         if (validateClick(i)) {
             if (i <= 5)
-                scoreUpperTexts[i].setOpacity(1.0);
+                scoreUpperText[i].setOpacity(1.0);
             else
-                scoreLowerTexts[i-6].setOpacity(1.0);
-        }
-        else if (!isSubmitted[i]) {
+                scoreLowerText[i - 6].setOpacity(1.0);
+        } else if (!isSubmitted[i]) {
             if (i <= 5)
-                scoreUpperTexts[i].setOpacity(0.5);
+                scoreUpperText[i].setOpacity(0.5);
             else
-                scoreLowerTexts[i-6].setOpacity(0.5);
+                scoreLowerText[i - 6].setOpacity(0.5);
         }
         updateText();
     }
 
-    // OBS! MISSING NEW LOGIC
     public void submit() {
-        for (int i = 0; i < isClicked.length; i++) {
-            switch (i) {
-                case 0:
-                    if (isClicked[i] && !isSubmitted[i]) {
-                        scoreOnes.setText("" + calculatePoints(i));
-                        scoresUpper[i] = calculatePoints(i);
-                        isSubmitted[i] = true;
-                        reset();
-                    }
-                    break;
-                case 1:
-                    if (isClicked[i] && !isSubmitted[i]) {
-                        scoreTwos.setText("" + calculatePoints(i));
-                        scoresUpper[i] = calculatePoints(i);
-                        isSubmitted[i] = true;
-                        reset();
-                    }
-                    break;
-                case 2:
-                    if (isClicked[i] && !isSubmitted[i]) {
-                        scoreThrees.setText("" + calculatePoints(i));
-                        scoresUpper[i] = calculatePoints(i);
-                        isSubmitted[i] = true;
-                        reset();
-                    }
-                    break;
-                case 3:
-                    if (isClicked[i] && !isSubmitted[i]) {
-                        scoreFours.setText("" + calculatePoints(i));
-                        scoresUpper[i] = calculatePoints(i);
-                        isSubmitted[i] = true;
-                        reset();
-                    }
-                    break;
-                case 4:
-                    if (isClicked[i] && !isSubmitted[i]) {
-                        scoreFives.setText("" + calculatePoints(i));
-                        scoresUpper[i] = calculatePoints(i);
-                        isSubmitted[i] = true;
-                        reset();
-                    }
-                    break;
-                case 5:
-                    if (isClicked[i] && !isSubmitted[i]) {
-                        scoreSixes.setText("" + calculatePoints(i));
-                        scoresUpper[i] = calculatePoints(i);
-                        isSubmitted[i] = true;
-                        reset();
-                    }
-                    break;
-                case 6:
-                    if (isClicked[i] && !isSubmitted[i]) {
-                        if (validateSubmit(i)) {
-                            scorePair.setText("" + calculatePoints(i));
-                            scoresLower[i - 6] = calculatePoints(i);
-                        } else {
-                            scoresLower[i - 6] = 0;
-                        }
-                        isSubmitted[i] = true;
-                        reset();
-                    }
-                    break;
-                case 7:
-                    if (isClicked[i] && !isSubmitted[i]) {
-                        if (validateSubmit(i)) {
-                            scoreTwoPairs.setText("" + calculatePoints(i));
-                            scoresLower[i - 6] = calculatePoints(i);
-                        } else {
-                            scoresLower[i - 6] = 0;
-                        }
-                        isSubmitted[i] = true;
-                        reset();
-                    }
-                    break;
-                case 8:
-                    if (isClicked[i] && !isSubmitted[i]) {
-                        if (validateSubmit(i)) {
-                            scoreThreeKind.setText("" + calculatePoints(i));
-                            scoresLower[i - 6] = calculatePoints(i);
-                        } else {
-                            scoresLower[i - 6] = 0;
-                        }
-                        isSubmitted[i] = true;
-                        reset();
-                    }
-                    break;
-                case 9:
-                    if (isClicked[i] && !isSubmitted[i]) {
-                        if (validateSubmit(i)) {
-                            scoreFourKind.setText("" + calculatePoints(i));
-                            scoresLower[i - 6] = calculatePoints(i);
-                        } else {
-                            scoresLower[i - 6] = 0;
-                        }
-                        isSubmitted[i] = true;
-                        reset();
-                    }
-                    break;
-                case 10:
-                    if (isClicked[i] && !isSubmitted[i]) {
-                        if (validateSubmit(i)) {
-                            scoreLowStraight.setText("" + calculatePoints(i));
-                            scoresLower[i - 6] = calculatePoints(i);
-                        } else {
-                            scoresLower[i - 6] = 0;
-                        }
-                        isSubmitted[i] = true;
-                        reset();
-                    }
-                    break;
-                case 11:
-                    if (isClicked[i] && !isSubmitted[i]) {
-                        if (validateSubmit(i)) {
-                            scoreHighStraight.setText("" + calculatePoints(i));
-                            scoresLower[i - 6] = calculatePoints(i);
-                        } else {
-                            scoresLower[i - 6] = 0;
-                        }
-                        isSubmitted[i] = true;
-                        reset();
-                    }
-                    break;
-                case 12:
-                    if (isClicked[i] && !isSubmitted[i]) {
-                        if (validateSubmit(i)) {
-                            scoreFullHouse.setText("" + calculatePoints(i));
-                            scoresLower[i - 6] = calculatePoints(i);
-                        } else {
-                            scoresLower[i - 6] = 0;
-                        }
-                        isSubmitted[i] = true;
-                        reset();
-                    }
-                    break;
-                case 13:
-                    if (isClicked[i] && !isSubmitted[i]) {
-                        scoreChance.setText("" + calculatePoints(i));
-                        scoresLower[i - 6] = calculatePoints(i);
-                        isSubmitted[i] = true;
-                        reset();
-                    }
-                    break;
-                case 14:
-                    if (isClicked[i] && !isSubmitted[i]) {
-                        if (validateSubmit(i)) {
-                            scoreYatzy.setText("" + calculatePoints(i));
-                            scoresLower[i - 6] = calculatePoints(i);
-                        } else {
-                            scoresLower[i - 6] = 0;
-                        }
-                        isSubmitted[i] = true;
-                        reset();
-                    }
-                    break;
-                default:
-                    break;
+        for (int i = 0; i < scoreUpperText.length + scoreLowerText.length; i++) {
+            //if (isClicked[i] && !isSubmitted[i]) {
+            if (isClicked[i]) {
+                int points = calculatePoints(i);
+                if (i <= 5) {
+                    scoreUpperText[i].setText("" + points);
+                    scoreUpper[i] = points;
+                } else if (validateSubmit(i)) {
+                    scoreLowerText[i - 6].setText("" + points);
+                    scoreLower[i - 6] = points;
+                }
+                isSubmitted[i] = true;
+                reset();
             }
         }
     }
 
     public void reset() {
         rollCount = 0;
-        for (int i = 0; i < nDice; i++)
+        for (int i = 0; i < dice.length; i++)
             if (dice[i].isLocked) {
                 dice[i].setLocked();
                 updateContrast(i);
@@ -295,13 +149,13 @@ public class YatzyController {
     public void restart() {
         Arrays.fill(isClicked, false);
         Arrays.fill(isSubmitted, false);
-        Arrays.fill(scoresUpper, 0);
-        Arrays.fill(scoresLower, 0);
-        for (Text score : scoreUpperTexts) {
+        Arrays.fill(scoreUpper, 0);
+        Arrays.fill(scoreLower, 0);
+        for (Text score : scoreUpperText) {
             score.setText("0");
             score.setOpacity(0.5);
         }
-        for (Text score : scoreLowerTexts) {
+        for (Text score : scoreLowerText) {
             score.setText("0");
             score.setOpacity(0.5);
         }
@@ -312,7 +166,7 @@ public class YatzyController {
         submitButton.setDisable(true);
         rollButton.setDisable(false);
         rollCount = 0;
-        for (int i = 0; i < nDice; i++) {
+        for (int i = 0; i < dice.length; i++) {
             dice[i].faceValue = i + 1;
             dice[i].isLocked = false;
             updateContrast(i);
@@ -373,18 +227,18 @@ public class YatzyController {
     private boolean validateClick(int n) {
         boolean isValid = false;
         if (!isSubmitted[n] && rollCount != 0) {
-            for (int i = 0; i < scoreUpperTexts.length; i++) {
+            for (int i = 0; i < scoreUpperText.length; i++) {
                 if (isClicked[i] && i != n) {
                     if (!isSubmitted[i])
-                        scoreUpperTexts[i].setOpacity(0.5);
+                        scoreUpperText[i].setOpacity(0.5);
                     isClicked[i] = false;
                 }
             }
-            for (int i = 0; i < scoreLowerTexts.length; i++) {
-                if (isClicked[i+6] && i+6 != n) {
-                    if (!isSubmitted[i+6])
-                        scoreLowerTexts[i].setOpacity(0.5);
-                    isClicked[i] = false;
+            for (int i = 0; i < scoreLowerText.length; i++) {
+                if (isClicked[i + 6] && i + 6 != n) {
+                    if (!isSubmitted[i + 6])
+                        scoreLowerText[i].setOpacity(0.5);
+                    isClicked[i + 6] = false;
                 }
             }
             if (!isClicked[n]) {
@@ -392,18 +246,18 @@ public class YatzyController {
                 submitButton.setDisable(false);
                 isClicked[n] = true;
             } else {
-                submitButton.setDisable(false);
+                submitButton.setDisable(true);
                 isClicked[n] = false;
             }
         } else {
             Arrays.fill(isClicked, false);
-            for (int i = 0; i < scoreUpperTexts.length; i++) {
+            for (int i = 0; i < scoreUpperText.length; i++) {
                 if (!isSubmitted[i])
-                    scoreUpperTexts[i].setOpacity(0.5);
+                    scoreUpperText[i].setOpacity(0.5);
             }
-            for (int i = 0; i < scoreLowerTexts.length; i++) {
-                if (!isSubmitted[i+6])
-                    scoreLowerTexts[i].setOpacity(0.5);
+            for (int i = 0; i < scoreLowerText.length; i++) {
+                if (!isSubmitted[i + 6])
+                    scoreLowerText[i].setOpacity(0.5);
             }
             submitButton.setDisable(true);
             pointsLabel.setText("0");
@@ -411,14 +265,13 @@ public class YatzyController {
         return isValid;
     }
 
-    // OBS! MISSING NEW LOGIC
     private boolean validateSubmit(int n) {
         boolean isValid = true;
         switch (n) {
             case 6:
                 boolean hasPair = false;
-                for (int i = 0; i < nDice - 1; i++)
-                    for (int j = i + 1; j < nDice; j++)
+                for (int i = 0; i < dice.length - 1; i++)
+                    for (int j = i + 1; j < dice.length; j++)
                         if (dice[i].faceValue == dice[j].faceValue) {
                             hasPair = true;
                             break;
@@ -464,7 +317,7 @@ public class YatzyController {
                 break;
             case 10:
                 int[] lowStraight = {1, 2, 3, 4, 5};
-                int[] tempLowStraight = new int[nDice];
+                int[] tempLowStraight = new int[dice.length];
                 for (int i = 0; i < tempLowStraight.length; i++)
                     tempLowStraight[i] = dice[i].faceValue;
                 Arrays.sort(tempLowStraight);
@@ -472,7 +325,7 @@ public class YatzyController {
                 break;
             case 11:
                 int[] highStraight = {2, 3, 4, 5, 6};
-                int[] tempHighStraight = new int[nDice];
+                int[] tempHighStraight = new int[dice.length];
                 for (int i = 0; i < tempHighStraight.length; i++)
                     tempHighStraight[i] = dice[i].faceValue;
                 Arrays.sort(tempHighStraight);
@@ -481,13 +334,13 @@ public class YatzyController {
             case 12:
                 int[] houseBucket = new int[6];
                 for (Die die : dice)
-                    houseBucket[die.faceValue-1]++;
+                    houseBucket[die.faceValue - 1]++;
                 Arrays.sort(houseBucket);
                 if (houseBucket[4] != 2 || houseBucket[5] != 3)
                     isValid = false;
                 break;
             case 14:
-                for (int i = 1; i < nDice; i++) {
+                for (int i = 1; i < dice.length; i++) {
                     if (dice[0].faceValue != dice[i].faceValue) {
                         isValid = false;
                         break;
@@ -521,11 +374,11 @@ public class YatzyController {
                 case 7:
                     int twoPairs = 0;
                     int[] twoPairsBucket = new int[6];
-                    int[] twoPairsTemp = new int[nDice];
-                    for (int j = 0; j < nDice; j++)
+                    int[] twoPairsTemp = new int[dice.length];
+                    for (int j = 0; j < dice.length; j++)
                         twoPairsTemp[j] = dice[j].faceValue;
-                    for (int j = 0; j < nDice - 1; j++) {
-                        for (int k = j + 1; k < nDice; k++) {
+                    for (int j = 0; j < dice.length - 1; j++) {
+                        for (int k = j + 1; k < dice.length; k++) {
                             if (twoPairsTemp[j] == twoPairsTemp[k] && twoPairsTemp[j] != 0) {
                                 twoPairsBucket[twoPairsTemp[j] - 1]++;
                                 twoPairsTemp[j] = 0;
@@ -576,8 +429,8 @@ public class YatzyController {
     }
 
     private void updateImage() {
-        for (int i = 0; i < nDice; i++)
-            diceImageViews[i].setImage(diceImages[dice[i].faceValue-1]);
+        for (int i = 0; i < dice.length; i++)
+            diceImageViews[i].setImage(diceImages[dice[i].faceValue - 1]);
     }
 
     private void updateContrast(int i) {
@@ -595,7 +448,7 @@ public class YatzyController {
             if (isClicked[i] && validateSubmit(i))
                 pointsLabel.setText("" + calculatePoints(i));
         int sumUpper = 0;
-        for (int i : scoresUpper)
+        for (int i : scoreUpper)
             sumUpper += i;
         scoreSumUpper.setText("" + sumUpper);
         int totalSum = sumUpper;
@@ -603,7 +456,7 @@ public class YatzyController {
             scoreBonus.setOpacity(1.0);
             totalSum += 50;
         }
-        for (int i : scoresLower)
+        for (int i : scoreLower)
             totalSum += i;
         scoreTotalSum.setText("" + totalSum);
     }
