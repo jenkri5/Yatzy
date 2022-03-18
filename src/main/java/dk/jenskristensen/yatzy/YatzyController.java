@@ -116,6 +116,7 @@ public class YatzyController {
         updateText();
     }
 
+    // OBS! MISSING NEW LOGIC
     public void submit() {
         for (int i = 0; i < isClicked.length; i++) {
             switch (i) {
