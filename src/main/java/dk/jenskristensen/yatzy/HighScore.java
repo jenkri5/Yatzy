@@ -39,7 +39,7 @@ public class HighScore {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Collections.sort(scores, Collections.reverseOrder());
+        scores.sort(Collections.reverseOrder());
         if (scores.size() > 5)
             scores = new ArrayList<>(scores.subList(0, 5));
         if (scores.size() < 5) {
