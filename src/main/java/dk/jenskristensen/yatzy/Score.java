@@ -20,7 +20,7 @@ public class Score implements Comparable<Score> {
 
     @Override
     public String toString() {
-        return name.substring(0, Math.min(name.length(),8)) + ": " + score;
+        return name.substring(0, Math.min(name.length(),10)) + ": " + score;
     }
 
     @Override
