@@ -6,7 +6,6 @@ import java.util.Collections;
 
 public class HighScore {
 
-    //src/main/resources/dk/jenskristensen/yatzy/
     private final File highScore = new File("highScore.dat");
     private ArrayList<Score> scores = new ArrayList<>();
 
@@ -23,8 +22,8 @@ public class HighScore {
 
     public void loadHighScore() {
         scores.clear();
-        FileReader fileReader = null;
-        BufferedReader bufferedReader = null;
+        FileReader fileReader;
+        BufferedReader bufferedReader;
         try {
             fileReader = new FileReader(highScore);
             bufferedReader = new BufferedReader(fileReader);
@@ -37,8 +36,6 @@ public class HighScore {
             }
             bufferedReader.close();
             fileReader.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -56,8 +53,8 @@ public class HighScore {
     }
 
     public void submitHighScore(String name, int score) {
-        FileWriter fileWriter = null;
-        BufferedWriter bufferedWriter = null;
+        FileWriter fileWriter;
+        BufferedWriter bufferedWriter;
         try {
             fileWriter = new FileWriter(highScore, true);
             bufferedWriter = new BufferedWriter(fileWriter);
@@ -71,8 +68,8 @@ public class HighScore {
     }
 
     public void trimHighScore() {
-        FileWriter fileWriter = null;
-        BufferedWriter bufferedWriter = null;
+        FileWriter fileWriter;
+        BufferedWriter bufferedWriter;
         highScore.delete();
         try {
             fileWriter = new FileWriter(highScore, true);
