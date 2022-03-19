@@ -88,6 +88,7 @@ public class YatzyController {
         }
         for (int i = 0; i < topScoresText.length; i++) {
             topScoresText[i].setText(highScore.getScores().get(i).toString());
+            topScoresText[i].setWrappingWidth(80);
             highScoreGrid.add(topScoresText[i],0,i+1);
         }
         scoreBonus.setOpacity(0.2);
@@ -169,8 +170,12 @@ public class YatzyController {
                     dialog.setHeaderText("Submit to High Score");
                     dialog.setContentText("Please enter your name:");
                     Optional<String> result2 = dialog.showAndWait();
-                    if (result2.isPresent() && !result2.get().equals("")) {
-                        highScore.submitHighScore(result2.get(), sumTotal);
+                    if (result2.isPresent()) {
+                        if (result2.get().equals("")) {
+                            highScore.submitHighScore("Anon", sumTotal);
+                        } else {
+                            highScore.submitHighScore(result2.get(), sumTotal);
+                        }
                         highScore.loadHighScore();
                         for (int i = 0; i < topScoresText.length; i++) {
                             topScoresText[i].setText(highScore.getScores().get(i).toString());
