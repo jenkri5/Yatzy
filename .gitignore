@@ -1,1 +1,3 @@
 /target/
+/src/main/resources/dk/jenskristensen/yatzy/highscore.dat
+/highScore.dat
