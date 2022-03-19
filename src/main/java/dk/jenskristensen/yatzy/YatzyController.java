@@ -1,24 +1,15 @@
 package dk.jenskristensen.yatzy;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.HPos;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.text.Text;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
@@ -178,7 +169,7 @@ public class YatzyController {
                     dialog.setHeaderText("Submit to High Score");
                     dialog.setContentText("Please enter your name:");
                     Optional<String> result2 = dialog.showAndWait();
-                    if (result2.isPresent() && result2.get() != "") {
+                    if (result2.isPresent() && !result2.get().equals("")) {
                         highScore.submitHighScore(result2.get(), sumTotal);
                         highScore.loadHighScore();
                         for (int i = 0; i < topScoresText.length; i++) {
@@ -487,10 +478,6 @@ public class YatzyController {
         calculateSum();
         scoreSumUpper.setText("" + sumUpper);
         scoreTotalSum.setText("" + sumTotal);
-    }
-
-    private void updateHighScore() {
-
     }
 
     public void calculateSum() {
