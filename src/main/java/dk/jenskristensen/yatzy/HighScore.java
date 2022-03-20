@@ -7,7 +7,7 @@ import java.util.Collections;
 public class HighScore {
 
     private final File highScore = new File("highScore.dat");
-    private ArrayList<Score> scores = new ArrayList<>();
+    private final ArrayList<Score> scores = new ArrayList<>();
 
     public HighScore() {
         if (!highScore.exists()) {
@@ -41,7 +41,7 @@ public class HighScore {
         }
         scores.sort(Collections.reverseOrder());
         if (scores.size() > 5)
-            scores = new ArrayList<>(scores.subList(0, 5));
+            scores.subList(5, scores.size()).clear();
         if (scores.size() < 5) {
             int temp = scores.size();
             for (int i = 0; i < 5 - temp; i++) {
