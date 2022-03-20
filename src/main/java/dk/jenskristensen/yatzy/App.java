@@ -4,9 +4,11 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class App extends Application {
 
@@ -17,6 +19,7 @@ public class App extends Application {
         scene = new Scene(loadFXML("yatzyScene"));
         stage.setScene(scene);
         stage.setTitle("Yatzy");
+        stage.getIcons().add(new Image(Objects.requireNonNull(YatzyController.class.getResourceAsStream("dice/6.png"))));
         stage.setResizable(false);
         stage.show();
     }
