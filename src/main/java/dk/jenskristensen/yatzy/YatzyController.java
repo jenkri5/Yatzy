@@ -89,7 +89,7 @@ public class YatzyController {
         for (int i = 0; i < topScoresText.length; i++) {
             topScoresText[i].setText(highScore.getScores().get(i).toString());
             topScoresText[i].setWrappingWidth(80);
-            highScoreGrid.add(topScoresText[i],0,i+1);
+            highScoreGrid.add(topScoresText[i], 0, i + 1);
         }
         scoreBonus.setOpacity(0.2);
         scorePane.add(scoreSumUpper, 1, 6);
@@ -158,28 +158,21 @@ public class YatzyController {
             }
         if (isFinished) {
             rollButton.setDisable(true);
-            if (!hasCheats) {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Game Finished");
-                alert.setHeaderText("Submit to High Score?");
-                alert.setContentText("Your score is " + sumTotal);
-                Optional<ButtonType> result = alert.showAndWait();
-                if (result.isPresent() && result.get() == ButtonType.OK) {
-                    TextInputDialog dialog = new TextInputDialog();
-                    dialog.setTitle("Game Finished");
-                    dialog.setHeaderText("Submit to High Score");
-                    dialog.setContentText("Please enter your name:");
-                    Optional<String> result2 = dialog.showAndWait();
-                    if (result2.isPresent()) {
-                        if (result2.get().equals("")) {
-                            highScore.submitHighScore("Anon", sumTotal);
-                        } else {
-                            highScore.submitHighScore(result2.get(), sumTotal);
-                        }
-                        highScore.loadHighScore();
-                        for (int i = 0; i < topScoresText.length; i++) {
-                            topScoresText[i].setText(highScore.getScores().get(i).toString());
-                        }
+            if (!hasCheats && sumTotal > highScore.getScores().get(4).getScore()) {
+                TextInputDialog dialog = new TextInputDialog();
+                dialog.setTitle("Game Finished");
+                dialog.setHeaderText("You are in the top 5!");
+                dialog.setContentText("Please enter your name:");
+                Optional<String> result = dialog.showAndWait();
+                if (result.isPresent()) {
+                    if (result.get().equals("")) {
+                        highScore.submitHighScore("Anon", sumTotal);
+                    } else {
+                        highScore.submitHighScore(result.get(), sumTotal);
+                    }
+                    highScore.loadHighScore();
+                    for (int i = 0; i < topScoresText.length; i++) {
+                        topScoresText[i].setText(highScore.getScores().get(i).toString());
                     }
                 }
             }
