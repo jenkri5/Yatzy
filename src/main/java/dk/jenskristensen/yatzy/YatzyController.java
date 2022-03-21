@@ -86,7 +86,6 @@ public class YatzyController {
 
         for (int i = 0; i < scoreUpperText.length; i++) {
             scorePanes[i].setMaxSize(28, 14);
-            //scorePanes[i].setOpacity(0.5);
             int finalI = i;
             scorePanes[i].setOnMouseClicked(event -> scoreClicked(finalI));
             scorePanes[i].setOnMouseEntered(event -> scoreHovered(finalI));
@@ -95,7 +94,6 @@ public class YatzyController {
         }
         for (int i = 6; i < scoreLowerText.length + 6; i++) {
             scorePanes[i].setMaxSize(28, 14);
-            //scorePanes[i].setOpacity(0.5);
             int finalI = i;
             scorePanes[i].setOnMouseClicked(event -> scoreClicked(finalI));
             scorePanes[i].setOnMouseEntered(event -> scoreHovered(finalI));
@@ -139,9 +137,14 @@ public class YatzyController {
             for (Pane pane : scorePanes)
                 pane.setCursor(Cursor.DEFAULT);
         } else {
-            for (int i = 0; i < isSubmitted.length; i++) {
+            for (int i = 0; i < isSubmitted.length; i++)
                 if (!isSubmitted[i])
                     scorePanes[i].setCursor(Cursor.HAND);
+        }
+        for (int i = 0; i < scorePanes.length; i++) {
+            if (!isClicked[i] && !isSubmitted[i]) {
+                scorePanes[i].setBackground(Background.fill(null));
+                scorePanes[i].setOpacity(1);
             }
         }
     }
@@ -180,15 +183,17 @@ public class YatzyController {
                 scoreUpperText[i].setOpacity(1.0);
             else
                 scoreLowerText[i - 6].setOpacity(1.0);
-            if (calculatePoints(i) > 0)
+            if (calculatePoints(i) > 0 && validateSubmit(i))
                 scorePanes[i].setBackground(Background.fill(Color.LIGHTGREEN));
             else
                 scorePanes[i].setBackground(Background.fill(Color.INDIANRED));
+            scorePanes[i].setOpacity(0.5);
         } else if (!isSubmitted[i]) {
             if (i <= 5)
                 scoreUpperText[i].setOpacity(0.5);
             else
                 scoreLowerText[i - 6].setOpacity(0.5);
+            scorePanes[i].setOpacity(1);
             scorePanes[i].setBackground(Background.fill(null));
         }
         updateText();
