@@ -6,8 +6,11 @@ import javafx.scene.control.*;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 import java.util.Arrays;
@@ -42,6 +45,12 @@ public class YatzyController {
     private final Text[] scoreLowerText = {scorePair, scoreTwoPairs, scoreThreeKind, scoreFourKind, scoreLowStraight, scoreHighStraight, scoreFullHouse, scoreChance, scoreYatzy};
     private final Text[] topScoresText = {highScoreOne, highScoreTwo, highScoreThree, highScoreFour, highScoreFive};
 
+    private final Pane paneOnes = new Pane(), paneTwos = new Pane(), paneThrees = new Pane(), paneFours = new Pane(),
+            paneFives = new Pane(), paneSixes = new Pane(), panePair = new Pane(), paneTwoPairs = new Pane(),
+            paneThreeKind = new Pane(), paneFourKind = new Pane(), paneLowStraight = new Pane(), paneHighStraight = new Pane(),
+            paneFullHouse = new Pane(), paneChance = new Pane(), paneYatzy = new Pane();
+    private final Pane[] scorePanes = {paneOnes, paneTwos, paneThrees, paneFours, paneFives, paneSixes, panePair, paneTwoPairs, paneThreeKind, paneFourKind, paneLowStraight, paneHighStraight, paneFullHouse, paneChance, paneYatzy};
+
     @FXML
     private HBox diceBox;
     @FXML
@@ -74,16 +83,40 @@ public class YatzyController {
             diceImageViews[i].setOnMouseClicked(event -> lockDice(finalI));
         }
         diceBox.getChildren().addAll(diceImageViews);
+
+        for (int i = 0; i < scoreUpperText.length; i++) {
+            scorePanes[i].setMaxSize(28, 14);
+            //scorePanes[i].setOpacity(0.5);
+            int finalI = i;
+            scorePanes[i].setOnMouseClicked(event -> scoreClicked(finalI));
+            scorePanes[i].setOnMouseEntered(event -> scoreHovered(finalI));
+            scorePanes[i].setOnMouseExited(event -> scoreExited(finalI));
+            scorePane.add(scorePanes[i], 1, i);
+        }
+        for (int i = 6; i < scoreLowerText.length + 6; i++) {
+            scorePanes[i].setMaxSize(28, 14);
+            //scorePanes[i].setOpacity(0.5);
+            int finalI = i;
+            scorePanes[i].setOnMouseClicked(event -> scoreClicked(finalI));
+            scorePanes[i].setOnMouseEntered(event -> scoreHovered(finalI));
+            scorePanes[i].setOnMouseExited(event -> scoreExited(finalI));
+            scorePane.add(scorePanes[i], 1, i + 2);
+        }
+
         for (int i = 0; i < scoreUpperText.length; i++) {
             scoreUpperText[i].setOpacity(0.5);
             int finalI = i;
             scoreUpperText[i].setOnMouseClicked(event -> scoreClicked(finalI));
+            scoreUpperText[i].setOnMouseEntered(event -> scoreHovered(finalI));
+            scoreUpperText[i].setOnMouseExited(event -> scoreExited(finalI));
             scorePane.add(scoreUpperText[i], 1, i);
         }
         for (int i = 0; i < scoreLowerText.length; i++) {
             scoreLowerText[i].setOpacity(0.5);
             int finalI = i + 6;
             scoreLowerText[i].setOnMouseClicked(event -> scoreClicked(finalI));
+            scoreLowerText[i].setOnMouseEntered(event -> scoreHovered(finalI));
+            scoreLowerText[i].setOnMouseExited(event -> scoreExited(finalI));
             scorePane.add(scoreLowerText[i], 1, i + 8);
         }
         for (int i = 0; i < topScoresText.length; i++) {
@@ -101,6 +134,28 @@ public class YatzyController {
 //        scorePane.getColumnConstraints().add(2, columnConstraints);
     }
 
+    private void updateScorePanes() {
+        if (rollCount == 0) {
+            for (Pane pane : scorePanes)
+                pane.setCursor(Cursor.DEFAULT);
+        } else {
+            for (int i = 0; i < isSubmitted.length; i++) {
+                if (!isSubmitted[i])
+                    scorePanes[i].setCursor(Cursor.HAND);
+            }
+        }
+    }
+
+    private void scoreExited(int i) {
+        if (!isClicked[i] && rollCount > 0 && !isSubmitted[i])
+            scorePanes[i].setBackground(Background.fill(null));
+    }
+
+    private void scoreHovered(int i) {
+        if (!isClicked[i] && rollCount > 0 && !isSubmitted[i])
+            scorePanes[i].setBackground(Background.fill(Color.LIGHTGOLDENRODYELLOW));
+    }
+
     public void roll() {
         Arrays.stream(dice).filter(die -> !die.isLocked).forEach(Die::roll);
         rollCount++;
@@ -108,6 +163,7 @@ public class YatzyController {
             rollButton.setDisable(true);
         updateImage();
         updateText();
+        updateScorePanes();
     }
 
     private void lockDice(int i) {
@@ -124,13 +180,19 @@ public class YatzyController {
                 scoreUpperText[i].setOpacity(1.0);
             else
                 scoreLowerText[i - 6].setOpacity(1.0);
+            if (calculatePoints(i) > 0)
+                scorePanes[i].setBackground(Background.fill(Color.LIGHTGREEN));
+            else
+                scorePanes[i].setBackground(Background.fill(Color.INDIANRED));
         } else if (!isSubmitted[i]) {
             if (i <= 5)
                 scoreUpperText[i].setOpacity(0.5);
             else
                 scoreLowerText[i - 6].setOpacity(0.5);
+            scorePanes[i].setBackground(Background.fill(null));
         }
         updateText();
+        updateScorePanes();
     }
 
     public void submit() {
@@ -190,6 +252,7 @@ public class YatzyController {
         submitButton.setDisable(true);
         rollButton.setDisable(false);
         updateText();
+        updateScorePanes();
     }
 
     public void restart() {
@@ -221,6 +284,7 @@ public class YatzyController {
         }
         updateImage();
         updateText();
+        updateScorePanes();
         passwordCheat.clear();
         hasCheats = false;
         cheatOnes.setDisable(true);
@@ -516,6 +580,7 @@ public class YatzyController {
         dice[4].faceValue = 1;
         updateImage();
         updateText();
+        updateScorePanes();
     }
 
     public void cheatTwos() {
@@ -526,6 +591,7 @@ public class YatzyController {
         dice[4].faceValue = 2;
         updateImage();
         updateText();
+        updateScorePanes();
     }
 
     public void cheatThrees() {
@@ -536,6 +602,7 @@ public class YatzyController {
         dice[4].faceValue = 3;
         updateImage();
         updateText();
+        updateScorePanes();
     }
 
     public void cheatFours() {
@@ -546,6 +613,7 @@ public class YatzyController {
         dice[4].faceValue = 4;
         updateImage();
         updateText();
+        updateScorePanes();
     }
 
     public void cheatFives() {
@@ -556,6 +624,7 @@ public class YatzyController {
         dice[4].faceValue = 5;
         updateImage();
         updateText();
+        updateScorePanes();
     }
 
     public void cheatPairs() {
@@ -566,6 +635,7 @@ public class YatzyController {
         dice[4].faceValue = 6;
         updateImage();
         updateText();
+        updateScorePanes();
     }
 
     public void cheatLowStraight() {
@@ -576,6 +646,7 @@ public class YatzyController {
         dice[4].faceValue = 5;
         updateImage();
         updateText();
+        updateScorePanes();
     }
 
     public void cheatHighStraight() {
@@ -586,6 +657,7 @@ public class YatzyController {
         dice[4].faceValue = 6;
         updateImage();
         updateText();
+        updateScorePanes();
     }
 
     public void cheatFullHouse() {
@@ -596,6 +668,7 @@ public class YatzyController {
         dice[4].faceValue = 6;
         updateImage();
         updateText();
+        updateScorePanes();
     }
 
     public void cheatYatzy() {
@@ -606,6 +679,7 @@ public class YatzyController {
         dice[4].faceValue = 6;
         updateImage();
         updateText();
+        updateScorePanes();
     }
 
     private static class Die {
