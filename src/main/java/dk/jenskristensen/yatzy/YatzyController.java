@@ -179,10 +179,15 @@ public class YatzyController {
     // Combine with validateClick
     private void scoreClicked(int i) {
         if (validateClick(i)) {
-            if (i <= 5)
+            if (i <= 5) {
                 scoreUpperText[i].setOpacity(1.0);
-            else
+                if (validateSubmit(i))
+                    scoreUpperText[i].setText(""+calculatePoints(i));
+            } else {
                 scoreLowerText[i - 6].setOpacity(1.0);
+                if (validateSubmit(i))
+                    scoreLowerText[i - 6].setText(""+calculatePoints(i));
+            }
             if (calculatePoints(i) > 0 && validateSubmit(i))
                 scorePanes[i].setBackground(Background.fill(Color.LIGHTGREEN));
             else
@@ -536,6 +541,12 @@ public class YatzyController {
                     scoreUpperText[i].setCursor(Cursor.HAND);
                 } else if (!isSubmitted[i]) {
                     scoreLowerText[i - 6].setCursor(Cursor.HAND);
+                }
+                if (!isSubmitted[i] && !isClicked[i]) {
+                    if (i <= 5)
+                        scoreUpperText[i].setText("0");
+                    else
+                        scoreLowerText[i - 6].setText("0");
                 }
             }
         }
