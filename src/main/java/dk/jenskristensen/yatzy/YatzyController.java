@@ -56,7 +56,7 @@ public class YatzyController {
     @FXML
     private GridPane scorePane, highScoreGrid;
     @FXML
-    private Text pointsLabel, rollCountLabel;
+    private Text rollCountLabel;
     @FXML
     private Button rollButton, submitButton,
             cheatOnes, cheatTwos, cheatThrees, cheatFours, cheatFives,
@@ -145,6 +145,12 @@ public class YatzyController {
             if (!isClicked[i] && !isSubmitted[i]) {
                 scorePanes[i].setBackground(Background.fill(null));
                 scorePanes[i].setOpacity(1);
+            }
+            if (isClicked[i]) {
+                if (calculatePoints(i) > 0 && validateSubmit(i))
+                    scorePanes[i].setBackground(Background.fill(Color.LIGHTGREEN));
+                else
+                    scorePanes[i].setBackground(Background.fill(Color.INDIANRED));
             }
         }
     }
@@ -283,7 +289,6 @@ public class YatzyController {
         scoreSumUpper.setText("0");
         scoreBonus.setOpacity(0.2);
         scoreTotalSum.setText("0");
-        pointsLabel.setText("0");
         submitButton.setDisable(true);
         rollButton.setDisable(false);
         rollCount = 0;
@@ -345,7 +350,6 @@ public class YatzyController {
                     scoreLowerText[i].setOpacity(0.5);
             }
             submitButton.setDisable(true);
-            pointsLabel.setText("0");
         }
         return isValid;
     }
@@ -528,7 +532,6 @@ public class YatzyController {
     }
 
     private void updateText() {
-        pointsLabel.setText("0");
         rollCountLabel.setText(rollCount + "/3");
         if (rollCount == 0) {
             for (Text score : scoreUpperText)
@@ -548,11 +551,14 @@ public class YatzyController {
                     else
                         scoreLowerText[i - 6].setText("0");
                 }
+                if (isClicked[i] && validateSubmit(i)) {
+                    if (i <= 5)
+                        scoreUpperText[i].setText(""+calculatePoints(i));
+                    else
+                        scoreLowerText[i - 6].setText(""+calculatePoints(i));
+                }
             }
         }
-        for (int i = 0; i < isClicked.length; i++)
-            if (isClicked[i] && validateSubmit(i))
-                pointsLabel.setText("" + calculatePoints(i));
         calculateSum();
         scoreSumUpper.setText("" + sumUpper);
         scoreTotalSum.setText("" + sumTotal);
